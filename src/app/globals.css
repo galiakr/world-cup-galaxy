@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --grass: #2D9E47;
+  --gold: #F5C842;
+  --night: #0D1B2A;
+  --sky: #1A6FBF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Nunito', system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+/* Fredoka One for headings */
+.font-fredoka { font-family: 'Fredoka One', cursive; }
+
+/* Sticker pop animation */
+@keyframes stickerPop {
+  0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.animate-stickerPop {
+  animation: stickerPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Slide up toast */
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0);   opacity: 1; }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease forwards;
+}
+
+/* Bottom nav safe area on iOS */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  nav.fixed.bottom-0 {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* RTL fixes */
+[dir="rtl"] .ltr { direction: ltr; }
+[dir="ltr"] .rtl { direction: rtl; }
+
+/* Flag images */
+img.flag {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Active press effect */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Score stepper button */
+.score-stepper button:active {
+  transform: scale(0.92);
+}
+
+/* Card hover */
+.hover-lift {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.hover-lift:active {
+  transform: translateY(0);
+}

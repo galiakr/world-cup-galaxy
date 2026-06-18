@@ -4,19 +4,21 @@ import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
 import { claimDailySticker, awardSticker } from '@/lib/supabase'
+import { israelDateString } from '@/lib/date'
 
 interface HomeClientProps {
   todayMatches: Match[]
   yesterdayMatches: Match[]
   tomorrowMatches: Match[]
   topScorers: TopScorer[]
+  matchesError?: boolean
 }
 
-export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers }: HomeClientProps) {
+export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError }: HomeClientProps) {
   const { lang, user, dailyClaimedDate, setDailyClaimedDate, addSticker } = useAppStore()
   const isHe = lang === 'he'
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = israelDateString()
   const dailyClaimed = dailyClaimedDate === today
 
   // Tournament countdown to July 19 2026 final
@@ -34,24 +36,42 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
 
   return (
     <div className="px-4 pt-4">
-      {/* Hero */}
-      <div className="relative bg-gray-900 rounded-3xl p-5 mb-4 overflow-hidden">
-        <div className="absolute right-0 bottom-0 text-8xl opacity-10 pointer-events-none">⚽</div>
-        <div className="font-fredoka text-yellow-400 text-2xl mb-1" style={{ fontFamily: 'Fredoka One, cursive' }}>
-          🏆 {t(lang, 'app_name')}
+      {/* Hero — mission control */}
+      <div className="relative bg-spacelight rounded-[2rem] p-5 pb-6 mb-4 overflow-hidden border border-ink/10">
+        {/* Ambient sparkles */}
+        <span className="absolute top-5 left-8 w-1.5 h-1.5 rounded-full bg-gold animate-twinkle pointer-events-none" />
+        <span className="absolute top-12 right-12 w-1.5 h-1.5 rounded-full bg-violet animate-twinkle pointer-events-none" style={{ animationDelay: '0.8s' }} />
+        <span className="absolute bottom-16 left-14 w-2 h-2 rounded-full bg-teal animate-twinkle pointer-events-none" style={{ animationDelay: '1.4s' }} />
+
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-1.5 text-teal text-[10px] font-bold tracking-[0.15em]">
+            <span className="w-1.5 h-1.5 rounded-full bg-teal animate-pulse" />
+            {t(lang, 'home_eyebrow')}
+          </div>
+          <div className="text-xs text-starlight/40">{t(lang, 'tagline')}</div>
         </div>
-        <div className="text-blue-300 text-xs mb-4">{t(lang, 'tagline')}</div>
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { num: '48', label: t(lang, 'home_teams') },
-            { num: '104', label: t(lang, 'home_matches') },
-            { num: String(daysLeft), label: t(lang, 'home_days_left') },
-          ].map(({ num, label }) => (
-            <div key={label} className="bg-white/10 rounded-2xl py-3 text-center">
-              <div className="font-fredoka text-yellow-400 text-2xl" style={{ fontFamily: 'Fredoka One, cursive' }}>{num}</div>
-              <div className="text-blue-200 text-[10px] mt-0.5">{label}</div>
-            </div>
-          ))}
+
+        <div className="font-display text-gold text-xl mb-4 flex items-center gap-2">
+          <span className="text-lg">🌌</span> {t(lang, 'app_name')}
+        </div>
+
+        {/* Radar countdown dial — signature element */}
+        <div className="relative w-32 h-32 mx-auto">
+          <div
+            className="absolute inset-0 rounded-full animate-radar"
+            style={{ background: 'conic-gradient(from 0deg, transparent 0%, transparent 72%, rgba(255,200,87,0.85) 94%, transparent 100%)' }}
+          />
+          <div className="absolute inset-[5px] rounded-full bg-space border border-ink/10 flex flex-col items-center justify-center">
+            <div className="font-readout text-gold text-3xl leading-none">{daysLeft}</div>
+            <div className="text-starlight/50 text-[9px] tracking-widest uppercase mt-1">{t(lang, 'home_days_left')}</div>
+          </div>
+        </div>
+
+        {/* Telemetry strip */}
+        <div className="flex items-center justify-center gap-2.5 mt-4 font-readout text-[11px] text-starlight/70">
+          <span><span className="text-teal">48</span> {t(lang, 'home_teams')}</span>
+          <span className="w-1 h-1 rounded-full bg-ink/20" />
+          <span><span className="text-teal">104</span> {t(lang, 'home_matches')}</span>
         </div>
       </div>
 
@@ -61,62 +81,76 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
         disabled={dailyClaimed}
         className={`w-full flex items-center gap-4 rounded-2xl p-4 mb-4 text-left transition-all
           ${dailyClaimed
-            ? 'bg-gray-200 opacity-60 cursor-default'
-            : 'bg-gradient-to-r from-yellow-400 to-orange-400 active:scale-98 hover-lift'
+            ? 'bg-ink/5 border border-ink/10 opacity-60 cursor-default'
+            : 'bg-gradient-to-r from-gold to-coral active:scale-98 hover-lift'
           }`}
       >
-        <div className="text-5xl">{dailyClaimed ? '✅' : '🎁'}</div>
+        <div className="text-5xl">{dailyClaimed ? '✅' : '🌟'}</div>
         <div>
-          <div className="font-fredoka text-gray-900 text-lg" style={{ fontFamily: 'Fredoka One, cursive' }}>
+          <div className={`font-display text-lg ${dailyClaimed ? 'text-starlight' : 'text-starlight'}`}>
             {t(lang, 'home_daily_sticker')}
           </div>
-          <div className="text-gray-700 text-xs mt-0.5">
+          <div className={`text-xs mt-0.5 ${dailyClaimed ? 'text-starlight/60' : 'text-starlight/70'}`}>
             {dailyClaimed ? t(lang, 'home_daily_claimed') : t(lang, 'home_daily_sub')}
           </div>
         </div>
       </button>
 
       {/* Today's matches */}
-      <Section title={t(lang, 'home_today')} emoji="📅">
-        {todayMatches.length > 0
-          ? todayMatches.map(m => <MatchCard key={m.id} match={m} compact />)
-          : <EmptyMsg text={t(lang, 'home_no_matches')} />
+      <Section title={t(lang, 'home_today')} emoji="🌍" accent="gold">
+        {matchesError
+          ? <EmptyMsg text={t(lang, 'matches_load_error')} />
+          : todayMatches.length > 0
+            ? todayMatches.map(m => <MatchCard key={m.id} match={m} compact />)
+            : <EmptyMsg text={t(lang, 'home_no_matches')} />
         }
       </Section>
 
       {/* Yesterday's results */}
       {yesterdayMatches.length > 0 && (
-        <Section title={t(lang, 'home_yesterday')} emoji="📊">
+        <Section title={t(lang, 'home_yesterday')} emoji="🌑" accent="violet">
           {yesterdayMatches.map(m => <MatchCard key={m.id} match={m} compact />)}
         </Section>
       )}
 
       {/* Tomorrow */}
       {tomorrowMatches.length > 0 && (
-        <Section title={t(lang, 'home_tomorrow')} emoji="🔮">
+        <Section title={t(lang, 'home_tomorrow')} emoji="🔮" accent="coral">
           {tomorrowMatches.map(m => <MatchCard key={m.id} match={m} compact />)}
         </Section>
       )}
 
       {/* Top scorers */}
       {topScorers.length > 0 && (
-        <Section title={t(lang, 'home_top_scorers')} emoji="⚽">
+        <Section title={t(lang, 'home_top_scorers')} emoji="⚽" accent="teal">
           {topScorers.map((s, i) => (
-            <div key={s.player_name} className="flex items-center gap-3 py-2 border-b border-gray-100 last:border-0">
-              <div className="font-fredoka text-gray-400 text-lg w-6 text-center" style={{ fontFamily: 'Fredoka One, cursive' }}>
+            <div key={s.player_name} className="flex items-center gap-3 py-2 border-b border-ink/10 last:border-0">
+              <div
+                className={`font-readout text-xs w-6 h-6 rounded-full flex items-center justify-center ${
+                  MEDAL_STYLE[i] ?? 'text-starlight/40'
+                }`}
+              >
                 {i + 1}
               </div>
+              {s.photo_url && (
+                <img
+                  src={s.photo_url}
+                  alt=""
+                  className="w-8 h-8 rounded-full object-cover border border-ink/10 flex-shrink-0"
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+              )}
               <img
                 src={s.team?.flag_url || ''}
                 alt=""
-                className="w-7 h-5 object-cover rounded shadow-sm"
+                className="w-7 h-5 object-cover rounded shadow-sm flex-shrink-0"
                 onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
               />
               <div className="flex-1">
                 <div className="font-bold text-sm">{s.player_name}</div>
-                <div className="text-xs text-gray-400">{isHe ? s.team?.name_he : s.team?.name_en}</div>
+                <div className="text-xs text-starlight/40">{isHe ? s.team?.name_he : s.team?.name_en}</div>
               </div>
-              <div className="font-fredoka text-green-600 text-xl" style={{ fontFamily: 'Fredoka One, cursive' }}>
+              <div className="font-readout text-teal text-lg">
                 {s.goals} ⚽
               </div>
             </div>
@@ -127,13 +161,27 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
   )
 }
 
-function Section({ title, emoji, children }: { title: string; emoji: string; children: React.ReactNode }) {
+const MEDAL_STYLE: Record<number, string> = {
+  0: 'bg-gold/20 text-gold',
+  1: 'bg-starlight/15 text-starlight/80',
+  2: 'bg-coral/20 text-coral',
+}
+
+const ACCENT_DOT: Record<string, string> = {
+  gold: 'bg-gold',
+  teal: 'bg-teal',
+  violet: 'bg-violet',
+  coral: 'bg-coral',
+}
+
+function Section({ title, emoji, accent, children }: { title: string; emoji: string; accent: string; children: React.ReactNode }) {
   return (
     <div className="mb-4">
-      <h2 className="font-fredoka text-gray-800 text-lg mb-2 flex items-center gap-2" style={{ fontFamily: 'Fredoka One, cursive' }}>
+      <h2 className="font-display text-starlight text-base mb-2 flex items-center gap-2">
+        <span className={`w-1.5 h-1.5 rounded-full ${ACCENT_DOT[accent]}`} />
         {emoji} {title}
       </h2>
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-3">
+      <div className="bg-spacelight rounded-2xl border border-ink/10 p-3">
         {children}
       </div>
     </div>
@@ -141,5 +189,5 @@ function Section({ title, emoji, children }: { title: string; emoji: string; chi
 }
 
 function EmptyMsg({ text }: { text: string }) {
-  return <p className="text-gray-400 text-sm text-center py-3">{text}</p>
+  return <p className="text-starlight/40 text-sm text-center py-3">{text}</p>
 }

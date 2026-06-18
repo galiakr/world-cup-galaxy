@@ -5,14 +5,25 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        fredoka: ['Fredoka One', 'cursive'],
+        display: ['Varela Round', 'system-ui', 'sans-serif'],
         nunito: ['Nunito', 'system-ui', 'sans-serif'],
+        mono: ['Space Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
-        grass: '#2D9E47',
-        gold: '#F5C842',
-        night: '#0D1B2A',
-        sky: '#1A6FBF',
+        // Daytime "cartoon space meets soccer pitch" palette. Token names
+        // stay the same as the old dark theme (space/spacelight/starlight)
+        // so every existing bg-space/text-starlight class still resolves
+        // correctly — only their roles flip: space/spacelight go from dark
+        // backgrounds to light ones, starlight goes from light text to ink.
+        space: '#FFF8EC',
+        spacelight: '#FFFFFF',
+        starlight: '#241F4D',
+        ink: '#241F4D',
+        gold: '#FFB703',
+        coral: '#FF6F59',
+        violet: '#8C6BFF',
+        teal: '#2BB673',
+        sky: '#4CC9F0',
       },
       keyframes: {
         stickerPop: {
@@ -24,10 +35,20 @@ const config: Config = {
           from: { transform: 'translateX(-50%) translateY(20px)', opacity: '0' },
           to: { transform: 'translateX(-50%) translateY(0)', opacity: '1' },
         },
+        twinkle: {
+          '0%, 100%': { opacity: '0.2', transform: 'scale(0.8)' },
+          '50%': { opacity: '1', transform: 'scale(1.1)' },
+        },
+        drift: {
+          from: { transform: 'translateY(0)' },
+          to: { transform: 'translateY(-8px)' },
+        },
       },
       animation: {
         stickerPop: 'stickerPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
         slideUp: 'slideUp 0.3s ease forwards',
+        twinkle: 'twinkle 2.4s ease-in-out infinite',
+        drift: 'drift 3.6s ease-in-out infinite alternate',
       },
       borderRadius: {
         '3xl': '1.5rem',

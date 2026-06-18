@@ -33,18 +33,18 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
   if (!owned) {
     return (
       <div
-        className={`relative ${sizes[size]} rounded-2xl flex flex-col items-center justify-center cursor-pointer select-none
-          bg-gray-100 border-2 border-dashed border-gray-300 opacity-50 grayscale`}
+        className={`relative ${sizes[size]} rounded-full flex flex-col items-center justify-center cursor-pointer select-none
+          bg-ink/[0.03] border border-dashed border-ink/15`}
         onClick={onClick}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        <span className="text-2xl">❓</span>
-        <span className={`${labelSizes[size]} text-gray-400 font-bold mt-1 text-center leading-tight px-1`}>
+        <span className="text-lg text-starlight/15">✦</span>
+        <span className={`${labelSizes[size]} text-starlight/20 font-bold mt-1 text-center leading-tight px-1`}>
           {t(lang, 'stickers_locked')}
         </span>
         {showTooltip && (
-          <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap z-50 max-w-48 text-center leading-tight">
+          <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-space border border-ink/10 text-starlight text-xs rounded-lg px-3 py-2 whitespace-nowrap z-50 max-w-48 text-center leading-tight">
             {lang === 'he' ? sticker.unlock_condition_he : sticker.unlock_condition}
           </div>
         )}
@@ -54,24 +54,24 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
 
   return (
     <div
-      className={`relative ${sizes[size]} rounded-2xl flex flex-col items-center justify-center cursor-pointer select-none
+      className={`relative ${sizes[size]} rounded-full flex flex-col items-center justify-center cursor-pointer select-none
         overflow-hidden transition-transform active:scale-95 hover:scale-105
         ${isNew ? 'animate-stickerPop' : ''}`}
       style={{
         background: `linear-gradient(145deg, ${sticker.color_from}, ${sticker.color_to})`,
         border: `2px solid ${rarity.border}`,
-        boxShadow: `0 0 12px ${rarity.glow}, 0 2px 8px rgba(0,0,0,0.2)`,
+        boxShadow: `0 0 14px ${rarity.glow}, 0 2px 8px rgba(0,0,0,0.4)`,
       }}
       onClick={onClick}
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
       {/* Glossy overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-ink/40 via-transparent to-ink/10 pointer-events-none" />
       {/* Shine streak */}
-      <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-white/20 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-ink/20 to-transparent pointer-events-none" />
       {/* Inner border */}
-      <div className="absolute inset-0 rounded-2xl border border-white/40 pointer-events-none" />
+      <div className="absolute inset-0 rounded-full border border-ink/40 pointer-events-none" />
 
       {/* Rarity badge */}
       <div
@@ -100,7 +100,7 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
       </span>
 
       {showTooltip && (
-        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap z-50 text-center">
+        <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-space border border-ink/10 text-starlight text-xs rounded-lg px-3 py-2 whitespace-nowrap z-50 text-center">
           {lang === 'he' ? sticker.name_he : sticker.name_en}
         </div>
       )}

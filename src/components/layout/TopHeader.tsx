@@ -1,31 +1,32 @@
 'use client'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
+import ProfileSwitcher from './ProfileSwitcher'
 import Link from 'next/link'
 
 export default function TopHeader() {
   const { lang, setLang, user } = useAppStore()
 
   return (
-    <header className="sticky top-0 z-40 bg-gray-900 text-white px-4 py-3">
-      <div className="max-w-lg mx-auto flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-40 bg-space/90 backdrop-blur-sm text-starlight px-4 py-3 relative">
+      <div className="max-w-lg lg:max-w-4xl mx-auto flex items-center justify-between gap-3">
         {/* Logo */}
-        <Link href="/" className="font-black text-yellow-400 text-lg leading-tight" style={{ fontFamily: 'system-ui' }}>
-          ⚽ {t(lang, 'app_name')}
+        <Link href="/" className="font-display text-gold text-base leading-tight flex items-center gap-1.5">
+          <span className="text-lg">🪐</span> {t(lang, 'app_name')}
         </Link>
 
         <div className="flex items-center gap-2">
           {/* Language toggle */}
-          <div className="flex rounded-full border border-white/20 overflow-hidden text-xs font-bold">
+          <div className="flex rounded-full border border-ink/15 overflow-hidden text-xs font-bold">
             <button
               onClick={() => setLang('he')}
-              className={`px-3 py-1 transition-colors ${lang === 'he' ? 'bg-yellow-400 text-gray-900' : 'text-gray-300 hover:text-white'}`}
+              className={`px-3 py-1 transition-colors ${lang === 'he' ? 'bg-gold text-starlight' : 'text-starlight/50 hover:text-starlight'}`}
             >
               עב
             </button>
             <button
               onClick={() => setLang('en')}
-              className={`px-3 py-1 transition-colors ${lang === 'en' ? 'bg-yellow-400 text-gray-900' : 'text-gray-300 hover:text-white'}`}
+              className={`px-3 py-1 transition-colors ${lang === 'en' ? 'bg-gold text-starlight' : 'text-starlight/50 hover:text-starlight'}`}
             >
               EN
             </button>
@@ -33,18 +34,21 @@ export default function TopHeader() {
 
           {/* User chip */}
           {user && (
-            <Link href="/stickers" className="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1">
+            <Link href="/stickers" className="flex items-center gap-2 bg-ink/5 border border-ink/10 rounded-full px-3 py-1">
               <span className="text-lg">{user.avatar_emoji}</span>
               <div className="hidden sm:block">
-                <div className="text-xs font-bold text-white leading-none">{user.username}</div>
-                <div className="text-[10px] text-yellow-400 font-bold leading-none mt-0.5">
+                <div className="text-xs font-bold text-starlight leading-none">{user.username}</div>
+                <div className="text-[10px] text-gold font-bold leading-none mt-0.5">
                   🔥 {user.streak_days} {t(lang, 'home_streak')}
                 </div>
               </div>
             </Link>
           )}
+
+          <ProfileSwitcher />
         </div>
       </div>
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
     </header>
   )
 }

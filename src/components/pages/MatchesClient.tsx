@@ -9,11 +9,12 @@ import { format } from 'date-fns'
 interface MatchesClientProps {
   pastMatches: Match[]
   upcomingMatches: Match[]
+  matchesError?: boolean
 }
 
 type Tab = 'upcoming' | 'results' | 'all'
 
-export default function MatchesClient({ pastMatches, upcomingMatches }: MatchesClientProps) {
+export default function MatchesClient({ pastMatches, upcomingMatches, matchesError }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
 
@@ -52,18 +53,18 @@ export default function MatchesClient({ pastMatches, upcomingMatches }: MatchesC
 
   return (
     <div className="px-4 pt-4">
-      <h1 className="font-fredoka text-2xl text-gray-800 mb-4" style={{ fontFamily: 'Fredoka One, cursive' }}>
-        📅 {t(lang, 'matches_title')}
+      <h1 className="font-display text-2xl text-starlight mb-4">
+        🛰️ {t(lang, 'matches_title')}
       </h1>
 
       {/* Tabs */}
-      <div className="flex rounded-2xl bg-white shadow-sm border border-gray-100 p-1 mb-4 gap-1">
+      <div className="flex rounded-2xl bg-spacelight border border-ink/10 p-1 mb-4 gap-1">
         {TABS.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setTab(key)}
             className={`flex-1 py-2 rounded-xl text-sm font-bold transition-colors
-              ${tab === key ? 'bg-gray-900 text-yellow-400' : 'text-gray-500 hover:text-gray-700'}`}
+              ${tab === key ? 'bg-teal text-starlight' : 'text-starlight/50 hover:text-starlight'}`}
           >
             {label}
           </button>
@@ -73,7 +74,7 @@ export default function MatchesClient({ pastMatches, upcomingMatches }: MatchesC
       {/* Grouped matches */}
       {Object.keys(grouped).sort().map(dateStr => (
         <div key={dateStr} className="mb-4">
-          <div className="text-xs font-black text-gray-400 uppercase tracking-wider mb-2 px-1">
+          <div className="text-xs font-black text-teal uppercase tracking-wider mb-2 px-1">
             {dateLabel(dateStr)}
           </div>
           {grouped[dateStr].map(m => (
@@ -83,9 +84,9 @@ export default function MatchesClient({ pastMatches, upcomingMatches }: MatchesC
       ))}
 
       {displayed.length === 0 && (
-        <div className="text-center text-gray-400 py-12">
-          <div className="text-4xl mb-3">⚽</div>
-          <div>{t(lang, 'home_no_matches')}</div>
+        <div className="text-center text-starlight/40 py-12">
+          <div className="text-4xl mb-3">🛰️</div>
+          <div>{t(lang, matchesError ? 'matches_load_error' : 'home_no_matches')}</div>
         </div>
       )}
     </div>

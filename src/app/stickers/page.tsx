@@ -2,11 +2,13 @@
 import { useState } from 'react'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
-import { STICKERS } from '@/data/stickers'
+import { STICKERS, RARITY_COLORS } from '@/data/stickers'
 import { StickerCategory } from '@/types'
 import StickerCard from '@/components/ui/StickerCard'
 
 type Filter = StickerCategory | 'all'
+
+const RARITIES = ['common', 'rare', 'epic', 'legend'] as const
 
 export default function StickersPage() {
   const { lang, user, ownedStickers } = useAppStore()
@@ -26,35 +28,57 @@ export default function StickersPage() {
 
   return (
     <div className="px-4 pt-4">
-      <h1 className="font-fredoka text-2xl text-gray-800 mb-4" style={{ fontFamily: 'Fredoka One, cursive' }}>
-        ⭐ {t(lang, 'stickers_title')}
+      <h1 className="font-display text-2xl text-starlight mb-4">
+        🌌 {t(lang, 'stickers_title')}
       </h1>
 
       {/* Profile card */}
-      <div className="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-300 rounded-3xl p-4 mb-4">
+      <div className="bg-gradient-to-br from-gold/15 to-violet/10 border-2 border-gold/40 rounded-3xl p-4 mb-4">
         <div className="flex items-center gap-3 mb-3">
           <div className="text-5xl">{user?.avatar_emoji ?? '🦁'}</div>
           <div>
-            <div className="font-fredoka text-xl text-gray-800" style={{ fontFamily: 'Fredoka One, cursive' }}>
+            <div className="font-display text-xl text-starlight">
               {user?.username}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-starlight/60">
               {totalOwned} / {STICKERS.length} {t(lang, 'stickers_count')}
             </div>
-            <div className="text-xs text-green-600 font-bold mt-0.5">
+            <div className="text-xs text-teal font-bold mt-0.5">
               🔥 {user?.streak_days ?? 1} {t(lang, 'home_streak')}
             </div>
           </div>
         </div>
         {/* Progress bar */}
-        <div className="h-3 bg-white rounded-full overflow-hidden border border-yellow-200">
+        <div className="h-3 bg-ink/10 rounded-full overflow-hidden border border-ink/10">
           <div
-            className="h-full bg-gradient-to-r from-green-400 to-yellow-400 rounded-full transition-all duration-700"
+            className="h-full bg-gradient-to-r from-teal to-gold rounded-full transition-all duration-700"
             style={{ width: `${pct}%` }}
           />
         </div>
-        <div className="text-xs text-gray-400 text-center mt-1">
+        <div className="text-xs text-starlight/40 text-center mt-1">
           {pct}% — {STICKERS.length - totalOwned} {t(lang, 'stickers_progress')}
+        </div>
+      </div>
+
+      {/* Rarity guide */}
+      <div className="bg-spacelight rounded-3xl border border-ink/10 p-4 mb-4">
+        <h2 className="font-display text-base text-starlight mb-1">
+          ✨ {t(lang, 'stickers_guide_title')}
+        </h2>
+        <p className="text-xs text-starlight/40 mb-3">{t(lang, 'stickers_guide_text')}</p>
+        <div className="flex flex-col gap-2">
+          {RARITIES.map(rarity => (
+            <div key={rarity} className="flex items-center gap-3">
+              <span
+                className="w-5 h-5 rounded-full flex-shrink-0"
+                style={{ background: RARITY_COLORS[rarity].border, boxShadow: `0 0 8px ${RARITY_COLORS[rarity].glow}` }}
+              />
+              <div>
+                <div className="text-xs font-bold text-starlight">{t(lang, `rarity_${rarity}`)}</div>
+                <div className="text-[11px] text-starlight/40">{t(lang, `rarity_${rarity}_desc`)}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -66,8 +90,8 @@ export default function StickersPage() {
             onClick={() => setFilter(key)}
             className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-bold transition-colors border
               ${filter === key
-                ? 'bg-gray-900 text-yellow-400 border-gray-900'
-                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'
+                ? 'bg-gold text-starlight border-gold'
+                : 'bg-ink/5 text-starlight/50 border-ink/10 hover:border-ink/30'
               }`}
           >
             {label}
@@ -75,8 +99,8 @@ export default function StickersPage() {
         ))}
       </div>
 
-      {/* Sticker grid */}
-      <div className="grid grid-cols-4 gap-3 pb-4">
+      {/* Star chart grid */}
+      <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 gap-3 pb-4">
         {filtered.map(sticker => (
           <div key={sticker.id} className="flex flex-col items-center">
             <StickerCard

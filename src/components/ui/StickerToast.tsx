@@ -28,17 +28,17 @@ export default function StickerToast() {
         }}
       >
         {/* Overlay */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/30 via-transparent to-white/10 pointer-events-none" />
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-ink/30 via-transparent to-ink/10 pointer-events-none" />
 
         <div className="text-6xl animate-bounce relative z-10">{sticker.emoji}</div>
         <div className="relative z-10 text-center">
-          <div className="text-white font-black text-lg drop-shadow" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.4)' }}>
-            {t(lang, 'toast_new_sticker')} 🎉
+          <div className="text-white font-display text-lg drop-shadow" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.4)' }}>
+            🌟 {t(lang, 'toast_new_sticker')}
           </div>
-          <div className="text-white/90 font-bold text-sm mt-1">
+          <div className="text-ink/90 font-bold text-sm mt-1">
             {lang === 'he' ? sticker.name_he : sticker.name_en}
           </div>
-          <div className="mt-2 text-xs font-bold px-3 py-1 rounded-full bg-black/20 text-white/80">
+          <div className="mt-2 text-xs font-bold px-3 py-1 rounded-full bg-black/20 text-ink/80">
             {sticker.rarity === 'legend' ? '⭐ LEGEND' : sticker.rarity === 'epic' ? '💜 EPIC' : sticker.rarity === 'rare' ? '💙 RARE' : '📗 COMMON'}
           </div>
         </div>

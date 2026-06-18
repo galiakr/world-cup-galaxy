@@ -35,15 +35,15 @@ export default function MatchCard({ match, compact = false, showGroup = true }: 
     : kickoff || t(lang, 'match_scheduled')
 
   const statusColor = match.status === 'finished'
-    ? 'bg-gray-100 text-gray-500'
+    ? 'bg-ink/10 text-starlight/50'
     : match.status === 'live'
-    ? 'bg-red-500 text-white animate-pulse'
-    : 'bg-blue-100 text-blue-700'
+    ? 'bg-coral text-white animate-pulse'
+    : 'bg-teal/20 text-teal'
 
   return (
-    <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm ${compact ? 'p-3' : 'p-4'} mb-3`}>
+    <div className={`bg-ink/5 rounded-2xl border border-ink/10 ${compact ? 'p-3' : 'p-4'} mb-3`}>
       {showGroup && match.group_name && (
-        <div className="text-xs text-gray-400 font-bold mb-2 uppercase tracking-wide">
+        <div className="text-xs text-starlight/40 font-bold mb-2 uppercase tracking-wide">
           {t(lang, 'match_group')} {match.group_name}
         </div>
       )}
@@ -57,7 +57,7 @@ export default function MatchCard({ match, compact = false, showGroup = true }: 
             className="w-8 h-6 object-cover rounded shadow-sm"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           />
-          <span className={`font-bold ${compact ? 'text-sm' : 'text-base'} leading-tight`}>
+          <span className={`font-bold text-starlight ${compact ? 'text-sm' : 'text-base'} leading-tight`}>
             {homeName}
           </span>
         </div>
@@ -65,11 +65,11 @@ export default function MatchCard({ match, compact = false, showGroup = true }: 
         {/* Score / Time */}
         <div className="flex flex-col items-center gap-1 flex-shrink-0">
           {match.status === 'finished' || match.home_score !== null ? (
-            <div className="bg-gray-900 text-white font-black text-lg px-3 py-1 rounded-xl min-w-[64px] text-center tracking-wide">
+            <div className="bg-space border border-ink/10 text-gold font-readout text-lg px-3 py-1 rounded-xl min-w-[64px] text-center tracking-wide">
               {match.home_score} – {match.away_score}
             </div>
           ) : (
-            <div className="bg-blue-600 text-white font-bold text-sm px-3 py-2 rounded-xl min-w-[64px] text-center">
+            <div className="bg-violet text-white font-readout text-sm px-3 py-2 rounded-xl min-w-[64px] text-center">
               {kickoff || 'TBD'}
             </div>
           )}
@@ -80,7 +80,7 @@ export default function MatchCard({ match, compact = false, showGroup = true }: 
 
         {/* Away team */}
         <div className={`flex items-center gap-2 flex-1 justify-end ${isHe ? 'flex-row text-left' : 'flex-row-reverse text-right'}`}>
-          <span className={`font-bold ${compact ? 'text-sm' : 'text-base'} leading-tight`}>
+          <span className={`font-bold text-starlight ${compact ? 'text-sm' : 'text-base'} leading-tight`}>
             {awayName}
           </span>
           <img
@@ -94,8 +94,8 @@ export default function MatchCard({ match, compact = false, showGroup = true }: 
 
       {/* Stadium */}
       {!compact && match.stadium_id && (
-        <div className="mt-2 text-xs text-gray-400 text-center">
-          🏟️ {match.stadium_id} · {matchDate}
+        <div className="mt-2 text-xs text-starlight/40 text-center">
+          🏟️ {match.stadium ? `${isHe ? match.stadium.name_he : match.stadium.name_en}, ${isHe ? match.stadium.city_he : match.stadium.city_en}` : match.stadium_id} · {matchDate}
         </div>
       )}
     </div>

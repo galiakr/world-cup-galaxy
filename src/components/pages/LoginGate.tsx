@@ -19,6 +19,7 @@ export default function LoginGate({ children }: { children: React.ReactNode }) {
   const [recoverCode, setRecoverCode] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showParentInfo, setShowParentInfo] = useState(false)
 
   // Set once a new profile is created — shown once so the code can be
   // saved before the user is actually logged in.
@@ -180,6 +181,21 @@ export default function LoginGate({ children }: { children: React.ReactNode }) {
         <button onClick={() => setLang('en')} className={`px-5 py-2 transition-colors ${lang === 'en' ? 'bg-gold text-starlight' : 'text-starlight/50'}`}>
           English
         </button>
+      </div>
+
+      {/* For parents */}
+      <div className="w-full max-w-xs mb-6 relative z-10">
+        <button
+          onClick={() => setShowParentInfo(s => !s)}
+          className="text-starlight/40 text-xs font-bold underline w-full text-center"
+        >
+          {t(lang, 'login_parent_info_toggle')}
+        </button>
+        {showParentInfo && (
+          <p className="text-starlight/50 text-xs text-center mt-2 leading-relaxed">
+            {t(lang, 'login_parent_info_text')}
+          </p>
+        )}
       </div>
 
       {mode === 'signup' ? (

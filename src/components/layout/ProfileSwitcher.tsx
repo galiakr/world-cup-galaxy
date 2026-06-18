@@ -22,6 +22,7 @@ export default function ProfileSwitcher() {
   const [error, setError] = useState('')
   const [pendingProfile, setPendingProfile] = useState<AppUser | null>(null)
   const [pendingCode, setPendingCode] = useState<string | null>(null)
+  const [showParentInfo, setShowParentInfo] = useState(false)
 
   useEffect(() => {
     if (open) getMyLinkedProfiles().then(setProfiles)
@@ -37,6 +38,7 @@ export default function ProfileSwitcher() {
     setError('')
     setPendingProfile(null)
     setPendingCode(null)
+    setShowParentInfo(false)
   }
 
   async function switchTo(profile: AppUser) {
@@ -140,9 +142,22 @@ export default function ProfileSwitcher() {
                 >
                   {loading ? '...' : t(lang, 'switcher_add_confirm')}
                 </button>
-                <button onClick={() => setAdding(false)} className="w-full text-starlight/50 text-xs py-1">
+                <button onClick={() => setAdding(false)} className="w-full text-starlight/50 text-xs py-1 mb-2">
                   {t(lang, 'login_recover_back')}
                 </button>
+
+                {/* For parents */}
+                <button
+                  onClick={() => setShowParentInfo(s => !s)}
+                  className="text-starlight/40 text-xs font-bold underline w-full text-center"
+                >
+                  {t(lang, 'login_parent_info_toggle')}
+                </button>
+                {showParentInfo && (
+                  <p className="text-starlight/50 text-xs text-center mt-2 leading-relaxed">
+                    {t(lang, 'login_parent_info_text')}
+                  </p>
+                )}
               </>
             ) : (
               <>

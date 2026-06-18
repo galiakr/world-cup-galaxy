@@ -33,6 +33,8 @@ export const TRANSLATIONS = {
     login_code_title: 'Save your recovery code!',
     login_code_subtitle: 'You\'ll need this to play on another device — write it down somewhere safe!',
     login_code_continue: "I saved it — Let's play! 🚀",
+    login_parent_info_toggle: 'ℹ️ For parents',
+    login_parent_info_text: "No passwords or emails — just a name and avatar. Up to 4 kids can share this device and switch anytime. After signup you'll see a one-time recovery code — save it; it's the only way to add this player on a different device.",
 
     // Home
     home_teams: 'Teams',
@@ -252,6 +254,8 @@ export const TRANSLATIONS = {
     login_code_title: 'שמור את קוד השחזור שלך!',
     login_code_subtitle: 'תצטרך אותו כדי לשחק במכשיר אחר — כתוב אותו במקום בטוח!',
     login_code_continue: 'שמרתי אותו — בואו נשחק! 🚀',
+    login_parent_info_toggle: 'ℹ️ להורים',
+    login_parent_info_text: 'אין צורך בסיסמאות או אימיילים — רק שם ואווטאר. עד 4 ילדים יכולים לשתף את המכשיר הזה ולהחליף בכל עת. אחרי ההרשמה תוצג קוד שחזור חד-פעמי — שמרו אותו; זו הדרך היחידה להוסיף את השחקן הזה במכשיר אחר.',
 
     home_teams: 'קבוצות',
     home_matches: 'משחקים',

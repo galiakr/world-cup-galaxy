@@ -5,6 +5,7 @@ import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
 import { format } from 'date-fns'
+import { israelDateString } from '@/lib/date'
 
 interface MatchesClientProps {
   pastMatches: Match[]
@@ -12,19 +13,13 @@ interface MatchesClientProps {
   matchesError?: boolean
 }
 
-type Tab = 'upcoming' | 'results' | 'all'
+type Tab = 'upcoming' | 'results'
 
 export default function MatchesClient({ pastMatches, upcomingMatches, matchesError }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
 
-  const allMatches = [...upcomingMatches, ...pastMatches].sort((a, b) =>
-    a.match_date.localeCompare(b.match_date)
-  )
-
-  const displayed = tab === 'upcoming' ? upcomingMatches
-    : tab === 'results' ? pastMatches
-    : allMatches
+  const displayed = tab === 'upcoming' ? upcomingMatches : pastMatches
 
   // Group by date
   const grouped = displayed.reduce<Record<string, Match[]>>((acc, m) => {
@@ -34,9 +29,9 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
     return acc
   }, {})
 
-  const today = new Date().toISOString().split('T')[0]
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
-  const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0]
+  const today = israelDateString()
+  const yesterday = israelDateString(-1)
+  const tomorrow = israelDateString(1)
 
   function dateLabel(dateStr: string) {
     if (dateStr === today) return t(lang, 'today')
@@ -48,7 +43,6 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
   const TABS: { key: Tab; label: string }[] = [
     { key: 'upcoming', label: t(lang, 'matches_upcoming') },
     { key: 'results', label: t(lang, 'matches_results') },
-    { key: 'all', label: t(lang, 'matches_all') },
   ]
 
   return (

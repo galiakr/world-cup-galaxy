@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --space: #FFF8EC;
-  --spacelight: #FFFFFF;
-  --starlight: #241F4D;
-  --ink: #241F4D;
-  --gold: #FFB703;
-  --coral: #FF6F59;
-  --violet: #8C6BFF;
-  --teal: #2BB673;
-  --sky: #4CC9F0;
+  --space: #F6EFE2;
+  --spacelight: #FFFDF8;
+  --starlight: #221F1B;
+  --ink: #221F1B;
+  --gold: #D69E2E;
+  --coral: #C0392B;
+  --violet: #5B7DA6;
+  --teal: #2F6B4F;
+  --sky: #9DBFD9;
 }
 
 html {
@@ -31,26 +31,26 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(36,31,77,0.18); border-radius: 4px; }
 
-/* Varela Round for headings */
-.font-display { font-family: 'Varela Round', system-ui, sans-serif; }
+/* Bungee for headings — stamped/marquee display face */
+.font-display { font-family: 'Bungee', system-ui, sans-serif; }
 
 /* Tabular score digits */
 .font-readout { font-family: 'Space Mono', ui-monospace, monospace; }
 
-/* Daytime sky backdrop — sun-drenched space, not night sky: a soft
-   blue-to-cream gradient with scattered colorful sparkles standing in
-   for stars, fitting a light/fun take on the same space motif. */
+/* Paper backdrop — a passport page, not a UI surface: a faint denim wash
+   at the top fading into aged paper, with a scattering of ink flecks
+   standing in for the old starfield, fitting the Mission Passport motif. */
 .bg-galaxy {
   background-color: var(--space);
   background-image:
-    linear-gradient(180deg, rgba(76,201,240,0.16) 0%, rgba(255,248,236,0) 38%),
-    radial-gradient(2px 2px at 10% 20%, rgba(255,183,3,0.55) 0, transparent 50%),
-    radial-gradient(2px 2px at 80% 12%, rgba(140,107,255,0.45) 0, transparent 50%),
-    radial-gradient(2.5px 2.5px at 35% 65%, rgba(43,182,115,0.4) 0, transparent 50%),
-    radial-gradient(2px 2px at 60% 80%, rgba(255,111,89,0.4) 0, transparent 50%),
-    radial-gradient(2.5px 2.5px at 92% 55%, rgba(76,201,240,0.5) 0, transparent 50%),
-    radial-gradient(2px 2px at 15% 90%, rgba(255,183,3,0.4) 0, transparent 50%),
-    radial-gradient(2px 2px at 50% 35%, rgba(140,107,255,0.35) 0, transparent 50%);
+    linear-gradient(180deg, rgba(157,191,217,0.18) 0%, rgba(246,239,226,0) 38%),
+    radial-gradient(2px 2px at 10% 20%, rgba(214,158,46,0.45) 0, transparent 50%),
+    radial-gradient(2px 2px at 80% 12%, rgba(91,125,166,0.4) 0, transparent 50%),
+    radial-gradient(2.5px 2.5px at 35% 65%, rgba(47,107,79,0.35) 0, transparent 50%),
+    radial-gradient(2px 2px at 60% 80%, rgba(192,57,43,0.35) 0, transparent 50%),
+    radial-gradient(2.5px 2.5px at 92% 55%, rgba(91,125,166,0.4) 0, transparent 50%),
+    radial-gradient(2px 2px at 15% 90%, rgba(214,158,46,0.35) 0, transparent 50%),
+    radial-gradient(2px 2px at 50% 35%, rgba(91,125,166,0.3) 0, transparent 50%);
   background-repeat: repeat;
 }
 
@@ -101,17 +101,7 @@ button, a {
   transform: scale(0.92);
 }
 
-/* Radar sweep — mission control countdown dial */
-@keyframes radarSpin {
-  to { transform: rotate(360deg); }
-}
-
-.animate-radar {
-  animation: radarSpin 7s linear infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-radar,
   .animate-twinkle,
   .animate-drift {
     animation: none !important;

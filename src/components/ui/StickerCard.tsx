@@ -75,10 +75,10 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
 
       {/* Rarity badge */}
       <div
-        className="absolute top-1 right-1 text-[7px] font-black px-1 rounded"
-        style={{ background: 'rgba(0,0,0,0.3)', color: '#fff', letterSpacing: '0.3px' }}
+        className="absolute top-1 right-1 text-sm leading-none font-black px-1.5 py-1 rounded-full"
+        style={{ background: 'rgba(0,0,0,0.35)', color: '#fff', letterSpacing: '0.3px' }}
       >
-        {sticker.rarity === 'common' ? '📗' : sticker.rarity === 'rare' ? '💙' : sticker.rarity === 'epic' ? '💜' : '⭐'}
+        {sticker.rarity === 'common' ? '🤍' : sticker.rarity === 'rare' ? '💙' : sticker.rarity === 'epic' ? '💜' : '⭐'}
       </div>
 
       {/* NEW badge */}

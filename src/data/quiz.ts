@@ -1,4 +1,4 @@
-import { QuizQuestion } from '@/types'
+import { QuizQuestion } from '@/types';
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── RULES ─────────────────────────────────────────────────────────────────
@@ -27,8 +27,18 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'r3',
     question_en: 'What happens when a player gets two yellow cards?',
     question_he: 'מה קורה כשלשחקן יש שני כרטיסים צהובים?',
-    options_en: ['He gets a warning', 'He gets a red card and must leave', 'He gets a penalty', 'Nothing happens'],
-    options_he: ['הוא מקבל אזהרה', 'הוא מקבל כרטיס אדום וחייב לצאת', 'הוא מקבל פנדל', 'כלום לא קורה'],
+    options_en: [
+      'He gets a warning',
+      'He gets a red card and must leave',
+      'He gets a penalty',
+      'Nothing happens',
+    ],
+    options_he: [
+      'הוא מקבל אזהרה',
+      'הוא מקבל כרטיס אדום וחייב לצאת',
+      'הוא מקבל פנדל',
+      'כלום לא קורה',
+    ],
     correct_index: 1,
     difficulty: 'easy',
     category: 'rules',
@@ -56,7 +66,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 'r6',
     question_en: 'What is the offside rule? A player is offside if...',
-    question_he: 'מהי עבירת הניאוף (אופסייד)?',
+    question_he: 'מהי עבירת הנבדל (אופסייד)?',
     options_en: [
       'They run too fast',
       'Fewer than 2 opponents are between them and the goal when they receive the ball',
@@ -75,10 +85,21 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 'r7',
-    question_en: 'What happens if the score is tied after 90 minutes in a knockout match?',
+    question_en:
+      'What happens if the score is tied after 90 minutes in a knockout match?',
     question_he: 'מה קורה אם יש תיקו בנוקאאוט אחרי 90 דקות?',
-    options_en: ['The away team wins', 'Extra time and possibly penalties', 'The match is replayed', 'Both teams advance'],
-    options_he: ['הקבוצה האורחת מנצחת', 'הארכה ואולי פנדלים', 'המשחק יחזור', 'שתי הקבוצות עוברות'],
+    options_en: [
+      'The away team wins',
+      'Extra time and possibly penalties',
+      'The match is replayed',
+      'Both teams advance',
+    ],
+    options_he: [
+      'הקבוצה האורחת מנצחת',
+      'הארכה ואולי פנדלים',
+      'המשחק יחזור',
+      'שתי הקבוצות עוברות',
+    ],
     correct_index: 1,
     difficulty: 'medium',
     category: 'rules',
@@ -98,8 +119,18 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 't2',
     question_en: 'Which three countries are hosting the 2026 World Cup?',
     question_he: 'אילו שלוש מדינות מארחות את המונדיאל 2026?',
-    options_en: ['USA, Canada & Mexico', 'USA, Brazil & Mexico', 'Canada, Brazil & Argentina', 'USA, Germany & France'],
-    options_he: ['ארה"ב, קנדה ומקסיקו', 'ארה"ב, ברזיל ומקסיקו', 'קנדה, ברזיל וארגנטינה', 'ארה"ב, גרמניה וצרפת'],
+    options_en: [
+      'USA, Canada & Mexico',
+      'USA, Brazil & Mexico',
+      'Canada, Brazil & Argentina',
+      'USA, Germany & France',
+    ],
+    options_he: [
+      'ארה"ב, קנדה ומקסיקו',
+      'ארה"ב, ברזיל ומקסיקו',
+      'קנדה, ברזיל וארגנטינה',
+      'ארה"ב, גרמניה וצרפת',
+    ],
     correct_index: 0,
     difficulty: 'easy',
     category: 'tournament',
@@ -118,8 +149,13 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 't4',
     question_en: 'Where is the World Cup 2026 final being played?',
     question_he: 'איפה ישוחק הגמר של מונדיאל 2026?',
-    options_en: ['Los Angeles', 'Mexico City', 'New York / New Jersey', 'Miami'],
-    options_he: ['לוס אנג\'לס', 'מקסיקו סיטי', 'ניו יורק / ניו ג\'רזי', 'מיאמי'],
+    options_en: [
+      'Los Angeles',
+      'Mexico City',
+      'New York / New Jersey',
+      'Miami',
+    ],
+    options_he: ["לוס אנג'לס", 'מקסיקו סיטי', "ניו יורק / ניו ג'רזי", 'מיאמי'],
     correct_index: 2,
     difficulty: 'medium',
     category: 'tournament',
@@ -138,8 +174,18 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 't6',
     question_en: 'Which stadium hosted the 2026 opening match?',
     question_he: 'באיזה אצטדיון שוחק משחק הפתיחה של 2026?',
-    options_en: ['MetLife Stadium', 'Estadio Azteca', 'AT&T Stadium', 'SoFi Stadium'],
-    options_he: ['מטלייף אצטדיון', 'אצטדיון אצטקה', 'AT&T אצטדיון', 'סופי אצטדיון'],
+    options_en: [
+      'MetLife Stadium',
+      'Estadio Azteca',
+      'AT&T Stadium',
+      'SoFi Stadium',
+    ],
+    options_he: [
+      'מטלייף אצטדיון',
+      'אצטדיון אצטקה',
+      'AT&T אצטדיון',
+      'סופי אצטדיון',
+    ],
     correct_index: 1,
     difficulty: 'hard',
     category: 'tournament',
@@ -159,7 +205,12 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'tm2',
     question_en: 'What colors are the Brazilian national team jersey?',
     question_he: 'מה צבע חולצת הנבחרת הברזילאית?',
-    options_en: ['Red and black', 'Blue and white', 'Yellow and green', 'Orange and black'],
+    options_en: [
+      'Red and black',
+      'Blue and white',
+      'Yellow and green',
+      'Orange and black',
+    ],
     options_he: ['אדום ושחור', 'כחול ולבן', 'צהוב וירוק', 'כתום ושחור'],
     correct_index: 2,
     difficulty: 'easy',
@@ -211,8 +262,13 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'pl2',
     question_en: 'Which club does Kylian Mbappé play for?',
     question_he: 'באיזה מועדון משחק קיליאן מבאפה?',
-    options_en: ['Barcelona', 'Manchester City', 'Real Madrid', 'Bayern Munich'],
-    options_he: ['ברצלונה', 'מנצ\'סטר סיטי', 'ריאל מדריד', 'באיירן מינכן'],
+    options_en: [
+      'Barcelona',
+      'Manchester City',
+      'Real Madrid',
+      'Bayern Munich',
+    ],
+    options_he: ['ברצלונה', "מנצ'סטר סיטי", 'ריאל מדריד', 'באיירן מינכן'],
     correct_index: 2,
     difficulty: 'easy',
     category: 'players',
@@ -243,7 +299,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 'pl5',
     question_en: 'Jude Bellingham plays for which country?',
-    question_he: 'ג\'וד בלינגהם משחק לאיזו מדינה?',
+    question_he: "ג'וד בלינגהם משחק לאיזו מדינה?",
     options_en: ['Scotland', 'Wales', 'England', 'Ireland'],
     options_he: ['סקוטלנד', 'וויילס', 'אנגליה', 'אירלנד'],
     correct_index: 2,
@@ -302,13 +358,19 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     difficulty: 'medium',
     category: 'history',
   },
-]
+];
 
 // Daily quiz rotation - returns today's set of 5 questions
 export function getDailyQuestions(): QuizQuestion[] {
-  const today = new Date()
-  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000)
-  const seed = dayOfYear % QUIZ_QUESTIONS.length
-  const rotated = [...QUIZ_QUESTIONS.slice(seed), ...QUIZ_QUESTIONS.slice(0, seed)]
-  return rotated.slice(0, 5)
+  const today = new Date();
+  const dayOfYear = Math.floor(
+    (today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) /
+      86400000,
+  );
+  const seed = dayOfYear % QUIZ_QUESTIONS.length;
+  const rotated = [
+    ...QUIZ_QUESTIONS.slice(seed),
+    ...QUIZ_QUESTIONS.slice(0, seed),
+  ];
+  return rotated.slice(0, 5);
 }

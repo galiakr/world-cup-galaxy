@@ -51,19 +51,18 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
           <div className="text-xs text-starlight/40">{t(lang, 'tagline')}</div>
         </div>
 
-        <div className="font-display text-gold text-xl mb-4 flex items-center gap-2">
-          <span className="text-lg">🌌</span> {t(lang, 'app_name')}
+        <div className="font-display text-gold text-xl mb-4 flex items-center justify-center gap-2">
+          {t(lang, 'app_name')}
         </div>
 
-        {/* Radar countdown dial — signature element */}
-        <div className="relative w-32 h-32 mx-auto">
-          <div
-            className="absolute inset-0 rounded-full animate-radar"
-            style={{ background: 'conic-gradient(from 0deg, transparent 0%, transparent 72%, rgba(255,200,87,0.85) 94%, transparent 100%)' }}
-          />
-          <div className="absolute inset-[5px] rounded-full bg-space border border-ink/10 flex flex-col items-center justify-center">
-            <div className="font-readout text-gold text-3xl leading-none">{daysLeft}</div>
-            <div className="text-starlight/50 text-[9px] tracking-widest uppercase mt-1">{t(lang, 'home_days_left')}</div>
+        {/* Passport stamp — signature element: the countdown stamped like
+            an entry visa, slightly askew like a real hand-stamped mark */}
+        <div className="relative w-32 h-32 mx-auto -rotate-6">
+          <div className="absolute inset-0 rounded-full border-[3px] border-double border-coral" />
+          <div className="absolute inset-[6px] rounded-full border border-dashed border-coral/50 bg-space flex flex-col items-center justify-center px-2 text-center">
+            <div className="text-coral text-[8px] font-bold tracking-[0.15em] uppercase leading-tight">{t(lang, 'app_name')}</div>
+            <div className="font-display text-coral text-3xl leading-none my-1">{daysLeft}</div>
+            <div className="text-ink/50 text-[8px] font-bold tracking-[0.2em] uppercase">{t(lang, 'home_days_left')}</div>
           </div>
         </div>
 
@@ -97,7 +96,7 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
       </button>
 
       {/* Today's matches */}
-      <Section title={t(lang, 'home_today')} emoji="🌍" accent="gold">
+      <Section title={t(lang, 'home_today')} emoji="" accent="gold">
         {matchesError
           ? <EmptyMsg text={t(lang, 'matches_load_error')} />
           : todayMatches.length > 0
@@ -108,14 +107,14 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
 
       {/* Yesterday's results */}
       {yesterdayMatches.length > 0 && (
-        <Section title={t(lang, 'home_yesterday')} emoji="🌑" accent="violet">
+        <Section title={t(lang, 'home_yesterday')} emoji="" accent="violet">
           {yesterdayMatches.map(m => <MatchCard key={m.id} match={m} compact />)}
         </Section>
       )}
 
       {/* Tomorrow */}
       {tomorrowMatches.length > 0 && (
-        <Section title={t(lang, 'home_tomorrow')} emoji="🔮" accent="coral">
+        <Section title={t(lang, 'home_tomorrow')} emoji="" accent="coral">
           {tomorrowMatches.map(m => <MatchCard key={m.id} match={m} compact />)}
         </Section>
       )}

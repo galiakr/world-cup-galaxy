@@ -251,8 +251,12 @@ export async function fetchWikipediaPhoto(slug: string): Promise<string | null> 
 
 // ─── Match helpers ─────────────────────────────────────────────────────────
 
+function byKickoffAsc(a: Match, b: Match): number {
+  return new Date(a.kick_off_utc).getTime() - new Date(b.kick_off_utc).getTime()
+}
+
 export function getMatchesByDate(matches: Match[], dateStr: string): Match[] {
-  return matches.filter(m => m.match_date === dateStr)
+  return matches.filter(m => m.match_date === dateStr).sort(byKickoffAsc)
 }
 
 
@@ -269,16 +273,16 @@ export function getTomorrowMatches(matches: Match[]): Match[] {
 }
 
 export function getUpcomingMatches(matches: Match[], limit = 20): Match[] {
-  const today = new Date().toISOString().split('T')[0]
+  const today = israelDateString()
   return matches
     .filter(m => m.match_date >= today && m.status !== 'finished')
-    .sort((a, b) => a.match_date.localeCompare(b.match_date))
+    .sort(byKickoffAsc)
     .slice(0, limit)
 }
 
 export function getPastMatches(matches: Match[]): Match[] {
-  const today = new Date().toISOString().split('T')[0]
+  const today = israelDateString()
   return matches
     .filter(m => m.match_date < today || m.status === 'finished')
-    .sort((a, b) => b.match_date.localeCompare(a.match_date))
+    .sort((a, b) => byKickoffAsc(b, a))
 }

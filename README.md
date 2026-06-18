@@ -31,5 +31,5 @@ There are no passwords and no emails — your child just picks an avatar and typ
 | Score predictions with +/− buttons                 | ✅   |
 | Soccer rules page                                  | ✅   |
 | Bug report form                                    | ✅   |
-| Mobile-first                                       | ✅   |
+| Responsive                                         | ✅   |
 | Fully free — no paid APIs                          | ✅   |

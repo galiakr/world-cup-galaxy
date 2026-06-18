@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'World Cup Galaxy 🌌⚽',
   description: 'World Cup 2026 app for kids — stickers, quizzes, predictions in Hebrew & English',
   manifest: '/manifest.json',
-  themeColor: '#FFF8EC',
+  themeColor: '#F6EFE2',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
       <body className="bg-galaxy min-h-screen">

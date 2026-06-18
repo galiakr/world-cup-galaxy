@@ -86,7 +86,14 @@ export default function QuizPage() {
       <h1 className="font-display text-2xl text-starlight mb-2">
         🧠 {t(lang, 'quiz_title')}
       </h1>
-      <p className="text-sm text-starlight/40 mb-4">{t(lang, 'quiz_subtitle')}</p>
+      <p className="text-sm text-starlight/40 mb-3">{t(lang, 'quiz_subtitle')}</p>
+
+      {/* Difficulty legend — explains the colored dot shown on each question */}
+      <div className="flex items-center justify-center gap-4 mb-4 text-xs text-starlight/50 font-bold">
+        <span>🟢 {t(lang, 'quiz_difficulty_easy')}</span>
+        <span>🟡 {t(lang, 'quiz_difficulty_medium')}</span>
+        <span>🔴 {t(lang, 'quiz_difficulty_hard')}</span>
+      </div>
 
       {/* Progress */}
       <div className="flex items-center gap-3 mb-4">

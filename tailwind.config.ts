@@ -5,25 +5,30 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Varela Round', 'system-ui', 'sans-serif'],
+        // Bungee: a bold stadium-marquee/rubber-stamp display face — the
+        // "Mission Passport" identity is built around things getting
+        // officially stamped (countdown, finished matches, streaks), so
+        // headings should look stamped/printed, not soft and rounded.
+        display: ['Bungee', 'system-ui', 'sans-serif'],
         nunito: ['Nunito', 'system-ui', 'sans-serif'],
         mono: ['Space Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
-        // Daytime "cartoon space meets soccer pitch" palette. Token names
-        // stay the same as the old dark theme (space/spacelight/starlight)
-        // so every existing bg-space/text-starlight class still resolves
-        // correctly — only their roles flip: space/spacelight go from dark
-        // backgrounds to light ones, starlight goes from light text to ink.
-        space: '#FFF8EC',
-        spacelight: '#FFFFFF',
-        starlight: '#241F4D',
-        ink: '#241F4D',
-        gold: '#FFB703',
-        coral: '#FF6F59',
-        violet: '#8C6BFF',
-        teal: '#2BB673',
-        sky: '#4CC9F0',
+        // "Mission Passport" palette: a kid's World Cup passport/sticker
+        // album that gets stamped as the tournament goes — paper, ink,
+        // and a small set of stamp-ink colors, each with one job, rather
+        // than four interchangeable pastel accents. Token names stay the
+        // same as earlier passes so every existing class still resolves —
+        // only the hex values (and in three cases, the role) change.
+        space: '#F6EFE2',        // aged paper — page background
+        spacelight: '#FFFDF8',   // paper card — barely-warm white
+        starlight: '#221F1B',    // ink — warm near-black text
+        ink: '#221F1B',
+        gold: '#D69E2E',         // foil/stamp gold — rewards only (stickers, streak)
+        coral: '#C0392B',        // stamp red — the one bold action color
+        teal: '#2F6B4F',         // stamp green — finished/success states
+        violet: '#5B7DA6',       // passport-cover denim — secondary accent
+        sky: '#9DBFD9',          // pale denim wash — ambient/decorative only
       },
       keyframes: {
         stickerPop: {

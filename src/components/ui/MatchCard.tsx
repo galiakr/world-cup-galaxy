@@ -1,71 +1,112 @@
-'use client'
-import { Match } from '@/types'
-import { useAppStore } from '@/store'
-import { t } from '@/lib/i18n'
-import { format } from 'date-fns'
+'use client';
+import { Match } from '@/types';
+import { useAppStore } from '@/store';
+import { t } from '@/lib/i18n';
+import { format } from 'date-fns';
 
 interface MatchCardProps {
-  match: Match
-  compact?: boolean
-  showGroup?: boolean
+  match: Match;
+  compact?: boolean;
+  showGroup?: boolean;
 }
 
-export default function MatchCard({ match, compact = false, showGroup = true }: MatchCardProps) {
-  const lang = useAppStore(s => s.lang)
-  const isHe = lang === 'he'
+export default function MatchCard({
+  match,
+  compact = false,
+  showGroup = true,
+}: MatchCardProps) {
+  const lang = useAppStore((s) => s.lang);
+  const isHe = lang === 'he';
 
-  const homeTeam = match.home_team
-  const awayTeam = match.away_team
+  const homeTeam = match.home_team;
+  const awayTeam = match.away_team;
 
-  const homeName = homeTeam ? (isHe ? homeTeam.name_he : homeTeam.name_en) : match.home_team_id
-  const awayName = awayTeam ? (isHe ? awayTeam.name_he : awayTeam.name_en) : match.away_team_id
+  const homeName = homeTeam
+    ? isHe
+      ? homeTeam.name_he
+      : homeTeam.name_en
+    : match.home_team_id;
+  const awayName = awayTeam
+    ? isHe
+      ? awayTeam.name_he
+      : awayTeam.name_en
+    : match.away_team_id;
 
   const kickoff = match.kick_off_utc
     ? format(new Date(match.kick_off_utc), 'HH:mm')
-    : ''
+    : '';
 
   const matchDate = match.match_date
     ? format(new Date(match.match_date), 'dd/MM')
-    : ''
+    : '';
 
-  const statusLabel = match.status === 'finished'
-    ? t(lang, 'match_finished')
-    : match.status === 'live'
-    ? t(lang, 'match_live')
-    : kickoff || t(lang, 'match_scheduled')
+  // The upstream feed's own `status` can lag — Predict's lock logic
+  // already treats a match as started once its kickoff time has passed,
+  // even if `status` hasn't flipped to 'live' yet. Match that here too,
+  // so a match isn't shown as merely "scheduled" in one place while
+  // Predict has already locked it as ongoing in another.
+  const hasKickedOff =
+    !!match.kick_off_utc &&
+    new Date(match.kick_off_utc).getTime() <= Date.now();
+  const isOngoing =
+    match.status !== 'finished' && (match.status === 'live' || hasKickedOff);
 
-  const statusColor = match.status === 'finished'
-    ? 'bg-ink/10 text-starlight/50'
-    : match.status === 'live'
-    ? 'bg-coral text-white animate-pulse'
-    : 'bg-teal/20 text-teal'
+  const statusLabel =
+    match.status === 'finished'
+      ? t(lang, 'match_finished')
+      : isOngoing
+        ? `🔴 ${t(lang, 'match_live')}`
+        : kickoff || t(lang, 'match_scheduled');
+
+  // Finished matches get a stamped-result look (dashed ink ring, slight
+  // tilt) — the one state that's "officially recorded," echoing the
+  // passport-stamp motif; live/upcoming stay as plain status pills.
+  const statusColor =
+    match.status === 'finished'
+      ? 'border border-dashed border-teal text-teal bg-transparent'
+      : isOngoing
+        ? 'bg-coral text-white animate-pulse'
+        : 'bg-teal/20 text-teal';
 
   return (
-    <div className={`bg-ink/5 rounded-2xl border border-ink/10 ${compact ? 'p-3' : 'p-4'} mb-3`}>
+    <div
+      className={`rounded-2xl border ${compact ? 'p-3' : 'p-4'} mb-3 ${
+        isOngoing ? 'bg-coral/10 border-coral/40' : 'bg-ink/5 border-ink/10'
+      }`}
+    >
       {showGroup && match.group_name && (
         <div className="text-xs text-starlight/40 font-bold mb-2 uppercase tracking-wide">
           {t(lang, 'match_group')} {match.group_name}
         </div>
       )}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-6">
         {/* Home team */}
-        <div className={`flex items-center gap-2 flex-1 ${isHe ? 'flex-row-reverse text-right' : 'text-left'}`}>
-          <img
-            src={homeTeam?.flag_url || `https://flagcdn.com/w40/${match.home_team_id.toLowerCase()}.png`}
-            alt={homeName}
-            className="w-8 h-6 object-cover rounded shadow-sm"
-            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-          />
-          <span className={`font-bold text-starlight ${compact ? 'text-sm' : 'text-base'} leading-tight`}>
+        <div
+          className={`flex items-center gap-2 ${isHe ? 'flex-row-reverse text-right' : 'text-left'}`}
+        >
+          <span
+            className={`font-bold text-starlight max-w-22 ${compact ? 'text-sm' : 'text-base'} leading-tight`}
+          >
             {homeName}
           </span>
+          <img
+            src={
+              homeTeam?.flag_url ||
+              `https://flagcdn.com/w40/${match.home_team_id.toLowerCase()}.png`
+            }
+            alt={homeName}
+            className="w-8 h-6 object-cover rounded shadow-sm"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
         </div>
 
         {/* Score / Time */}
         <div className="flex flex-col items-center gap-1 flex-shrink-0">
           {match.status === 'finished' || match.home_score !== null ? (
-            <div className="bg-space border border-ink/10 text-gold font-readout text-lg px-3 py-1 rounded-xl min-w-[64px] text-center tracking-wide">
+            <div className="bg-space border border-ink/10 text-gold font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
               {match.home_score} – {match.away_score}
             </div>
           ) : (
@@ -73,21 +114,32 @@ export default function MatchCard({ match, compact = false, showGroup = true }: 
               {kickoff || 'TBD'}
             </div>
           )}
-          <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${statusColor}`}>
+          <span
+            className={`text-xs font-bold px-2 py-0.5 rounded-full ${statusColor}`}
+          >
             {statusLabel}
           </span>
         </div>
 
         {/* Away team */}
-        <div className={`flex items-center gap-2 flex-1 justify-end ${isHe ? 'flex-row text-left' : 'flex-row-reverse text-right'}`}>
-          <span className={`font-bold text-starlight ${compact ? 'text-sm' : 'text-base'} leading-tight`}>
+        <div
+          className={`flex items-center gap-2 justify-end flex-row-reverse text-right ${isHe ? 'flex-row text-left' : ''}`}
+        >
+          <span
+            className={`font-bold text-starlight max-w-22 ${compact ? 'text-sm' : 'text-base'} leading-tight`}
+          >
             {awayName}
           </span>
           <img
-            src={awayTeam?.flag_url || `https://flagcdn.com/w40/${match.away_team_id.toLowerCase()}.png`}
+            src={
+              awayTeam?.flag_url ||
+              `https://flagcdn.com/w40/${match.away_team_id.toLowerCase()}.png`
+            }
             alt={awayName}
             className="w-8 h-6 object-cover rounded shadow-sm"
-            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
           />
         </div>
       </div>
@@ -95,9 +147,13 @@ export default function MatchCard({ match, compact = false, showGroup = true }: 
       {/* Stadium */}
       {!compact && match.stadium_id && (
         <div className="mt-2 text-xs text-starlight/40 text-center">
-          🏟️ {match.stadium ? `${isHe ? match.stadium.name_he : match.stadium.name_en}, ${isHe ? match.stadium.city_he : match.stadium.city_en}` : match.stadium_id} · {matchDate}
+          🏟️{' '}
+          {match.stadium
+            ? `${isHe ? match.stadium.name_he : match.stadium.name_en}, ${isHe ? match.stadium.city_he : match.stadium.city_en}`
+            : match.stadium_id}{' '}
+          · {matchDate}
         </div>
       )}
     </div>
-  )
+  );
 }

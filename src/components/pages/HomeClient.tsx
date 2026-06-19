@@ -100,7 +100,7 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
         {matchesError
           ? <EmptyMsg text={t(lang, 'matches_load_error')} />
           : todayMatches.length > 0
-            ? todayMatches.map(m => <MatchCard key={m.id} match={m} compact />)
+            ? todayMatches.map(m => <MatchCard key={m.id} match={m} />)
             : <EmptyMsg text={t(lang, 'home_no_matches')} />
         }
       </Section>
@@ -115,7 +115,7 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
       {/* Tomorrow */}
       {tomorrowMatches.length > 0 && (
         <Section title={t(lang, 'home_tomorrow')} emoji="" accent="coral">
-          {tomorrowMatches.map(m => <MatchCard key={m.id} match={m} compact />)}
+          {tomorrowMatches.map(m => <MatchCard key={m.id} match={m} />)}
         </Section>
       )}
 

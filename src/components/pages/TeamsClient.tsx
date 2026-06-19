@@ -1,61 +1,74 @@
-'use client'
-import { useState, useEffect } from 'react'
-import { Team } from '@/types'
-import { useAppStore } from '@/store'
-import { t } from '@/lib/i18n'
-import { fetchWikipediaPhoto } from '@/lib/api'
+'use client';
+import { useState, useEffect } from 'react';
+import { Team } from '@/types';
+import { useAppStore } from '@/store';
+import { t } from '@/lib/i18n';
+import { fetchWikipediaPhoto } from '@/lib/api';
 
 interface SquadResult {
-  coachName: string | null
-  players: { name: string; position: string; jersey: number; photo_url?: string }[]
+  coachName: string | null;
+  players: {
+    name: string;
+    position: string;
+    jersey: number;
+    photo_url?: string;
+  }[];
 }
 
 async function fetchSquad(code: string): Promise<SquadResult> {
-  const res = await fetch(`/api/squad/${code}`)
-  if (!res.ok) return { coachName: null, players: [] }
-  return res.json()
+  const res = await fetch(`/api/squad/${code}`);
+  if (!res.ok) return { coachName: null, players: [] };
+  return res.json();
 }
 
-interface TeamsClientProps { teams: Team[] }
+interface TeamsClientProps {
+  teams: Team[];
+}
 
 export default function TeamsClient({ teams }: TeamsClientProps) {
-  const lang = useAppStore(s => s.lang)
-  const isHe = lang === 'he'
-  const [search, setSearch] = useState('')
-  const [selected, setSelected] = useState<Team | null>(null)
-  const [coachPhoto, setCoachPhoto] = useState<string | null>(null)
-  const [coachName, setCoachName] = useState<string | null>(null)
-  const [squad, setSquad] = useState<SquadResult['players']>([])
-  const [loadingDetail, setLoadingDetail] = useState(false)
+  const lang = useAppStore((s) => s.lang);
+  const isHe = lang === 'he';
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<Team | null>(null);
+  const [coachPhoto, setCoachPhoto] = useState<string | null>(null);
+  const [coachName, setCoachName] = useState<string | null>(null);
+  const [squad, setSquad] = useState<SquadResult['players']>([]);
+  const [loadingDetail, setLoadingDetail] = useState(false);
 
-  const filtered = teams.filter(team => {
-    const q = search.toLowerCase()
-    return team.name_en.toLowerCase().includes(q) || team.name_he.includes(q) || team.group.toLowerCase().includes(q)
-  })
+  const filtered = teams.filter((team) => {
+    const q = search.toLowerCase();
+    return (
+      team.name_en.toLowerCase().includes(q) ||
+      team.name_he.includes(q) ||
+      team.group.toLowerCase().includes(q)
+    );
+  });
 
   // Group by group letter
   const byGroup = filtered.reduce<Record<string, Team[]>>((acc, t) => {
-    if (!acc[t.group]) acc[t.group] = []
-    acc[t.group].push(t)
-    return acc
-  }, {})
+    if (!acc[t.group]) acc[t.group] = [];
+    acc[t.group].push(t);
+    return acc;
+  }, {});
 
   async function openTeam(team: Team) {
-    setSelected(team)
-    setCoachPhoto(null)
-    setCoachName(null)
-    setSquad([])
-    setLoadingDetail(true)
+    setSelected(team);
+    setCoachPhoto(null);
+    setCoachName(null);
+    setSquad([]);
+    setLoadingDetail(true);
     try {
       const [photo, squadResult] = await Promise.all([
-        team.wikipedia_slug ? fetchWikipediaPhoto(team.wikipedia_slug) : Promise.resolve(null),
+        team.wikipedia_slug
+          ? fetchWikipediaPhoto(team.wikipedia_slug)
+          : Promise.resolve(null),
         fetchSquad(team.fifa_code),
-      ])
-      setCoachPhoto(photo)
-      setCoachName(squadResult.coachName)
-      setSquad(squadResult.players)
+      ]);
+      setCoachPhoto(photo);
+      setCoachName(squadResult.coachName);
+      setSquad(squadResult.players);
     } catch {}
-    setLoadingDetail(false)
+    setLoadingDetail(false);
   }
 
   const posMap: Record<string, string> = {
@@ -63,7 +76,7 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
     Defender: t(lang, 'pos_defender'),
     Midfielder: t(lang, 'pos_midfielder'),
     Forward: t(lang, 'pos_forward'),
-  }
+  };
 
   return (
     <div className="px-4 pt-4">
@@ -73,11 +86,13 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
 
       {/* Search */}
       <div className="relative mb-4">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-starlight/40">🔍</span>
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-starlight/40">
+          🔍
+        </span>
         <input
           type="text"
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder={t(lang, 'teams_search')}
           dir="auto"
           className="w-full pl-10 pr-4 py-3 bg-spacelight border border-ink/10 text-starlight placeholder-starlight/30 rounded-2xl text-sm focus:outline-none focus:border-teal"
@@ -85,28 +100,38 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
       </div>
 
       {/* Groups */}
-      {Object.keys(byGroup).sort().map(group => (
-        <div key={group} className="mb-4">
-          <div className="text-xs font-black text-teal uppercase tracking-wider mb-2">
-            {t(lang, 'teams_group')} {group}
+      {Object.keys(byGroup)
+        .sort()
+        .map((group) => (
+          <div key={group} className="mb-4">
+            <div className="text-xs font-black text-teal uppercase tracking-wider mb-2">
+              {t(lang, 'teams_group')} {group}
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+              {byGroup[group].map((team) => (
+                <button
+                  key={team.id}
+                  onClick={() => openTeam(team)}
+                  className="bg-spacelight rounded-2xl border border-ink/10 p-3 flex items-center gap-3 hover-lift text-start active:scale-97"
+                >
+                  <img
+                    src={team.flag_url}
+                    alt={team.name_en}
+                    className="w-10 h-7 object-cover rounded shadow-sm"
+                  />
+                  <div>
+                    <div className="font-bold text-sm leading-tight text-starlight">
+                      {isHe ? team.name_he : team.name_en}
+                    </div>
+                    <div className="text-xs text-starlight/40">
+                      {team.fifa_code}
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-            {byGroup[group].map(team => (
-              <button
-                key={team.id}
-                onClick={() => openTeam(team)}
-                className="bg-spacelight rounded-2xl border border-ink/10 p-3 flex items-center gap-3 hover-lift text-start active:scale-97"
-              >
-                <img src={team.flag_url} alt={team.name_en} className="w-10 h-7 object-cover rounded shadow-sm" />
-                <div>
-                  <div className="font-bold text-sm leading-tight text-starlight">{isHe ? team.name_he : team.name_en}</div>
-                  <div className="text-xs text-starlight/40">{team.fifa_code}</div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      ))}
+        ))}
 
       {/* Team detail modal */}
       {selected && (
@@ -116,7 +141,7 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
         >
           <div
             className="bg-spacelight rounded-t-3xl w-full max-w-lg max-h-[85vh] overflow-y-auto pb-8 border-t border-ink/10"
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Handle */}
             <div className="flex justify-center pt-3 pb-2">
@@ -125,12 +150,19 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
 
             {/* Header */}
             <div className="px-5 py-3 flex items-center gap-4 border-b border-ink/10">
-              <img src={selected.flag_url} alt={selected.name_en} className="w-16 h-11 object-cover rounded-lg shadow" />
+              <img
+                src={selected.flag_url}
+                alt={selected.name_en}
+                className="w-16 h-11 object-cover rounded-lg shadow"
+              />
               <div>
                 <div className="font-display text-2xl text-starlight">
                   {isHe ? selected.name_he : selected.name_en}
                 </div>
-                <div className="text-sm text-starlight/40">{t(lang, 'teams_group')} {selected.group} · {selected.fifa_code}</div>
+                <div className="text-sm text-starlight/40">
+                  {t(lang, 'teams_group')} {selected.group} ·{' '}
+                  {selected.fifa_code}
+                </div>
               </div>
             </div>
 
@@ -140,7 +172,7 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
                 <img
                   src={coachPhoto}
                   alt={isHe ? selected.name_he : selected.name_en}
-                  className="w-full h-48 object-cover rounded-2xl shadow-sm"
+                  className="h-48 m-auto object-cover rounded-2xl shadow-sm"
                 />
               </div>
             )}
@@ -148,38 +180,63 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
             {/* Coach */}
             {coachName && (
               <div className="px-5 pt-4 flex items-center gap-2">
-                <span className="text-xs font-bold text-starlight/40 uppercase tracking-wide">{t(lang, 'teams_coach')}</span>
-                <span className="text-sm font-bold text-starlight">{coachName}</span>
+                <span className="text-xs font-bold text-starlight/40 uppercase tracking-wide">
+                  {t(lang, 'teams_coach')}
+                </span>
+                <span className="text-sm font-bold text-starlight">
+                  {coachName}
+                </span>
               </div>
             )}
 
             {/* Squad */}
             <div className="px-5 pt-4">
               <h3 className="font-display text-lg text-starlight mb-3">
-                ⭐ {t(lang, 'teams_squad')}
+                {t(lang, 'teams_squad')}
               </h3>
-              {loadingDetail && <p className="text-starlight/40 text-sm text-center py-4">Loading...</p>}
-              {!loadingDetail && squad.length === 0 && (
-                <p className="text-starlight/40 text-sm text-center py-4">{t(lang, 'teams_no_photo')}</p>
+              {loadingDetail && (
+                <p className="text-starlight/40 text-sm text-center py-4">
+                  Loading...
+                </p>
               )}
-              {squad.map(player => (
-                <div key={player.name} className="flex items-center gap-3 py-2 border-b border-ink/10 last:border-0">
+              {!loadingDetail && squad.length === 0 && (
+                <p className="text-starlight/40 text-sm text-center py-4">
+                  {t(lang, 'teams_no_photo')}
+                </p>
+              )}
+              {squad.map((player) => (
+                <div
+                  key={player.name}
+                  className="flex items-center gap-3 py-2 border-b border-ink/10 last:border-0"
+                >
                   {player.photo_url ? (
                     <img
                       src={player.photo_url}
                       alt=""
                       className="w-10 h-10 rounded-full object-cover border border-ink/10 flex-shrink-0"
-                      onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-ink/5 border border-ink/10 flex items-center justify-center text-3xl leading-none flex-shrink-0 overflow-hidden">⚽</div>
+                    <div className="w-10 h-10 rounded-full bg-ink/5 border border-ink/10 flex items-center justify-center text-3xl leading-none flex-shrink-0 overflow-hidden">
+                      ⚽
+                    </div>
                   )}
                   <div className="flex-1">
                     <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-sm text-starlight">{player.name}</span>
-                      {player.jersey > 0 && <span className="font-readout text-gold text-xs">#{player.jersey}</span>}
+                      <span className="font-bold text-sm text-starlight">
+                        {player.name}
+                      </span>
+                      {player.jersey > 0 && (
+                        <span className="font-readout text-gold text-xs">
+                          #{player.jersey}
+                        </span>
+                      )}
                     </div>
-                    <div className="text-xs text-starlight/40">{posMap[player.position] ?? player.position}</div>
+                    <div className="text-xs text-starlight/40">
+                      {posMap[player.position] ?? player.position}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -197,5 +254,5 @@ export default function TeamsClient({ teams }: TeamsClientProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

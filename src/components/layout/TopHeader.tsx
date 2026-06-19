@@ -16,13 +16,14 @@ export default function TopHeader() {
             href="/"
             className="font-display text-gold text-base leading-tight flex items-center gap-1.5"
           >
-            <span className="text-lg">🪐</span> {t(lang, 'app_name')}
+            <span className="text-lg">🪐</span> {t(lang, 'app_name')}{' '}
+            <span className="text-lg">🪐</span>
           </Link>
           <a
             href="https://www.linkedin.com/in/galiakr/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[9px] text-starlight/30 hover:text-teal transition-colors mt-0.5"
+            className="text-sm text-starlight/30 hover:text-teal transition-colors mt-0.5"
           >
             by Galia Kropach
           </a>

@@ -18,7 +18,7 @@ export default function MatchCard({
 }: MatchCardProps) {
   const lang = useAppStore((s) => s.lang);
   const isHe = lang === 'he';
-  const [showSummary, setShowSummary] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   const homeTeam = match.home_team;
   const awayTeam = match.away_team;
@@ -66,7 +66,7 @@ export default function MatchCard({
     ...match.away_scorers.map((g) => ({ ...g, side: 'away' as const })),
   ].sort(
     (a, b) =>
-      Number(a.minute.replace('+', '.')) - Number(b.minute.replace('+', '.'))
+      Number(a.minute.replace('+', '.')) - Number(b.minute.replace('+', '.')),
   );
 
   const statusLabel =
@@ -86,32 +86,92 @@ export default function MatchCard({
         ? 'bg-coral text-white animate-pulse'
         : 'bg-teal/20 text-teal';
 
+  const hasInfo =
+    (showGroup && !!match.group_name) ||
+    (match.status === 'finished' && allGoals.length > 0) ||
+    !!match.stadium_id;
+
   return (
     <div
-      className={`rounded-2xl border ${compact ? 'p-3' : 'p-4'} mb-3 ${
+      className={`flex flex-col gap-1 lg:flex-row lg:gap-6 rounded-2xl border ${compact ? 'p-3' : 'p-4'} mb-3 ${
         isOngoing ? 'bg-coral/10 border-coral/40' : 'bg-ink/5 border-ink/10'
       }`}
     >
-      {showGroup && match.group_name && (
-        <div className="text-xs text-starlight/40 font-bold mb-2 uppercase tracking-wide">
-          {t(lang, 'match_group')} {match.group_name}
-        </div>
-      )}
+      <div className="order-2 lg:order-1 flex flex-col lg:basis-[30%] min-w-0 lg:shrink">
+        {/* Mobile-only toggle — desktop has room to show this section always */}
+        {hasInfo && (
+          <button
+            onClick={() => setShowInfo((s) => !s)}
+            className="lg:hidden w-full text-xs text-starlight/40 font-bold text-center py-1 hover:text-starlight/70 transition-colors"
+          >
+            ⚽ {t(lang, 'match_summary')} {showInfo ? '▲' : '▼'}
+          </button>
+        )}
 
-      <div className="flex items-center justify-center gap-6">
+        <div className={`${showInfo ? 'block' : 'hidden'} lg:block`}>
+          {showGroup && match.group_name && (
+            <div className="text-xs text-starlight/40 font-bold mb-2 uppercase tracking-wide">
+              {t(lang, 'match_group')} {match.group_name}
+            </div>
+          )}
+
+          {/* Match summary — goal-by-goal timeline, always visible when present */}
+          {match.status === 'finished' && allGoals.length > 0 && (
+            <div className="flex flex-col gap-1.5 mb-3">
+              {allGoals.map((g, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 text-xs text-starlight/70"
+                >
+                  <span className="font-readout text-starlight/40 w-10 text-right">
+                    {g.minute}&apos;
+                  </span>
+                  <img
+                    src={g.side === 'home' ? homeFlagUrl : awayFlagUrl}
+                    alt=""
+                    className="w-5 h-3.5 object-cover rounded-sm flex-shrink-0"
+                  />
+                  <span className="flex-1">
+                    {g.scorer}
+                    {g.own_goal && (
+                      <span className="text-coral font-bold"> (OG)</span>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Stadium */}
+          {match.stadium_id && (
+            <div
+              className={`mb-3 text-xs text-starlight/40 ${isHe ? 'text-right' : 'text-left'}`}
+            >
+              {match.stadium
+                ? `${isHe ? match.stadium.name_he : match.stadium.name_en}, ${isHe ? match.stadium.city_he : match.stadium.city_en}`
+                : match.stadium_id}{' '}
+              · {matchDate} {kickoff && `· ${kickoff}`}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div
+        dir="ltr"
+        className="order-1 lg:order-2 flex items-center justify-center gap-2 lg:basis-[70%] min-w-0 lg:shrink"
+      >
         {/* Home team */}
-        <div
-          className={`flex items-center gap-2 ${isHe ? 'flex-row-reverse text-right' : 'text-left'}`}
-        >
+        <div className="flex items-center gap-1.5 min-w-0 flex-1 justify-end">
           <span
-            className={`font-bold text-starlight max-w-22 ${compact ? 'text-sm' : 'text-base'} leading-tight`}
+            dir={isHe ? 'rtl' : 'ltr'}
+            className={`font-bold text-starlight text-sm leading-tight ${isHe ? 'text-right' : 'text-left'}`}
           >
             {homeName}
           </span>
           <img
             src={homeFlagUrl}
             alt={homeName}
-            className="w-8 h-6 object-cover rounded shadow-sm"
+            className="w-7 h-5 object-cover rounded shadow-sm flex-shrink-0"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
             }}
@@ -137,72 +197,23 @@ export default function MatchCard({
         </div>
 
         {/* Away team */}
-        <div
-          className={`flex items-center gap-2 justify-end flex-row-reverse text-right ${isHe ? 'flex-row text-left' : ''}`}
-        >
+        <div className="flex items-center gap-1.5 min-w-0 flex-1 justify-end flex-row-reverse">
           <span
-            className={`font-bold text-starlight max-w-22 ${compact ? 'text-sm' : 'text-base'} leading-tight`}
+            dir={isHe ? 'rtl' : 'ltr'}
+            className={`font-bold text-starlight text-sm leading-tight ${isHe ? 'text-right' : 'text-left'}`}
           >
             {awayName}
           </span>
           <img
             src={awayFlagUrl}
             alt={awayName}
-            className="w-8 h-6 object-cover rounded shadow-sm"
+            className="w-7 h-5 object-cover rounded shadow-sm flex-shrink-0"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
             }}
           />
         </div>
       </div>
-
-      {/* Stadium */}
-      {!compact && match.stadium_id && (
-        <div className="mt-2 text-xs text-starlight/40 text-center">
-          🏟️{' '}
-          {match.stadium
-            ? `${isHe ? match.stadium.name_he : match.stadium.name_en}, ${isHe ? match.stadium.city_he : match.stadium.city_en}`
-            : match.stadium_id}{' '}
-          · {matchDate}
-        </div>
-      )}
-
-      {/* Match summary — goal-by-goal timeline, collapsed by default */}
-      {match.status === 'finished' && allGoals.length > 0 && (
-        <div className="mt-2">
-          <button
-            onClick={() => setShowSummary((s) => !s)}
-            className="w-full text-xs text-starlight/40 font-bold text-center hover:text-starlight/70 transition-colors"
-          >
-            ⚽ {t(lang, 'match_summary')} {showSummary ? '▲' : '▼'}
-          </button>
-          {showSummary && (
-            <div className="mt-2 flex flex-col gap-1.5 px-1">
-              {allGoals.map((g, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 text-xs text-starlight/70"
-                >
-                  <span className="font-readout text-starlight/40 w-10 text-right">
-                    {g.minute}&apos;
-                  </span>
-                  <img
-                    src={g.side === 'home' ? homeFlagUrl : awayFlagUrl}
-                    alt=""
-                    className="w-5 h-3.5 object-cover rounded-sm flex-shrink-0"
-                  />
-                  <span className="flex-1">
-                    {g.scorer}
-                    {g.own_goal && (
-                      <span className="text-coral font-bold"> (OG)</span>
-                    )}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

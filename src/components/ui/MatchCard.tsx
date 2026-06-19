@@ -120,13 +120,13 @@ export default function MatchCard({
 
         {/* Score / Time */}
         <div className="flex flex-col items-center gap-1 flex-shrink-0">
-          {match.status === 'finished' || match.home_score !== null ? (
+          {match.status === 'finished' || isOngoing ? (
             <div className="bg-space border border-ink/10 text-gold font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
               {match.home_score} – {match.away_score}
             </div>
           ) : (
-            <div className="bg-violet text-white font-readout text-sm px-3 py-2 rounded-xl min-w-[64px] text-center">
-              {kickoff || 'TBD'}
+            <div className="bg-space border border-ink/10 text-gold/40 font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
+              --:--
             </div>
           )}
           <span

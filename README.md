@@ -2,6 +2,8 @@
 
 🔗 **Live app:** [world-cup-galaxy.vercel.app](https://world-cup-galaxy.vercel.app/)
 
+👤 **Created by:** [Galia Kropach](https://www.linkedin.com/in/galiakr/)
+
 ## For parents: how login works
 
 There are no passwords and no emails — your child just picks an avatar and types a name to play. A few things worth knowing:

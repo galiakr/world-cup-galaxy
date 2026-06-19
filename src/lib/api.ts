@@ -28,6 +28,30 @@ function setCache<T>(key: string, data: T, ttlMs: number) {
   cache.set(key, { data, expires: Date.now() + ttlMs })
 }
 
+// worldcup26.ir is a free hobby API that's frequently flaky (hangs or 500s)
+// — each Vercel route is its own serverless function with its own cold
+// in-memory cache, so every page independently rolls the dice against it.
+// Retry several times with a short per-attempt timeout so one bad attempt
+// doesn't sink the whole page, while staying well under Vercel's function
+// duration limit.
+async function fetchWithRetry(url: string, init: RequestInit, attempts = 3, timeoutMs = 2000): Promise<Response> {
+  let lastErr: unknown
+  for (let i = 0; i < attempts; i++) {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), timeoutMs)
+    try {
+      const res = await fetch(url, { ...init, signal: controller.signal })
+      if (res.ok) return res
+      lastErr = new Error(`status ${res.status}`)
+    } catch (e) {
+      lastErr = e
+    } finally {
+      clearTimeout(timer)
+    }
+  }
+  throw lastErr
+}
+
 // ─── Matches ───────────────────────────────────────────────────────────────
 
 export async function fetchMatches(): Promise<Match[]> {
@@ -36,16 +60,9 @@ export async function fetchMatches(): Promise<Match[]> {
   if (cached) return cached
 
   try {
-    // worldcup26.ir intermittently 500s on an otherwise-healthy request —
-    // a single retry clears it almost every time, so don't fail the whole
-    // page over what's usually a one-off blip.
-    let res = await fetch(`${WC_BASE}/get/games`, {
+    const res = await fetchWithRetry(`${WC_BASE}/get/games`, {
       next: { revalidate: 900 }, // 15-min cache
     })
-    if (!res.ok) {
-      res = await fetch(`${WC_BASE}/get/games`, { cache: 'no-store' })
-    }
-    if (!res.ok) throw new Error(`fetch games: ${res.status}`)
     const json = await res.json()
 
     const raw: unknown[] = Array.isArray(json) ? json : (json.data ?? json.games ?? [])
@@ -244,10 +261,13 @@ async function fetchRefereeMap(): Promise<Record<string, string>> {
   if (cached) return cached
 
   try {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), 2000)
     const res = await fetch(`${FDORG_BASE}/competitions/WC/matches`, {
       headers: { 'X-Auth-Token': FDORG_KEY },
       next: { revalidate: 3600 },
-    })
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timer))
     if (!res.ok) return {}
     const json = await res.json()
     const map: Record<string, string> = {}

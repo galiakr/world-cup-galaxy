@@ -1,11 +1,15 @@
 'use client'
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { Match } from '@/types'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
 import { format } from 'date-fns'
 import { israelDateString } from '@/lib/date'
+
+// Leaflet touches `window` on import, so it can't render on the server.
+const StadiumsMap = dynamic(() => import('@/components/ui/StadiumsMap'), { ssr: false })
 
 interface MatchesClientProps {
   pastMatches: Match[]
@@ -18,6 +22,7 @@ type Tab = 'upcoming' | 'results'
 export default function MatchesClient({ pastMatches, upcomingMatches, matchesError }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
+  const [showMap, setShowMap] = useState(false)
 
   const displayed = tab === 'upcoming' ? upcomingMatches : pastMatches
 
@@ -50,6 +55,19 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
       <h1 className="font-display text-2xl text-starlight mb-4">
         🛰️ {t(lang, 'matches_title')}
       </h1>
+
+      {/* Stadium map */}
+      <button
+        onClick={() => setShowMap(s => !s)}
+        className="w-full flex items-center justify-center gap-2 bg-spacelight border border-ink/10 rounded-2xl py-2.5 mb-4 text-sm font-bold text-starlight/70 hover:text-starlight transition-colors"
+      >
+        🗺️ {t(lang, 'matches_map_toggle')} {showMap ? '▲' : '▼'}
+      </button>
+      {showMap && (
+        <div className="mb-4">
+          <StadiumsMap />
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="flex rounded-2xl bg-spacelight border border-ink/10 p-1 mb-4 gap-1">

@@ -53,6 +53,7 @@ export interface Match {
   phase?: string
   home_scorers: GoalEvent[]
   away_scorers: GoalEvent[]
+  referee?: string
 }
 
 export interface Stadium {
@@ -63,6 +64,8 @@ export interface Stadium {
   city_he: string
   country: string
   capacity: number
+  lat: number
+  lng: number
 }
 
 export interface GroupStanding {

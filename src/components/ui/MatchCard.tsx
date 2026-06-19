@@ -153,6 +153,17 @@ export default function MatchCard({
               · {matchDate} {kickoff && `· ${kickoff}`}
             </div>
           )}
+
+          {/* Referee — only finished matches get a "no information" fallback;
+              referees for scheduled matches simply aren't assigned yet */}
+          {(match.referee || match.status === 'finished') && (
+            <div
+              className={`mb-3 text-xs text-starlight/40 ${isHe ? 'text-right' : 'text-left'}`}
+            >
+              🧑‍⚖️ {t(lang, 'match_referee')}:{' '}
+              {match.referee ?? t(lang, 'match_referee_unknown')}
+            </div>
+          )}
         </div>
       </div>
 

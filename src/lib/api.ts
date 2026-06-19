@@ -43,6 +43,7 @@ export async function fetchMatches(): Promise<Match[]> {
     const json = await res.json()
 
     const raw: unknown[] = Array.isArray(json) ? json : (json.data ?? json.games ?? [])
+    const refereeMap = await fetchRefereeMap()
 
     const matches: Match[] = raw.map((m: unknown) => {
       const r = m as Record<string, unknown>
@@ -60,13 +61,16 @@ export async function fetchMatches(): Promise<Match[]> {
         finished                                                        ? 'finished' :
         r.status === 'live' || (timeElapsed && timeElapsed !== 'notstarted') ? 'live' : 'scheduled'
 
+      const homeTeam = TEAMS_BY_ID[homeId] ?? { name_en: homeNameEn, name_he: homeNameEn, flag_emoji: '🏳️', flag_url: '' }
+      const awayTeam = TEAMS_BY_ID[awayId] ?? { name_en: awayNameEn, name_he: awayNameEn, flag_emoji: '🏳️', flag_url: '' }
+
       return {
         id:           String(r.id ?? r._id ?? Math.random()),
         match_number: Number(r.match_number ?? r.matchday ?? r.num ?? 0),
         home_team_id: homeId,
         away_team_id: awayId,
-        home_team:    TEAMS_BY_ID[homeId] ?? { name_en: homeNameEn, name_he: homeNameEn, flag_emoji: '🏳️', flag_url: '' },
-        away_team:    TEAMS_BY_ID[awayId] ?? { name_en: awayNameEn, name_he: awayNameEn, flag_emoji: '🏳️', flag_url: '' },
+        home_team:    homeTeam,
+        away_team:    awayTeam,
         home_score:   scoreHome,
         away_score:   scoreAway,
         status,
@@ -78,6 +82,9 @@ export async function fetchMatches(): Promise<Match[]> {
         stadium:      STADIUMS_BY_ID[stadiumId],
         home_scorers: parseScorers(r.home_scorers),
         away_scorers: parseScorers(r.away_scorers),
+        referee: homeTeam.fifa_code && awayTeam.fifa_code
+          ? refereeMap[`${homeTeam.fifa_code.toUpperCase()}|${awayTeam.fifa_code.toUpperCase()}`]
+          : undefined,
       }
     })
 
@@ -218,6 +225,38 @@ export async function fetchSquad(teamCode: string): Promise<SquadResult> {
     setCache(cacheKey, result, 86400000)
     return result
   } catch { return empty }
+}
+
+// football-data.org only assigns referees once a match is played/imminent
+// (roughly a quarter of matches at any given time), and doesn't share match
+// IDs with the worldcup26.ir feed — so matches are joined by FIFA team-code
+// pair instead (team *names* differ between the two sources, e.g. "Czechia"
+// vs "Czech Republic", but the 3-letter codes match).
+async function fetchRefereeMap(): Promise<Record<string, string>> {
+  const cacheKey = 'wc_referees'
+  const cached = getCache<Record<string, string>>(cacheKey)
+  if (cached) return cached
+
+  try {
+    const res = await fetch(`${FDORG_BASE}/competitions/WC/matches`, {
+      headers: { 'X-Auth-Token': FDORG_KEY },
+      next: { revalidate: 3600 },
+    })
+    if (!res.ok) return {}
+    const json = await res.json()
+    const map: Record<string, string> = {}
+    for (const m of (json.matches ?? []) as Record<string, unknown>[]) {
+      const referees = (m.referees ?? []) as Record<string, unknown>[]
+      const referee = referees.find(r => r.type === 'REFEREE')
+      if (!referee) continue
+      const homeTla = (m.homeTeam as Record<string, unknown>)?.tla
+      const awayTla = (m.awayTeam as Record<string, unknown>)?.tla
+      if (!homeTla || !awayTla) continue
+      map[`${String(homeTla).toUpperCase()}|${String(awayTla).toUpperCase()}`] = String(referee.name)
+    }
+    setCache(cacheKey, map, 3600000)
+    return map
+  } catch { return {} }
 }
 
 export async function fetchTopScorers(): Promise<TopScorer[]> {

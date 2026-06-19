@@ -69,6 +69,7 @@ export const TRANSLATIONS = {
     matches_results: 'Results',
     match_group: 'Group',
     match_finished: 'Finished',
+    match_summary: 'Match Summary',
     match_scheduled: 'Upcoming',
     match_live: 'IN PROGRESS',
 
@@ -327,6 +328,7 @@ export const TRANSLATIONS = {
     matches_results: 'תוצאות',
     match_group: 'קבוצה',
     match_finished: 'הסתיים',
+    match_summary: 'סיכום המשחק',
     match_scheduled: 'קרוב',
     match_live: 'מתקיים עכשיו',
 

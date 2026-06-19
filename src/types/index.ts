@@ -28,6 +28,12 @@ export interface Player {
   assists?: number
 }
 
+export interface GoalEvent {
+  scorer: string
+  minute: string   // e.g. "67" or "45+5"
+  own_goal: boolean
+}
+
 export interface Match {
   id: string
   match_number: number
@@ -45,6 +51,8 @@ export interface Match {
   stadium_id: string
   stadium?: Stadium
   phase?: string
+  home_scorers: GoalEvent[]
+  away_scorers: GoalEvent[]
 }
 
 export interface Stadium {

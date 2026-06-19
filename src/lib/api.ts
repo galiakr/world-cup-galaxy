@@ -1,4 +1,4 @@
-import { Match, TopScorer } from '@/types'
+import { GoalEvent, Match, TopScorer } from '@/types'
 import { TEAMS_BY_ID, TEAMS_BY_FIFA_CODE } from '@/data/teams'
 import { STADIUMS_BY_ID } from '@/data/stadiums'
 import { israelDateString } from '@/lib/date'
@@ -76,6 +76,8 @@ export async function fetchMatches(): Promise<Match[]> {
         kick_off_utc: kickoff,
         stadium_id:   stadiumId,
         stadium:      STADIUMS_BY_ID[stadiumId],
+        home_scorers: parseScorers(r.home_scorers),
+        away_scorers: parseScorers(r.away_scorers),
       }
     })
 
@@ -94,6 +96,26 @@ function parseScore(v: unknown): number {
   if (v == null) return 0
   const n = Number(v)
   return Number.isFinite(n) ? n : 0
+}
+
+// worldcup26.ir sends goal scorers as a Postgres-array-literal string, e.g.
+// {"J. Quiñones 9'","R. Jiménez 67'"} — some entries use curly “smart quotes”
+// instead of escaped straight quotes, so we match either quote style.
+function parseScorers(v: unknown): GoalEvent[] {
+  if (typeof v !== 'string' || v === 'null') return []
+  // Quote direction is inconsistent upstream (some entries use a closing
+  // curly quote “”/”” on both sides), so accept any quote char as either
+  // delimiter rather than requiring a matched open/close pair.
+  const entries = v.match(/["“”]([^"“”]+)["“”]/g) ?? []
+  return entries.map(raw => {
+    const text = raw.slice(1, -1)
+    const own_goal = /\(OG\)/i.test(text)
+    const clean = text.replace(/\(OG\)/i, '').trim()
+    const m = clean.match(/^(.*?)\s+(\d+(?:\+\d+)?)'$/)
+    return m
+      ? { scorer: m[1].trim(), minute: m[2], own_goal }
+      : { scorer: clean, minute: '', own_goal }
+  })
 }
 
 function mapRound(r: string): Match['round'] {

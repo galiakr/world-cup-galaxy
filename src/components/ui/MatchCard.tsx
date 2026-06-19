@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { Match } from '@/types';
 import { useAppStore } from '@/store';
 import { t } from '@/lib/i18n';
@@ -17,9 +18,16 @@ export default function MatchCard({
 }: MatchCardProps) {
   const lang = useAppStore((s) => s.lang);
   const isHe = lang === 'he';
+  const [showSummary, setShowSummary] = useState(false);
 
   const homeTeam = match.home_team;
   const awayTeam = match.away_team;
+  const homeFlagUrl =
+    homeTeam?.flag_url ||
+    `https://flagcdn.com/w40/${match.home_team_id.toLowerCase()}.png`;
+  const awayFlagUrl =
+    awayTeam?.flag_url ||
+    `https://flagcdn.com/w40/${match.away_team_id.toLowerCase()}.png`;
 
   const homeName = homeTeam
     ? isHe
@@ -50,6 +58,16 @@ export default function MatchCard({
     new Date(match.kick_off_utc).getTime() <= Date.now();
   const isOngoing =
     match.status !== 'finished' && (match.status === 'live' || hasKickedOff);
+
+  // Combined goal timeline for the post-match summary — "45+5" sorts as 45.5
+  // so stoppage-time goals land right after the minute they were added to.
+  const allGoals = [
+    ...match.home_scorers.map((g) => ({ ...g, side: 'home' as const })),
+    ...match.away_scorers.map((g) => ({ ...g, side: 'away' as const })),
+  ].sort(
+    (a, b) =>
+      Number(a.minute.replace('+', '.')) - Number(b.minute.replace('+', '.'))
+  );
 
   const statusLabel =
     match.status === 'finished'
@@ -91,10 +109,7 @@ export default function MatchCard({
             {homeName}
           </span>
           <img
-            src={
-              homeTeam?.flag_url ||
-              `https://flagcdn.com/w40/${match.home_team_id.toLowerCase()}.png`
-            }
+            src={homeFlagUrl}
             alt={homeName}
             className="w-8 h-6 object-cover rounded shadow-sm"
             onError={(e) => {
@@ -131,10 +146,7 @@ export default function MatchCard({
             {awayName}
           </span>
           <img
-            src={
-              awayTeam?.flag_url ||
-              `https://flagcdn.com/w40/${match.away_team_id.toLowerCase()}.png`
-            }
+            src={awayFlagUrl}
             alt={awayName}
             className="w-8 h-6 object-cover rounded shadow-sm"
             onError={(e) => {
@@ -152,6 +164,43 @@ export default function MatchCard({
             ? `${isHe ? match.stadium.name_he : match.stadium.name_en}, ${isHe ? match.stadium.city_he : match.stadium.city_en}`
             : match.stadium_id}{' '}
           · {matchDate}
+        </div>
+      )}
+
+      {/* Match summary — goal-by-goal timeline, collapsed by default */}
+      {match.status === 'finished' && allGoals.length > 0 && (
+        <div className="mt-2">
+          <button
+            onClick={() => setShowSummary((s) => !s)}
+            className="w-full text-xs text-starlight/40 font-bold text-center hover:text-starlight/70 transition-colors"
+          >
+            ⚽ {t(lang, 'match_summary')} {showSummary ? '▲' : '▼'}
+          </button>
+          {showSummary && (
+            <div className="mt-2 flex flex-col gap-1.5 px-1">
+              {allGoals.map((g, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 text-xs text-starlight/70"
+                >
+                  <span className="font-readout text-starlight/40 w-10 text-right">
+                    {g.minute}&apos;
+                  </span>
+                  <img
+                    src={g.side === 'home' ? homeFlagUrl : awayFlagUrl}
+                    alt=""
+                    className="w-5 h-3.5 object-cover rounded-sm flex-shrink-0"
+                  />
+                  <span className="flex-1">
+                    {g.scorer}
+                    {g.own_goal && (
+                      <span className="text-coral font-bold"> (OG)</span>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

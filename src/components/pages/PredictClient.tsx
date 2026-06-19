@@ -6,9 +6,9 @@ import { t } from '@/lib/i18n'
 import { savePrediction, getUserPredictions, scorePrediction, awardSticker } from '@/lib/supabase'
 import { format } from 'date-fns'
 
-interface PredictClientProps { upcomingMatches: Match[]; allMatches: Match[] }
+interface PredictClientProps { upcomingMatches: Match[]; allMatches: Match[]; matchesError?: boolean }
 
-export default function PredictClient({ upcomingMatches, allMatches }: PredictClientProps) {
+export default function PredictClient({ upcomingMatches, allMatches, matchesError }: PredictClientProps) {
   const { lang, user, addSticker } = useAppStore()
   const isHe = lang === 'he'
 
@@ -98,7 +98,9 @@ export default function PredictClient({ upcomingMatches, allMatches }: PredictCl
     return (
       <div className="px-4 pt-8 text-center">
         <div className="text-5xl mb-4">🔮</div>
-        <p className="text-gray-400">{t(lang, 'predict_no_upcoming')}</p>
+        <p className="text-gray-400">
+          {t(lang, matchesError ? 'matches_load_error' : 'predict_no_upcoming')}
+        </p>
       </div>
     )
   }

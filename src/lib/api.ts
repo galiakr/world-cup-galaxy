@@ -36,9 +36,15 @@ export async function fetchMatches(): Promise<Match[]> {
   if (cached) return cached
 
   try {
-    const res = await fetch(`${WC_BASE}/get/games`, {
+    // worldcup26.ir intermittently 500s on an otherwise-healthy request —
+    // a single retry clears it almost every time, so don't fail the whole
+    // page over what's usually a one-off blip.
+    let res = await fetch(`${WC_BASE}/get/games`, {
       next: { revalidate: 900 }, // 15-min cache
     })
+    if (!res.ok) {
+      res = await fetch(`${WC_BASE}/get/games`, { cache: 'no-store' })
+    }
     if (!res.ok) throw new Error(`fetch games: ${res.status}`)
     const json = await res.json()
 

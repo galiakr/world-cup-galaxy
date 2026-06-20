@@ -2,6 +2,10 @@ import { fetchMatches, getPastMatches, getUpcomingMatches } from '@/lib/api'
 import { Match } from '@/types'
 import MatchesClient from '@/components/pages/MatchesClient'
 
+// fetchMatches retries against a slow/flaky upstream with a generous
+// per-attempt timeout — give Vercel enough function budget for that.
+export const maxDuration = 30
+
 export default async function MatchesPage() {
   let matches: Match[] = []
   let error = false

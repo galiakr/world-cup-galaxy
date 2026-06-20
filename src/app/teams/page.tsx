@@ -7,6 +7,10 @@ import {
   getGroupPosition, TeamStage, GroupPosition,
 } from '@/lib/standings'
 
+// fetchMatches retries against a slow/flaky upstream with a generous
+// per-attempt timeout — give Vercel enough function budget for that.
+export const maxDuration = 30
+
 export default async function TeamsPage() {
   let matches: Match[] = []
   try {

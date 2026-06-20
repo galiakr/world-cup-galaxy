@@ -2,6 +2,10 @@ import { fetchMatches, fetchTopScorers, getTodayMatches, getYesterdayMatches, ge
 import { Match } from '@/types'
 import HomeClient from '@/components/pages/HomeClient'
 
+// fetchMatches retries against a slow/flaky upstream with a generous
+// per-attempt timeout — give Vercel enough function budget for that.
+export const maxDuration = 30
+
 export default async function HomePage() {
   const [matchesResult, scorers] = await Promise.all([
     fetchMatches()

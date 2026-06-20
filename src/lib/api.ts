@@ -29,13 +29,20 @@ function setCache<T>(key: string, data: T, ttlMs: number) {
   cache.set(key, { data, expires: Date.now() + ttlMs })
 }
 
-// worldcup26.ir is a free hobby API that's frequently flaky (hangs or 500s)
-// — each Vercel route is its own serverless function with its own cold
-// in-memory cache, so every page independently rolls the dice against it.
-// Retry several times with a short per-attempt timeout so one bad attempt
-// doesn't sink the whole page, while staying well under Vercel's function
-// duration limit.
-async function fetchWithRetry(url: string, init: RequestInit, attempts = 3, timeoutMs = 2000): Promise<Response> {
+// worldcup26.ir is a free hobby API that's frequently flaky (hangs or
+// 500s) — each Vercel route is its own serverless function with its own
+// cold in-memory cache, so every page independently rolls the dice
+// against it. Retry several times with a per-attempt timeout so one bad
+// attempt doesn't sink the whole page.
+//
+// The timeout needs to be generous: Vercel's build/runtime network path
+// to this host (observed from iad1) is noticeably slower than a typical
+// local connection, and a build log once showed every attempt failing
+// with AbortError — our own timeout firing before the request even got
+// a response, not the API actually being down. 2s was too tight; 5s
+// gives real responses time to land while still bailing on a truly dead
+// connection well under Vercel's function duration limit.
+async function fetchWithRetry(url: string, init: RequestInit, attempts = 3, timeoutMs = 5000): Promise<Response> {
   let lastErr: unknown
   for (let i = 0; i < attempts; i++) {
     const controller = new AbortController()
@@ -295,7 +302,7 @@ async function fetchRefereeMap(): Promise<Record<string, string>> {
 
   try {
     const controller = new AbortController()
-    const timer = setTimeout(() => controller.abort(), 2000)
+    const timer = setTimeout(() => controller.abort(), 4000)
     const res = await fetch(`${FDORG_BASE}/competitions/WC/matches`, {
       headers: { 'X-Auth-Token': FDORG_KEY },
       next: { revalidate: 3600 },

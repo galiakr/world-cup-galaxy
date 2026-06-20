@@ -9,12 +9,12 @@ export const maxDuration = 30
 export default async function HomePage() {
   const [matchesResult, scorers] = await Promise.all([
     fetchMatches()
-      .then(r => ({ matches: r.matches, error: false, stale: r.stale, updatedAt: r.updatedAt }))
-      .catch(() => ({ matches: [] as Match[], error: true, stale: false, updatedAt: null as string | null })),
+      .then(r => ({ matches: r.matches, error: false, stale: r.stale, updatedAt: r.updatedAt, attemptedAt: r.attemptedAt }))
+      .catch(() => ({ matches: [] as Match[], error: true, stale: false, updatedAt: null as string | null, attemptedAt: new Date().toISOString() })),
     fetchTopScorers(),
   ])
 
-  const { matches, error, stale, updatedAt } = matchesResult
+  const { matches, error, stale, updatedAt, attemptedAt } = matchesResult
   const todayMatches = getTodayMatches(matches)
   const yesterdayMatches = getYesterdayMatches(matches)
   const tomorrowMatches = getTomorrowMatches(matches)
@@ -28,6 +28,7 @@ export default async function HomePage() {
       matchesError={error}
       matchesStale={stale}
       matchesUpdatedAt={updatedAt}
+      matchesAttemptedAt={attemptedAt}
     />
   )
 }

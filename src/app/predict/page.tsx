@@ -11,11 +11,13 @@ export default async function PredictPage() {
   let error = false
   let stale = false
   let updatedAt: string | null = null
+  let attemptedAt: string = new Date().toISOString()
   try {
     const result = await fetchMatches()
     matches = result.matches
     stale = result.stale
     updatedAt = result.updatedAt
+    attemptedAt = result.attemptedAt
   } catch {
     error = true
   }
@@ -28,6 +30,7 @@ export default async function PredictPage() {
       matchesError={error}
       matchesStale={stale}
       matchesUpdatedAt={updatedAt}
+      matchesAttemptedAt={attemptedAt}
     />
   )
 }

@@ -5,6 +5,7 @@ import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import { savePrediction, getUserPredictions, scorePrediction, awardSticker } from '@/lib/supabase'
 import StaleDataBanner from '@/components/ui/StaleDataBanner'
+import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab'
 import { format } from 'date-fns'
 
 interface PredictClientProps {
@@ -13,9 +14,10 @@ interface PredictClientProps {
   matchesError?: boolean
   matchesStale?: boolean
   matchesUpdatedAt?: string | null
+  matchesAttemptedAt?: string
 }
 
-export default function PredictClient({ upcomingMatches, allMatches, matchesError, matchesStale, matchesUpdatedAt }: PredictClientProps) {
+export default function PredictClient({ upcomingMatches, allMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt }: PredictClientProps) {
   const { lang, user, addSticker } = useAppStore()
   const isHe = lang === 'he'
 
@@ -279,6 +281,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
           </div>
         </div>
       )}
+      {matchesAttemptedAt && <UpdateAttemptTab attemptedAt={matchesAttemptedAt} />}
     </div>
   )
 }

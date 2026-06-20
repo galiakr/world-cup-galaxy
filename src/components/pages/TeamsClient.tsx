@@ -5,6 +5,7 @@ import { useAppStore } from '@/store';
 import { t, TranslationKey } from '@/lib/i18n';
 import { fetchWikipediaPhoto } from '@/lib/api';
 import { TeamStage, GroupPosition } from '@/lib/standings';
+import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab';
 
 interface SquadResult {
   coachName: string | null;
@@ -26,6 +27,7 @@ interface TeamsClientProps {
   teams: Team[];
   stageById?: Record<string, TeamStage>;
   standingById?: Record<string, GroupPosition>;
+  matchesAttemptedAt?: string;
 }
 
 const STAGE_STYLE: Record<TeamStage, string> = {
@@ -56,7 +58,7 @@ const STAGE_KEY: Record<TeamStage, TranslationKey> = {
   eliminated: 'stage_eliminated',
 };
 
-export default function TeamsClient({ teams, stageById, standingById }: TeamsClientProps) {
+export default function TeamsClient({ teams, stageById, standingById, matchesAttemptedAt }: TeamsClientProps) {
   const lang = useAppStore((s) => s.lang);
   const isHe = lang === 'he';
   const [search, setSearch] = useState('');
@@ -310,6 +312,7 @@ export default function TeamsClient({ teams, stageById, standingById }: TeamsCli
           </div>
         </div>
       )}
+      {matchesAttemptedAt && <UpdateAttemptTab attemptedAt={matchesAttemptedAt} />}
     </div>
   );
 }

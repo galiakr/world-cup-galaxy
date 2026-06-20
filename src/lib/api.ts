@@ -65,13 +65,16 @@ async function fetchWithRetry(url: string, init: RequestInit, attempts = 3, time
 export interface MatchesResult {
   matches: Match[]
   stale: boolean        // true when served from the Supabase fallback snapshot
-  updatedAt: string | null  // when that snapshot was last successfully refreshed
+  updatedAt: string | null    // when the data itself was last successfully refreshed
+  attemptedAt: string         // when this fetch was last actually attempted (success or fail)
 }
 
 export async function fetchMatches(): Promise<MatchesResult> {
   const cacheKey = 'wc_matches'
   const cached = getCache<MatchesResult>(cacheKey)
   if (cached) return cached
+
+  const attemptedAt = new Date().toISOString()
 
   try {
     const res = await fetchWithRetry(`${WC_BASE}/get/games`, {
@@ -126,14 +129,14 @@ export async function fetchMatches(): Promise<MatchesResult> {
     })
 
     const updatedAt = new Date().toISOString()
-    const result: MatchesResult = { matches, stale: false, updatedAt }
+    const result: MatchesResult = { matches, stale: false, updatedAt, attemptedAt }
     setCache(cacheKey, result, 2 * 60 * 1000)
     await saveMatchesFallback(matches, updatedAt)
     return result
   } catch (e) {
     console.error('fetchMatches error:', e)
     const fallback = await loadMatchesFallback()
-    if (fallback) return { matches: fallback.matches, stale: true, updatedAt: fallback.updatedAt }
+    if (fallback) return { matches: fallback.matches, stale: true, updatedAt: fallback.updatedAt, attemptedAt }
     throw e
   }
 }

@@ -13,8 +13,11 @@ export const maxDuration = 30
 
 export default async function TeamsPage() {
   let matches: Match[] = []
+  let attemptedAt: string = new Date().toISOString()
   try {
-    matches = (await fetchMatches()).matches
+    const result = await fetchMatches()
+    matches = result.matches
+    attemptedAt = result.attemptedAt
   } catch {
     // Stage badges just won't show if match data is unavailable — the
     // teams list itself doesn't depend on it.
@@ -32,5 +35,12 @@ export default async function TeamsPage() {
     if (position) standingById[team.id] = position
   }
 
-  return <TeamsClient teams={TEAMS} stageById={stageById} standingById={standingById} />
+  return (
+    <TeamsClient
+      teams={TEAMS}
+      stageById={stageById}
+      standingById={standingById}
+      matchesAttemptedAt={attemptedAt}
+    />
+  )
 }

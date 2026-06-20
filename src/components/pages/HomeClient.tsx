@@ -4,6 +4,7 @@ import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
 import StaleDataBanner from '@/components/ui/StaleDataBanner'
+import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab'
 import { claimDailySticker, awardSticker } from '@/lib/supabase'
 import { israelDateString } from '@/lib/date'
 
@@ -15,9 +16,10 @@ interface HomeClientProps {
   matchesError?: boolean
   matchesStale?: boolean
   matchesUpdatedAt?: string | null
+  matchesAttemptedAt?: string
 }
 
-export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError, matchesStale, matchesUpdatedAt }: HomeClientProps) {
+export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt }: HomeClientProps) {
   const { lang, user, dailyClaimedDate, setDailyClaimedDate, addSticker } = useAppStore()
   const isHe = lang === 'he'
 
@@ -161,6 +163,7 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
           ))}
         </Section>
       )}
+      {matchesAttemptedAt && <UpdateAttemptTab attemptedAt={matchesAttemptedAt} />}
     </div>
   )
 }

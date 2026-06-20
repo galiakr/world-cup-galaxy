@@ -6,6 +6,7 @@ import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
 import StaleDataBanner from '@/components/ui/StaleDataBanner'
+import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab'
 import { format } from 'date-fns'
 import { israelDateString } from '@/lib/date'
 
@@ -18,11 +19,12 @@ interface MatchesClientProps {
   matchesError?: boolean
   matchesStale?: boolean
   matchesUpdatedAt?: string | null
+  matchesAttemptedAt?: string
 }
 
 type Tab = 'upcoming' | 'results'
 
-export default function MatchesClient({ pastMatches, upcomingMatches, matchesError, matchesStale, matchesUpdatedAt }: MatchesClientProps) {
+export default function MatchesClient({ pastMatches, upcomingMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
   const [showMap, setShowMap] = useState(false)
@@ -106,6 +108,7 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
           <div>{t(lang, matchesError ? 'matches_load_error' : 'home_no_matches')}</div>
         </div>
       )}
+      {matchesAttemptedAt && <UpdateAttemptTab attemptedAt={matchesAttemptedAt} />}
     </div>
   )
 }

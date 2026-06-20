@@ -25,6 +25,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
   const [editingMatchId, setEditingMatchId] = useState<string | null>(null)
   const [myPredictions, setMyPredictions] = useState<Prediction[]>([])
   const [loading, setLoading] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
   const matchesById = useMemo(() => new Map(allMatches.map(m => [m.id, m])), [allMatches])
   const current = upcomingMatches[matchIdx]
@@ -79,6 +80,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
     const existing = current ? myPredictions.find(p => p.match_id === current.id) : undefined
     setHomeScore(existing?.predicted_home ?? 0)
     setAwayScore(existing?.predicted_away ?? 0)
+    setSubmitError(false)
   }, [current?.id, myPredictions])
 
   function change(side: 'home' | 'away', delta: number) {
@@ -90,6 +92,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
   async function handleSubmit() {
     if (!user || !current || currentLocked) return
     setLoading(true)
+    setSubmitError(false)
     const ok = await savePrediction(user.id, current.id, homeScore, awayScore)
     if (ok) {
       addSticker('a_predict1')
@@ -97,24 +100,20 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
       // Refresh predictions
       const updated = await getUserPredictions(user.id)
       setMyPredictions(updated)
+    } else {
+      setSubmitError(true)
     }
     setLoading(false)
-  }
-
-  if (upcomingMatches.length === 0) {
-    return (
-      <div className="px-4 pt-8 text-center">
-        <div className="text-5xl mb-4">🔮</div>
-        <p className="text-gray-400">
-          {t(lang, matchesError ? 'matches_load_error' : 'predict_no_upcoming')}
-        </p>
-      </div>
-    )
   }
 
   const homeTeam = current?.home_team
   const awayTeam = current?.away_team
 
+  // The "no upcoming matches" empty state used to be an early `return` —
+  // which meant the My Predictions history below it never rendered once
+  // every match a user had predicted on had finished (or there were
+  // simply no upcoming matches left to show). Render it as a branch
+  // instead, so past predictions stay visible regardless.
   return (
     <div className="px-4 pt-4">
       <h1 className="font-display text-2xl text-starlight mb-1">
@@ -123,6 +122,15 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
       <p className="text-sm text-starlight/40 mb-4">{t(lang, 'predict_subtitle')}</p>
 
       {matchesStale && <StaleDataBanner updatedAt={matchesUpdatedAt ?? null} />}
+
+      {upcomingMatches.length === 0 && (
+        <div className="text-center py-8">
+          <div className="text-5xl mb-4">🔮</div>
+          <p className="text-gray-400">
+            {t(lang, matchesError ? 'matches_load_error' : 'predict_no_upcoming')}
+          </p>
+        </div>
+      )}
 
       {/* Match selector */}
       {upcomingMatches.length > 1 && (
@@ -152,6 +160,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
       )}
 
       {/* Prediction card */}
+      {current && (
       <div className="bg-spacelight rounded-3xl border border-ink/10 p-5 mb-4">
         {/* Match date + local kickoff time */}
         <div className="text-xs text-starlight/40 font-bold text-center mb-4">
@@ -203,6 +212,11 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
             >
               {loading ? '...' : t(lang, 'predict_submit')}
             </button>
+            {submitError && (
+              <p className="text-coral text-xs font-bold text-center mt-2">
+                {t(lang, 'predict_submit_error')}
+              </p>
+            )}
           </>
         )}
         {!isEditing && existingPrediction && (
@@ -224,6 +238,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
           </div>
         )}
       </div>
+      )}
 
       {/* My predictions history */}
       {myPredictions.length > 0 && (

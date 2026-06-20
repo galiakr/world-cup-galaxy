@@ -5,6 +5,7 @@ import { Match } from '@/types'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
+import StaleDataBanner from '@/components/ui/StaleDataBanner'
 import { format } from 'date-fns'
 import { israelDateString } from '@/lib/date'
 
@@ -15,11 +16,13 @@ interface MatchesClientProps {
   pastMatches: Match[]
   upcomingMatches: Match[]
   matchesError?: boolean
+  matchesStale?: boolean
+  matchesUpdatedAt?: string | null
 }
 
 type Tab = 'upcoming' | 'results'
 
-export default function MatchesClient({ pastMatches, upcomingMatches, matchesError }: MatchesClientProps) {
+export default function MatchesClient({ pastMatches, upcomingMatches, matchesError, matchesStale, matchesUpdatedAt }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
   const [showMap, setShowMap] = useState(false)
@@ -55,6 +58,8 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
       <h1 className="font-display text-2xl text-starlight mb-4">
         🛰️ {t(lang, 'matches_title')}
       </h1>
+
+      {matchesStale && <StaleDataBanner updatedAt={matchesUpdatedAt ?? null} />}
 
       {/* Stadium map */}
       <button

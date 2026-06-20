@@ -3,6 +3,7 @@ import { Match, TopScorer } from '@/types'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
+import StaleDataBanner from '@/components/ui/StaleDataBanner'
 import { claimDailySticker, awardSticker } from '@/lib/supabase'
 import { israelDateString } from '@/lib/date'
 
@@ -12,9 +13,11 @@ interface HomeClientProps {
   tomorrowMatches: Match[]
   topScorers: TopScorer[]
   matchesError?: boolean
+  matchesStale?: boolean
+  matchesUpdatedAt?: string | null
 }
 
-export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError }: HomeClientProps) {
+export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError, matchesStale, matchesUpdatedAt }: HomeClientProps) {
   const { lang, user, dailyClaimedDate, setDailyClaimedDate, addSticker } = useAppStore()
   const isHe = lang === 'he'
 
@@ -94,6 +97,8 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
           </div>
         </div>
       </button>
+
+      {matchesStale && <StaleDataBanner updatedAt={matchesUpdatedAt ?? null} />}
 
       {/* Today's matches */}
       <Section title={t(lang, 'home_today')} emoji="" accent="gold">

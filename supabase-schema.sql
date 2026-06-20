@@ -119,6 +119,16 @@ CREATE TABLE IF NOT EXISTS user_recovery (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- Last-known-good snapshot of the matches feed (worldcup26.ir is a free
+-- hobby API that's frequently unreliable) — a single row, overwritten on
+-- every successful fetch, read back only when the live fetch fails after
+-- retries. Tournament data, not user data, so it carries no RLS risk.
+CREATE TABLE IF NOT EXISTS matches_cache (
+  id         TEXT PRIMARY KEY DEFAULT 'latest',
+  data       JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- Generates an 8-character code (e.g. "XJ4M-7QPR") from an alphabet
 -- with no ambiguous characters (no 0/O, 1/I/L), ~40 bits of entropy —
 -- far beyond what's brute-forceable through the app's RPC.
@@ -261,6 +271,7 @@ ALTER TABLE predictions     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE bug_reports     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_auth_links ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_recovery   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE matches_cache   ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow all on users"         ON users;
 DROP POLICY IF EXISTS "Allow all on user_stickers" ON user_stickers;
@@ -324,6 +335,16 @@ CREATE POLICY "user_auth_links_select" ON user_auth_links FOR SELECT USING (auth
 -- user_recovery: no policies at all — completely inaccessible to
 -- anon/authenticated clients. Only the SECURITY DEFINER functions
 -- above (which run with elevated privileges) can read or write it.
+
+-- matches_cache: public tournament data, not user data — anyone can
+-- read or refresh it, since the worst case is just an out-of-date
+-- schedule snapshot, not a privacy/security issue.
+DROP POLICY IF EXISTS "matches_cache_select" ON matches_cache;
+DROP POLICY IF EXISTS "matches_cache_upsert" ON matches_cache;
+DROP POLICY IF EXISTS "matches_cache_update" ON matches_cache;
+CREATE POLICY "matches_cache_select" ON matches_cache FOR SELECT USING (true);
+CREATE POLICY "matches_cache_upsert" ON matches_cache FOR INSERT WITH CHECK (true);
+CREATE POLICY "matches_cache_update" ON matches_cache FOR UPDATE USING (true);
 
 -- ── Indexes ────────────────────────────────────────────────────────
 CREATE INDEX IF NOT EXISTS idx_user_stickers_user ON user_stickers(user_id);

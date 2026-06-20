@@ -4,11 +4,18 @@ import { Match, Prediction } from '@/types'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import { savePrediction, getUserPredictions, scorePrediction, awardSticker } from '@/lib/supabase'
+import StaleDataBanner from '@/components/ui/StaleDataBanner'
 import { format } from 'date-fns'
 
-interface PredictClientProps { upcomingMatches: Match[]; allMatches: Match[]; matchesError?: boolean }
+interface PredictClientProps {
+  upcomingMatches: Match[]
+  allMatches: Match[]
+  matchesError?: boolean
+  matchesStale?: boolean
+  matchesUpdatedAt?: string | null
+}
 
-export default function PredictClient({ upcomingMatches, allMatches, matchesError }: PredictClientProps) {
+export default function PredictClient({ upcomingMatches, allMatches, matchesError, matchesStale, matchesUpdatedAt }: PredictClientProps) {
   const { lang, user, addSticker } = useAppStore()
   const isHe = lang === 'he'
 
@@ -114,6 +121,8 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
         🔮 {t(lang, 'predict_title')}
       </h1>
       <p className="text-sm text-starlight/40 mb-4">{t(lang, 'predict_subtitle')}</p>
+
+      {matchesStale && <StaleDataBanner updatedAt={matchesUpdatedAt ?? null} />}
 
       {/* Match selector */}
       {upcomingMatches.length > 1 && (

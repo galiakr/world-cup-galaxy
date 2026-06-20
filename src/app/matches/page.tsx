@@ -5,8 +5,13 @@ import MatchesClient from '@/components/pages/MatchesClient'
 export default async function MatchesPage() {
   let matches: Match[] = []
   let error = false
+  let stale = false
+  let updatedAt: string | null = null
   try {
-    matches = await fetchMatches()
+    const result = await fetchMatches()
+    matches = result.matches
+    stale = result.stale
+    updatedAt = result.updatedAt
   } catch {
     error = true
   }
@@ -16,6 +21,8 @@ export default async function MatchesPage() {
       pastMatches={getPastMatches(matches)}
       upcomingMatches={getUpcomingMatches(matches, 10)}
       matchesError={error}
+      matchesStale={stale}
+      matchesUpdatedAt={updatedAt}
     />
   )
 }

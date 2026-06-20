@@ -2,6 +2,7 @@ import { GoalEvent, Match, TopScorer } from '@/types'
 import { TEAMS_BY_ID, TEAMS_BY_FIFA_CODE } from '@/data/teams'
 import { STADIUMS_BY_ID } from '@/data/stadiums'
 import { israelDateString } from '@/lib/date'
+import { supabase } from '@/lib/supabase'
 
 // ─── rezarahiminia/worldcup2026 (NO API KEY — completely free) ────────────
 // https://worldcup26.ir  — all 48 teams, 104 fixtures, live-updated scores
@@ -54,9 +55,15 @@ async function fetchWithRetry(url: string, init: RequestInit, attempts = 3, time
 
 // ─── Matches ───────────────────────────────────────────────────────────────
 
-export async function fetchMatches(): Promise<Match[]> {
+export interface MatchesResult {
+  matches: Match[]
+  stale: boolean        // true when served from the Supabase fallback snapshot
+  updatedAt: string | null  // when that snapshot was last successfully refreshed
+}
+
+export async function fetchMatches(): Promise<MatchesResult> {
   const cacheKey = 'wc_matches'
-  const cached = getCache<Match[]>(cacheKey)
+  const cached = getCache<MatchesResult>(cacheKey)
   if (cached) return cached
 
   try {
@@ -111,11 +118,37 @@ export async function fetchMatches(): Promise<Match[]> {
       }
     })
 
-    setCache(cacheKey, matches, 15 * 60 * 1000)
-    return matches
+    const updatedAt = new Date().toISOString()
+    const result: MatchesResult = { matches, stale: false, updatedAt }
+    setCache(cacheKey, result, 15 * 60 * 1000)
+    await saveMatchesFallback(matches, updatedAt)
+    return result
   } catch (e) {
     console.error('fetchMatches error:', e)
+    const fallback = await loadMatchesFallback()
+    if (fallback) return { matches: fallback.matches, stale: true, updatedAt: fallback.updatedAt }
     throw e
+  }
+}
+
+// Last-known-good snapshot, used only when the live feed is unreachable
+// after retries — real (if slightly stale) data instead of nothing.
+async function saveMatchesFallback(matches: Match[], updatedAt: string) {
+  try {
+    await supabase.from('matches_cache').upsert({ id: 'latest', data: matches, updated_at: updatedAt })
+  } catch {
+    // best-effort only — losing this write just means the next outage
+    // falls back to an older snapshot (or none), not a user-facing error
+  }
+}
+
+async function loadMatchesFallback(): Promise<{ matches: Match[]; updatedAt: string } | null> {
+  try {
+    const { data, error } = await supabase.from('matches_cache').select('data, updated_at').eq('id', 'latest').single()
+    if (error || !data) return null
+    return { matches: data.data as Match[], updatedAt: data.updated_at as string }
+  } catch {
+    return null
   }
 }
 

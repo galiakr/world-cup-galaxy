@@ -68,7 +68,7 @@ export async function fetchMatches(): Promise<MatchesResult> {
 
   try {
     const res = await fetchWithRetry(`${WC_BASE}/get/games`, {
-      next: { revalidate: 900 }, // 15-min cache
+      next: { revalidate: 120 }, // 2-min cache — short enough for live scores to feel current
     })
     const json = await res.json()
 
@@ -120,7 +120,7 @@ export async function fetchMatches(): Promise<MatchesResult> {
 
     const updatedAt = new Date().toISOString()
     const result: MatchesResult = { matches, stale: false, updatedAt }
-    setCache(cacheKey, result, 15 * 60 * 1000)
+    setCache(cacheKey, result, 2 * 60 * 1000)
     await saveMatchesFallback(matches, updatedAt)
     return result
   } catch (e) {

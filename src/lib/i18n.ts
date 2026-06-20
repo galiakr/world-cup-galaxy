@@ -52,7 +52,8 @@ export const TRANSLATIONS = {
     home_tomorrow: "Tomorrow's Matches",
     home_no_matches: 'No matches today',
     matches_load_error: "Couldn't load matches. Please try again.",
-    matches_stale_notice: "Showing saved results — live updates aren't available right now.",
+    matches_stale_notice:
+      "Showing saved results. live updates aren't available right now.",
     matches_stale_time: 'Last updated',
     home_streak: 'day streak',
     switcher_open: 'Switch Player',
@@ -319,7 +320,8 @@ export const TRANSLATIONS = {
     home_tomorrow: 'משחקי מחר',
     home_no_matches: 'אין משחקים היום',
     matches_load_error: 'טעינת המשחקים נכשלה. נסו שוב.',
-    matches_stale_notice: 'מוצגות תוצאות שמורות — עדכונים חיים אינם זמינים כרגע.',
+    matches_stale_notice:
+      'מוצגות תוצאות שמורות .עדכונים חיים אינם זמינים כרגע.',
     matches_stale_time: 'עודכן לאחרונה',
     home_streak: 'ימים רצופים',
     switcher_open: 'החליפו שחקנים/יות',

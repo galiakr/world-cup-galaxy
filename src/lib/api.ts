@@ -1,6 +1,5 @@
 import { GoalEvent, Match, TopScorer } from '@/types'
-import { TEAMS_BY_ID, TEAMS_BY_FIFA_CODE } from '@/data/teams'
-import { STADIUMS_BY_ID } from '@/data/stadiums'
+import { TEAMS_BY_ID } from '@/data/teams'
 import { israelDateString } from '@/lib/date'
 import { supabase } from '@/lib/supabase'
 
@@ -89,8 +88,6 @@ export async function fetchMatches(): Promise<MatchesResult> {
       const r = m as Record<string, unknown>
       const homeId = String(r.home_team_id ?? r.home ?? '')
       const awayId = String(r.away_team_id ?? r.away ?? '')
-      const homeNameEn = String(r.home_team_name_en ?? '')
-      const awayNameEn = String(r.away_team_name_en ?? '')
       const stadiumId = String(r.stadium_id ?? r.stadium ?? r.venue ?? '')
       const { date: dateStr, iso: kickoff } = parseLocalDate(String(r.local_date ?? r.date ?? r.match_date ?? r.kickoff ?? ''), stadiumId)
       const scoreHome = parseScore(r.home_score)
@@ -101,16 +98,14 @@ export async function fetchMatches(): Promise<MatchesResult> {
         finished                                                        ? 'finished' :
         r.status === 'live' || (timeElapsed && timeElapsed !== 'notstarted') ? 'live' : 'scheduled'
 
-      const homeTeam = TEAMS_BY_ID[homeId] ?? { name_en: homeNameEn, name_he: homeNameEn, flag_emoji: '🏳️', flag_url: '' }
-      const awayTeam = TEAMS_BY_ID[awayId] ?? { name_en: awayNameEn, name_he: awayNameEn, flag_emoji: '🏳️', flag_url: '' }
+      const homeTeam = TEAMS_BY_ID[homeId]
+      const awayTeam = TEAMS_BY_ID[awayId]
 
       return {
         id:           String(r.id ?? r._id ?? Math.random()),
         match_number: Number(r.match_number ?? r.matchday ?? r.num ?? 0),
         home_team_id: homeId,
         away_team_id: awayId,
-        home_team:    homeTeam,
-        away_team:    awayTeam,
         home_score:   scoreHome,
         away_score:   scoreAway,
         status,
@@ -119,10 +114,9 @@ export async function fetchMatches(): Promise<MatchesResult> {
         match_date:   dateStr,
         kick_off_utc: kickoff,
         stadium_id:   stadiumId,
-        stadium:      STADIUMS_BY_ID[stadiumId],
         home_scorers: parseScorers(r.home_scorers),
         away_scorers: parseScorers(r.away_scorers),
-        referee: homeTeam.fifa_code && awayTeam.fifa_code
+        referee: homeTeam?.fifa_code && awayTeam?.fifa_code
           ? refereeMap[`${homeTeam.fifa_code.toUpperCase()}|${awayTeam.fifa_code.toUpperCase()}`]
           : undefined,
       }
@@ -348,7 +342,6 @@ export async function fetchTopScorers(): Promise<TopScorer[]> {
       return {
         player_name: playerName,
         team_id:     code,
-        team:        TEAMS_BY_FIFA_CODE[code] ?? {},
         goals:       Number(s.goals  ?? 0),
         assists:     Number(s.assists ?? 0),
         photo_url:   playerName ? (await fetchWikipediaPhoto(playerName)) ?? undefined : undefined,

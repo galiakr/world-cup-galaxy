@@ -2,7 +2,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { STADIUMS } from '@/data/stadiums'
+import { STADIUMS, getStadiumText } from '@/data/stadiums'
 import { useAppStore } from '@/store'
 
 // Leaflet's default marker icon references image files that don't resolve
@@ -19,7 +19,6 @@ const pinIcon = new Icon({
 
 export default function StadiumsMap() {
   const lang = useAppStore(s => s.lang)
-  const isHe = lang === 'he'
 
   return (
     <div className="rounded-2xl overflow-hidden border border-ink/10 h-80">
@@ -33,17 +32,20 @@ export default function StadiumsMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {STADIUMS.map(s => (
-          <Marker key={s.id} position={[s.lat, s.lng]} icon={pinIcon}>
-            <Popup>
-              <div className="text-sm">
-                <div className="font-bold">{isHe ? s.name_he : s.name_en}</div>
-                <div className="text-starlight/60">{isHe ? s.city_he : s.city_en}</div>
-                <div className="text-starlight/60">{s.capacity.toLocaleString()} 🎟️</div>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+        {STADIUMS.map(s => {
+          const text = getStadiumText(s.id, lang)
+          return (
+            <Marker key={s.id} position={[s.lat, s.lng]} icon={pinIcon}>
+              <Popup>
+                <div className="text-sm">
+                  <div className="font-bold">{text.name}</div>
+                  <div className="text-starlight/60">{text.city}</div>
+                  <div className="text-starlight/60">{s.capacity.toLocaleString()} 🎟️</div>
+                </div>
+              </Popup>
+            </Marker>
+          )
+        })}
       </MapContainer>
     </div>
   )

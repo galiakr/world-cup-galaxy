@@ -7,6 +7,7 @@ import StaleDataBanner from '@/components/ui/StaleDataBanner'
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab'
 import { claimDailySticker, awardSticker } from '@/lib/supabase'
 import { israelDateString } from '@/lib/date'
+import { TEAMS_BY_FIFA_CODE, getTeamName } from '@/data/teams'
 
 interface HomeClientProps {
   todayMatches: Match[]
@@ -21,7 +22,6 @@ interface HomeClientProps {
 
 export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt }: HomeClientProps) {
   const { lang, user, dailyClaimedDate, setDailyClaimedDate, addSticker } = useAppStore()
-  const isHe = lang === 'he'
 
   const today = israelDateString()
   const dailyClaimed = dailyClaimedDate === today
@@ -129,7 +129,9 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
       {/* Top scorers */}
       {topScorers.length > 0 && (
         <Section title={t(lang, 'home_top_scorers')} emoji="⚽" accent="teal">
-          {topScorers.map((s, i) => (
+          {topScorers.map((s, i) => {
+            const scorerTeam = TEAMS_BY_FIFA_CODE[s.team_id]
+            return (
             <div key={s.player_name} className="flex items-center gap-3 py-2 border-b border-ink/10 last:border-0">
               <div
                 className={`font-readout text-xs w-6 h-6 rounded-full flex items-center justify-center ${
@@ -147,20 +149,21 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
                 />
               )}
               <img
-                src={s.team?.flag_url || ''}
+                src={scorerTeam?.flag_url || ''}
                 alt=""
                 className="w-7 h-5 object-cover rounded shadow-sm flex-shrink-0"
                 onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
               />
               <div className="flex-1">
                 <div className="font-bold text-sm">{s.player_name}</div>
-                <div className="text-xs text-starlight/40">{isHe ? s.team?.name_he : s.team?.name_en}</div>
+                <div className="text-xs text-starlight/40">{getTeamName(scorerTeam?.id, lang)}</div>
               </div>
               <div className="font-readout text-teal text-lg">
                 {s.goals} ⚽
               </div>
             </div>
-          ))}
+            )
+          })}
         </Section>
       )}
       {matchesAttemptedAt && <UpdateAttemptTab attemptedAt={matchesAttemptedAt} />}

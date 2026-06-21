@@ -6,6 +6,7 @@ import { t } from '@/lib/i18n'
 import { savePrediction, getUserPredictions, scorePrediction, awardSticker } from '@/lib/supabase'
 import StaleDataBanner from '@/components/ui/StaleDataBanner'
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab'
+import { TEAMS_BY_ID, getTeamName } from '@/data/teams'
 import { format } from 'date-fns'
 
 interface PredictClientProps {
@@ -19,7 +20,6 @@ interface PredictClientProps {
 
 export default function PredictClient({ upcomingMatches, allMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt }: PredictClientProps) {
   const { lang, user, addSticker } = useAppStore()
-  const isHe = lang === 'he'
 
   const [matchIdx, setMatchIdx] = useState(0)
   const [homeScore, setHomeScore] = useState(0)
@@ -108,8 +108,8 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
     setLoading(false)
   }
 
-  const homeTeam = current?.home_team
-  const awayTeam = current?.away_team
+  const homeTeam = current ? TEAMS_BY_ID[current.home_team_id] : undefined
+  const awayTeam = current ? TEAMS_BY_ID[current.away_team_id] : undefined
 
   // The "no upcoming matches" empty state used to be an early `return` —
   // which meant the My Predictions history below it never rendered once
@@ -138,8 +138,8 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
       {upcomingMatches.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-2 mb-4">
           {upcomingMatches.map((m, i) => {
-            const h = m.home_team
-            const a = m.away_team
+            const h = TEAMS_BY_ID[m.home_team_id]
+            const a = TEAMS_BY_ID[m.away_team_id]
             const locked = isLocked(m)
             return (
               <button
@@ -177,12 +177,12 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
         <div className="flex items-center gap-4 mb-6">
           <div className="flex-1 text-center">
             <div className="text-4xl mb-1">{homeTeam?.flag_emoji ?? '🏳️'}</div>
-            <div className="font-bold text-sm leading-tight text-starlight">{isHe ? homeTeam?.name_he : homeTeam?.name_en}</div>
+            <div className="font-bold text-sm leading-tight text-starlight">{getTeamName(current?.home_team_id, lang)}</div>
           </div>
-          <div className="text-coral font-bold text-xl">VS</div>
+          <div className="text-coral font-bold text-xl">{t(lang, 'predict_vs')}</div>
           <div className="flex-1 text-center">
             <div className="text-4xl mb-1">{awayTeam?.flag_emoji ?? '🏳️'}</div>
-            <div className="font-bold text-sm leading-tight text-starlight">{isHe ? awayTeam?.name_he : awayTeam?.name_en}</div>
+            <div className="font-bold text-sm leading-tight text-starlight">{getTeamName(current?.away_team_id, lang)}</div>
           </div>
         </div>
 
@@ -212,7 +212,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
               disabled={loading}
               className="w-full bg-coral text-white font-display text-lg rounded-2xl py-3 active:scale-97 disabled:opacity-60"
             >
-              {loading ? '...' : t(lang, 'predict_submit')}
+              {loading ? t(lang, 'predict_loading') : t(lang, 'predict_submit')}
             </button>
             {submitError && (
               <p className="text-coral text-xs font-bold text-center mt-2">
@@ -251,14 +251,14 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
           <div className="bg-spacelight rounded-2xl border border-ink/10 p-3">
             {myPredictions.map(p => {
               const m = matchesById.get(p.match_id)
-              const h = m?.home_team
-              const a = m?.away_team
+              const h = m ? TEAMS_BY_ID[m.home_team_id] : undefined
+              const a = m ? TEAMS_BY_ID[m.away_team_id] : undefined
               return (
                 <div key={p.id} className="py-2 border-b border-ink/10 last:border-0">
                   <div className="flex items-center gap-2 text-sm mb-1">
                     <span>{h?.flag_emoji ?? '🏳️'}</span>
                     <span className="font-bold text-starlight text-xs flex-1">
-                      {h ? (isHe ? h.name_he : h.name_en) : '?'} vs {a ? (isHe ? a.name_he : a.name_en) : '?'}
+                      {m ? getTeamName(m.home_team_id, lang) : '?'} {t(lang, 'predict_vs')} {m ? getTeamName(m.away_team_id, lang) : '?'}
                     </span>
                     <span>{a?.flag_emoji ?? '🏳️'}</span>
                   </div>

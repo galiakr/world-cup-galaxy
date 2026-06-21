@@ -25,7 +25,7 @@ export default function TopHeader() {
             rel="noopener noreferrer"
             className="text-sm text-starlight/30 hover:text-teal transition-colors mt-0.5"
           >
-            by Galia Kropach
+            {t(lang, 'credit_by')} Galia Kropach
           </a>
         </div>
 

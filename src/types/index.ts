@@ -1,9 +1,13 @@
 // ─── Tournament Data ───────────────────────────────────────────────────────
 
+// Team carries no language-dependent fields — its display name lives in
+// data/en.ts / data/he.ts and is resolved via getTeamName(id, lang) at
+// render time. This matters because Team objects (and Match/TopScorer
+// below) get embedded into server-fetched data that's cached and shared
+// across all users regardless of their language — baking in one
+// language at fetch time would show the wrong one to half of them.
 export interface Team {
   id: string
-  name_en: string
-  name_he: string
   fifa_code: string
   group: string
   flag_url: string        // from flag-icons CDN
@@ -39,8 +43,6 @@ export interface Match {
   match_number: number
   home_team_id: string
   away_team_id: string
-  home_team: Team
-  away_team: Team
   home_score: number | null
   away_score: number | null
   status: 'scheduled' | 'live' | 'finished'
@@ -49,7 +51,6 @@ export interface Match {
   match_date: string      // ISO date string
   kick_off_utc: string    // ISO datetime
   stadium_id: string
-  stadium?: Stadium
   phase?: string
   home_scorers: GoalEvent[]
   away_scorers: GoalEvent[]
@@ -58,10 +59,6 @@ export interface Match {
 
 export interface Stadium {
   id: string
-  name_en: string
-  name_he: string
-  city_en: string
-  city_he: string
   country: string
   capacity: number
   lat: number
@@ -88,8 +85,7 @@ export interface GroupTeamRow {
 
 export interface TopScorer {
   player_name: string
-  team_id: string
-  team: Team
+  team_id: string        // FIFA code — look up via TEAMS_BY_FIFA_CODE
   goals: number
   assists: number
   photo_url?: string
@@ -115,8 +111,6 @@ export type StickerCategory = 'country' | 'player' | 'moment' | 'achievement'
 
 export interface StickerDefinition {
   id: string
-  name_en: string
-  name_he: string
   category: StickerCategory
   rarity: StickerRarity
   emoji: string
@@ -125,8 +119,6 @@ export interface StickerDefinition {
   text_color: string
   team_id?: string       // for country stickers
   player_name?: string   // for player stickers
-  unlock_condition: string  // human-readable
-  unlock_condition_he: string
 }
 
 export interface UserSticker {
@@ -142,10 +134,6 @@ export interface UserSticker {
 
 export interface QuizQuestion {
   id: string
-  question_en: string
-  question_he: string
-  options_en: string[]
-  options_he: string[]
   correct_index: number
   difficulty: 'easy' | 'medium' | 'hard'
   sticker_reward_id?: string

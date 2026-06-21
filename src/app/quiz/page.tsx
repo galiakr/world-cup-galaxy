@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
-import { getDailyQuestions } from '@/data/quiz'
+import { getDailyQuestions, getQuizText } from '@/data/quiz'
 import { saveQuizAnswer } from '@/lib/supabase'
 import { STICKERS } from '@/data/stickers'
 
@@ -46,8 +46,9 @@ export default function QuizPage() {
     )
   }
 
-  const opts = lang === 'he' ? current.options_he : current.options_en
-  const question = lang === 'he' ? current.question_he : current.question_en
+  const currentText = getQuizText(current.id, lang)
+  const opts = currentText.options
+  const question = currentText.question
   const isCorrect = chosen === current.correct_index
 
   async function handleAnswer(idx: number) {
@@ -156,7 +157,7 @@ export default function QuizPage() {
           onClick={next}
           className="w-full bg-violet text-white font-display text-lg rounded-2xl py-4 active:scale-97"
         >
-          {currentIdx + 1 < unanswered.length ? t(lang, 'quiz_next') : '🏆 Finish!'}
+          {currentIdx + 1 < unanswered.length ? t(lang, 'quiz_next') : t(lang, 'quiz_finish')}
         </button>
       )}
 

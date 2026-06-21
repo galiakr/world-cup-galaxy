@@ -4,6 +4,8 @@ import { Match } from '@/types';
 import { useAppStore } from '@/store';
 import { t } from '@/lib/i18n';
 import { format } from 'date-fns';
+import { TEAMS_BY_ID, getTeamName } from '@/data/teams';
+import { getStadiumText } from '@/data/stadiums';
 
 interface MatchCardProps {
   match: Match;
@@ -20,25 +22,18 @@ export default function MatchCard({
   const isHe = lang === 'he';
   const [showInfo, setShowInfo] = useState(false);
 
-  const homeTeam = match.home_team;
-  const awayTeam = match.away_team;
+  const homeTeam = TEAMS_BY_ID[match.home_team_id];
+  const awayTeam = TEAMS_BY_ID[match.away_team_id];
   const homeFlagUrl =
     homeTeam?.flag_url ||
     `https://flagcdn.com/w40/${match.home_team_id.toLowerCase()}.png`;
   const awayFlagUrl =
     awayTeam?.flag_url ||
     `https://flagcdn.com/w40/${match.away_team_id.toLowerCase()}.png`;
+  const stadiumText = getStadiumText(match.stadium_id, lang);
 
-  const homeName = homeTeam
-    ? isHe
-      ? homeTeam.name_he
-      : homeTeam.name_en
-    : match.home_team_id;
-  const awayName = awayTeam
-    ? isHe
-      ? awayTeam.name_he
-      : awayTeam.name_en
-    : match.away_team_id;
+  const homeName = getTeamName(match.home_team_id, lang) || match.home_team_id;
+  const awayName = getTeamName(match.away_team_id, lang) || match.away_team_id;
 
   const kickoff = match.kick_off_utc
     ? format(new Date(match.kick_off_utc), 'HH:mm')
@@ -147,8 +142,8 @@ export default function MatchCard({
             <div
               className={`mb-3 text-xs text-starlight/40 ${isHe ? 'text-right' : 'text-left'}`}
             >
-              {match.stadium
-                ? `${isHe ? match.stadium.name_he : match.stadium.name_en}, ${isHe ? match.stadium.city_he : match.stadium.city_en}`
+              {stadiumText.name
+                ? `${stadiumText.name}, ${stadiumText.city}`
                 : match.stadium_id}{' '}
               · {matchDate} {kickoff && `· ${kickoff}`}
             </div>

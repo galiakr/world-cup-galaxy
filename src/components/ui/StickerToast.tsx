@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 import { useAppStore } from '@/store'
-import { STICKERS_BY_ID, RARITY_COLORS } from '@/data/stickers'
+import { STICKERS_BY_ID, RARITY_COLORS, getStickerText } from '@/data/stickers'
 import { t, TranslationKey } from '@/lib/i18n'
 
 export default function StickerToast() {
@@ -40,7 +40,7 @@ export default function StickerToast() {
         <div className="bg-spacelight rounded-2xl shadow-xl border border-ink/10 px-6 py-4 -mt-5 text-center min-w-[230px] relative z-10">
           <div className="text-gold font-display text-base">🌟 {t(lang, 'toast_new_sticker')}</div>
           <div className="text-starlight font-bold text-xl mt-1">
-            {lang === 'he' ? sticker.name_he : sticker.name_en}
+            {getStickerText(sticker.id, lang).name}
           </div>
           <div
             className="mt-2 inline-block text-xs font-bold px-3 py-1 rounded-full"

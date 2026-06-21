@@ -4,6 +4,7 @@ import { Team } from '@/types';
 import { useAppStore } from '@/store';
 import { t, TranslationKey } from '@/lib/i18n';
 import { fetchWikipediaPhoto } from '@/lib/api';
+import { getTeamName } from '@/data/teams';
 import { TeamStage, GroupPosition } from '@/lib/standings';
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab';
 
@@ -60,7 +61,6 @@ const STAGE_KEY: Record<TeamStage, TranslationKey> = {
 
 export default function TeamsClient({ teams, stageById, standingById, matchesAttemptedAt }: TeamsClientProps) {
   const lang = useAppStore((s) => s.lang);
-  const isHe = lang === 'he';
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<Team | null>(null);
   const [coachPhoto, setCoachPhoto] = useState<string | null>(null);
@@ -71,8 +71,8 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
   const filtered = teams.filter((team) => {
     const q = search.toLowerCase();
     return (
-      team.name_en.toLowerCase().includes(q) ||
-      team.name_he.includes(q) ||
+      getTeamName(team.id, 'en').toLowerCase().includes(q) ||
+      getTeamName(team.id, 'he').includes(q) ||
       team.group.toLowerCase().includes(q)
     );
   });
@@ -162,12 +162,12 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
                   >
                     <img
                       src={team.flag_url}
-                      alt={team.name_en}
+                      alt={getTeamName(team.id, lang)}
                       className="w-10 h-7 object-cover rounded shadow-sm flex-shrink-0"
                     />
                     <div className="min-w-0 flex-1">
                       <div className="font-bold text-sm leading-tight text-starlight">
-                        {isHe ? team.name_he : team.name_en}
+                        {getTeamName(team.id, lang)}
                       </div>
                       <div className="text-xs text-starlight/40 mb-1">
                         {team.fifa_code}
@@ -211,12 +211,12 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
             <div className="px-5 py-3 flex items-center gap-4 border-b border-ink/10">
               <img
                 src={selected.flag_url}
-                alt={selected.name_en}
+                alt={getTeamName(selected.id, lang)}
                 className="w-16 h-11 object-cover rounded-lg shadow"
               />
               <div>
                 <div className="font-display text-2xl text-starlight">
-                  {isHe ? selected.name_he : selected.name_en}
+                  {getTeamName(selected.id, lang)}
                 </div>
                 <div className="text-sm text-starlight/40">
                   {t(lang, 'teams_group')} {selected.group} ·{' '}
@@ -230,7 +230,7 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
               <div className="px-5 pt-4">
                 <img
                   src={coachPhoto}
-                  alt={isHe ? selected.name_he : selected.name_en}
+                  alt={getTeamName(selected.id, lang)}
                   className="h-48 m-auto object-cover rounded-2xl shadow-sm"
                 />
               </div>
@@ -255,7 +255,7 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
               </h3>
               {loadingDetail && (
                 <p className="text-starlight/40 text-sm text-center py-4">
-                  Loading...
+                  {t(lang, 'teams_loading')}
                 </p>
               )}
               {!loadingDetail && squad.length === 0 && (

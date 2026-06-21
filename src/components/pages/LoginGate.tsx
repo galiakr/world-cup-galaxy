@@ -97,7 +97,7 @@ export default function LoginGate({ children }: { children: React.ReactNode }) {
       setPendingCode(created.recoveryCode)
     } catch (e) {
       console.error(e)
-      setError('Something went wrong. Try again!')
+      setError(t(lang, 'generic_error'))
     } finally {
       setLoading(false)
     }
@@ -121,7 +121,7 @@ export default function LoginGate({ children }: { children: React.ReactNode }) {
       await activateProfile(recovered)
     } catch (e) {
       console.error(e)
-      setError('Something went wrong. Try again!')
+      setError(t(lang, 'generic_error'))
     } finally {
       setLoading(false)
     }

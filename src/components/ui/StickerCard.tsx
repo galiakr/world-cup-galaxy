@@ -1,6 +1,6 @@
 'use client'
 import { StickerDefinition, StickerRarity } from '@/types'
-import { RARITY_COLORS } from '@/data/stickers'
+import { RARITY_COLORS, getStickerText } from '@/data/stickers'
 import { t } from '@/lib/i18n'
 import { useAppStore } from '@/store'
 import { useState } from 'react'
@@ -17,6 +17,7 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
   const lang = useAppStore(s => s.lang)
   const [showTooltip, setShowTooltip] = useState(false)
   const rarity = RARITY_COLORS[sticker.rarity]
+  const text = getStickerText(sticker.id, lang)
 
   const sizes = {
     sm: 'w-16 h-16 text-2xl',
@@ -45,7 +46,7 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
         </span>
         {showTooltip && (
           <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-space border border-ink/10 text-starlight text-xs rounded-lg px-3 py-2 whitespace-nowrap z-50 max-w-48 text-center leading-tight">
-            {lang === 'he' ? sticker.unlock_condition_he : sticker.unlock_condition}
+            {text.unlock_condition}
           </div>
         )}
       </div>
@@ -84,7 +85,7 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
       {/* NEW badge */}
       {isNew && (
         <div className="absolute top-1 left-1 bg-yellow-400 text-yellow-900 text-[7px] font-black px-1 rounded animate-pulse">
-          NEW!
+          {t(lang, 'stickers_new_badge')}
         </div>
       )}
 
@@ -96,12 +97,12 @@ export default function StickerCard({ sticker, owned, isNew, size = 'md', onClic
         className={`${labelSizes[size]} font-extrabold mt-1 text-center leading-tight px-1 relative z-10`}
         style={{ color: sticker.text_color, textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
       >
-        {lang === 'he' ? sticker.name_he : sticker.name_en}
+        {text.name}
       </span>
 
       {showTooltip && (
         <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-space border border-ink/10 text-starlight text-xs rounded-lg px-3 py-2 whitespace-nowrap z-50 text-center">
-          {lang === 'he' ? sticker.name_he : sticker.name_en}
+          {text.name}
         </div>
       )}
     </div>

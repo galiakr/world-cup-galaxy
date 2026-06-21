@@ -90,8 +90,11 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
         ))}
       </div>
 
-      {/* Grouped matches */}
-      {Object.keys(grouped).sort().map(dateStr => (
+      {/* Grouped matches — results show most recent first, upcoming
+          show soonest first */}
+      {Object.keys(grouped)
+        .sort((a, b) => tab === 'results' ? b.localeCompare(a) : a.localeCompare(b))
+        .map(dateStr => (
         <div key={dateStr} className="mb-4">
           <div className="text-xs font-black text-teal uppercase tracking-wider mb-2 px-1">
             {dateLabel(dateStr)}

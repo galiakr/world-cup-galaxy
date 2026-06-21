@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { Match, TopScorer } from '@/types'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
@@ -18,10 +19,12 @@ interface HomeClientProps {
   matchesStale?: boolean
   matchesUpdatedAt?: string | null
   matchesAttemptedAt?: string
+  refereeCounts?: Record<string, number>
 }
 
-export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt }: HomeClientProps) {
+export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMatches, topScorers, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt, refereeCounts }: HomeClientProps) {
   const { lang, user, dailyClaimedDate, setDailyClaimedDate, addSticker } = useAppStore()
+  const [expandedFact, setExpandedFact] = useState<string | null>(null)
 
   const today = israelDateString()
   const dailyClaimed = dailyClaimedDate === today
@@ -107,7 +110,7 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
         {matchesError
           ? <EmptyMsg text={t(lang, 'matches_load_error')} />
           : todayMatches.length > 0
-            ? todayMatches.map(m => <MatchCard key={m.id} match={m} />)
+            ? todayMatches.map(m => <MatchCard key={m.id} match={m} refereeMatchCount={m.referee ? refereeCounts?.[m.referee] : undefined} />)
             : <EmptyMsg text={t(lang, 'home_no_matches')} />
         }
       </Section>
@@ -115,14 +118,14 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
       {/* Yesterday's results */}
       {yesterdayMatches.length > 0 && (
         <Section title={t(lang, 'home_yesterday')} emoji="" accent="violet">
-          {yesterdayMatches.map(m => <MatchCard key={m.id} match={m} compact />)}
+          {yesterdayMatches.map(m => <MatchCard key={m.id} match={m} compact refereeMatchCount={m.referee ? refereeCounts?.[m.referee] : undefined} />)}
         </Section>
       )}
 
       {/* Tomorrow */}
       {tomorrowMatches.length > 0 && (
         <Section title={t(lang, 'home_tomorrow')} emoji="" accent="coral">
-          {tomorrowMatches.map(m => <MatchCard key={m.id} match={m} />)}
+          {tomorrowMatches.map(m => <MatchCard key={m.id} match={m} refereeMatchCount={m.referee ? refereeCounts?.[m.referee] : undefined} />)}
         </Section>
       )}
 
@@ -131,36 +134,56 @@ export default function HomeClient({ todayMatches, yesterdayMatches, tomorrowMat
         <Section title={t(lang, 'home_top_scorers')} emoji="⚽" accent="teal">
           {topScorers.map((s, i) => {
             const scorerTeam = TEAMS_BY_FIFA_CODE[s.team_id]
+            const isExpanded = expandedFact === s.player_name
+            // Prefer a native Hebrew article when reading in Hebrew, but
+            // fall back to the English one rather than showing nothing.
+            const fact = (lang === 'he' ? s.fact_he : s.fact_en) ?? s.fact_en ?? s.fact_he
             return (
-            <div key={s.player_name} className="flex items-center gap-3 py-2 border-b border-ink/10 last:border-0">
-              <div
-                className={`font-readout text-xs w-6 h-6 rounded-full flex items-center justify-center ${
-                  MEDAL_STYLE[i] ?? 'text-starlight/40'
-                }`}
+            <div key={s.player_name} className="py-2 border-b border-ink/10 last:border-0">
+              <button
+                onClick={() => fact && setExpandedFact(isExpanded ? null : s.player_name)}
+                className="w-full flex items-center gap-3 text-start"
               >
-                {i + 1}
-              </div>
-              {s.photo_url && (
+                <div
+                  className={`font-readout text-xs w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    MEDAL_STYLE[i] ?? 'text-starlight/40'
+                  }`}
+                >
+                  {i + 1}
+                </div>
+                {s.photo_url && (
+                  <img
+                    src={s.photo_url}
+                    alt=""
+                    className="w-8 h-8 rounded-full object-cover border border-ink/10 flex-shrink-0"
+                    onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  />
+                )}
                 <img
-                  src={s.photo_url}
+                  src={scorerTeam?.flag_url || ''}
                   alt=""
-                  className="w-8 h-8 rounded-full object-cover border border-ink/10 flex-shrink-0"
+                  className="w-7 h-5 object-cover rounded shadow-sm flex-shrink-0"
                   onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
                 />
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-sm">{s.player_name}</div>
+                  <div className="text-xs text-starlight/40">{getTeamName(scorerTeam?.id, lang)}</div>
+                </div>
+                <div className="font-readout text-teal text-lg flex-shrink-0">
+                  {s.goals} ⚽
+                </div>
+                {fact && (
+                  <span className="text-starlight/30 text-xs flex-shrink-0">{isExpanded ? '▲' : '▼'}</span>
+                )}
+              </button>
+              {isExpanded && fact && (
+                <p
+                  dir={lang === 'he' && s.fact_he ? 'rtl' : 'ltr'}
+                  className="text-xs text-starlight/60 leading-relaxed mt-2 pl-9"
+                >
+                  💡 {fact}
+                </p>
               )}
-              <img
-                src={scorerTeam?.flag_url || ''}
-                alt=""
-                className="w-7 h-5 object-cover rounded shadow-sm flex-shrink-0"
-                onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
-              />
-              <div className="flex-1">
-                <div className="font-bold text-sm">{s.player_name}</div>
-                <div className="text-xs text-starlight/40">{getTeamName(scorerTeam?.id, lang)}</div>
-              </div>
-              <div className="font-readout text-teal text-lg">
-                {s.goals} ⚽
-              </div>
             </div>
             )
           })}

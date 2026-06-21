@@ -11,12 +11,14 @@ interface MatchCardProps {
   match: Match;
   compact?: boolean;
   showGroup?: boolean;
+  refereeMatchCount?: number;
 }
 
 export default function MatchCard({
   match,
   compact = false,
   showGroup = true,
+  refereeMatchCount,
 }: MatchCardProps) {
   const lang = useAppStore((s) => s.lang);
   const isHe = lang === 'he';
@@ -165,6 +167,11 @@ export default function MatchCard({
             >
               🧑‍⚖️ {t(lang, 'match_referee')}:{' '}
               {match.referee ?? t(lang, 'match_referee_unknown')}
+              {match.referee && !!refereeMatchCount && (
+                <span className="text-starlight/30">
+                  {' '}· {refereeMatchCount} {t(lang, 'referee_matches_judged')}
+                </span>
+              )}
             </div>
           )}
         </div>

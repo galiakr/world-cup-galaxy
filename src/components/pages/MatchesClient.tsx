@@ -20,11 +20,12 @@ interface MatchesClientProps {
   matchesStale?: boolean
   matchesUpdatedAt?: string | null
   matchesAttemptedAt?: string
+  refereeCounts?: Record<string, number>
 }
 
 type Tab = 'upcoming' | 'results'
 
-export default function MatchesClient({ pastMatches, upcomingMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt }: MatchesClientProps) {
+export default function MatchesClient({ pastMatches, upcomingMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt, refereeCounts }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
   const [showMap, setShowMap] = useState(false)
@@ -100,7 +101,7 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
             {dateLabel(dateStr)}
           </div>
           {grouped[dateStr].map(m => (
-            <MatchCard key={m.id} match={m} />
+            <MatchCard key={m.id} match={m} refereeMatchCount={m.referee ? refereeCounts?.[m.referee] : undefined} />
           ))}
         </div>
       ))}

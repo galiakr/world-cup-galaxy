@@ -129,6 +129,15 @@ CREATE TABLE IF NOT EXISTS matches_cache (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- Same pattern as matches_cache, for the top-scorers list — also saves
+-- us from re-fetching each player's English + Hebrew Wikipedia summary
+-- (a slow, multi-request lookup) on every cache expiry.
+CREATE TABLE IF NOT EXISTS scorers_cache (
+  id         TEXT PRIMARY KEY DEFAULT 'latest',
+  data       JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- Generates an 8-character code (e.g. "XJ4M-7QPR") from an alphabet
 -- with no ambiguous characters (no 0/O, 1/I/L), ~40 bits of entropy —
 -- far beyond what's brute-forceable through the app's RPC.
@@ -272,6 +281,7 @@ ALTER TABLE bug_reports     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_auth_links ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_recovery   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE matches_cache   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE scorers_cache   ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow all on users"         ON users;
 DROP POLICY IF EXISTS "Allow all on user_stickers" ON user_stickers;
@@ -345,6 +355,14 @@ DROP POLICY IF EXISTS "matches_cache_update" ON matches_cache;
 CREATE POLICY "matches_cache_select" ON matches_cache FOR SELECT USING (true);
 CREATE POLICY "matches_cache_upsert" ON matches_cache FOR INSERT WITH CHECK (true);
 CREATE POLICY "matches_cache_update" ON matches_cache FOR UPDATE USING (true);
+
+-- scorers_cache: same reasoning as matches_cache above.
+DROP POLICY IF EXISTS "scorers_cache_select" ON scorers_cache;
+DROP POLICY IF EXISTS "scorers_cache_upsert" ON scorers_cache;
+DROP POLICY IF EXISTS "scorers_cache_update" ON scorers_cache;
+CREATE POLICY "scorers_cache_select" ON scorers_cache FOR SELECT USING (true);
+CREATE POLICY "scorers_cache_upsert" ON scorers_cache FOR INSERT WITH CHECK (true);
+CREATE POLICY "scorers_cache_update" ON scorers_cache FOR UPDATE USING (true);
 
 -- ── Indexes ────────────────────────────────────────────────────────
 CREATE INDEX IF NOT EXISTS idx_user_stickers_user ON user_stickers(user_id);

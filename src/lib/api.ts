@@ -156,6 +156,27 @@ async function loadMatchesFallback(): Promise<{ matches: Match[]; updatedAt: str
   }
 }
 
+// Same persistence pattern as matches_cache — survives restarts/cache
+// expiry, and saves re-doing the (slow, multi-request) Wikipedia
+// lookups every time the in-memory cache turns over.
+async function saveScorersFallback(scorers: TopScorer[]) {
+  try {
+    await supabase.from('scorers_cache').upsert({ id: 'latest', data: scorers, updated_at: new Date().toISOString() })
+  } catch {
+    // best-effort only
+  }
+}
+
+async function loadScorersFallback(): Promise<TopScorer[]> {
+  try {
+    const { data, error } = await supabase.from('scorers_cache').select('data').eq('id', 'latest').single()
+    if (error || !data) return []
+    return data.data as TopScorer[]
+  } catch {
+    return []
+  }
+}
+
 // worldcup26.ir sends scores as strings, but uses the literal string "null"
 // (not JSON null) for some not-yet-played matches — Number("null") is NaN,
 // which showed up inconsistently next to matches that used "0" instead.
@@ -332,43 +353,112 @@ export async function fetchTopScorers(): Promise<TopScorer[]> {
       headers: { 'X-Auth-Token': FDORG_KEY },
       next: { revalidate: 3600 },
     })
-    if (!res.ok) return []
+    if (!res.ok) throw new Error(`scorers fetch: ${res.status}`)
     const json = await res.json()
     const scorers: TopScorer[] = await Promise.all((json.scorers ?? []).map(async (s: Record<string, unknown>) => {
       const pl = s.player as Record<string, unknown>
       const tm = s.team   as Record<string, unknown>
       const code = String(tm?.tla ?? '').toUpperCase()
       const playerName = String(pl?.name ?? '')
+      const [summary, factHe] = playerName
+        ? await Promise.all([fetchWikipediaSummary(playerName), fetchHebrewFact(playerName)])
+        : [{ photo_url: null, fact: null }, null]
       return {
         player_name: playerName,
         team_id:     code,
         goals:       Number(s.goals  ?? 0),
         assists:     Number(s.assists ?? 0),
-        photo_url:   playerName ? (await fetchWikipediaPhoto(playerName)) ?? undefined : undefined,
+        photo_url:   summary.photo_url ?? undefined,
+        fact_en:     summary.fact ?? undefined,
+        fact_he:     factHe ?? undefined,
       }
     }))
     setCache(cacheKey, scorers, 3600000)
+    await saveScorersFallback(scorers)
     return scorers
-  } catch { return [] }
+  } catch (e) {
+    console.error('fetchTopScorers error:', e)
+    return await loadScorersFallback()
+  }
 }
 
 // ─── Wikipedia Commons ─────────────────────────────────────────────────────
 
-export async function fetchWikipediaPhoto(slug: string): Promise<string | null> {
-  const cacheKey = `wiki_${slug}`
-  const cached = getCache<string | null>(cacheKey)
-  if (cached !== null) return cached
+interface WikiSummary {
+  photo_url: string | null
+  fact: string | null   // first ~2 sentences of the page extract, as a quick "fun fact"
+}
 
+function firstSentences(text: string, count: number): string {
+  const parts = text.split(/(?<=[.!?])\s+/).slice(0, count)
+  return parts.join(' ').trim()
+}
+
+async function fetchWikipediaSummary(slug: string): Promise<WikiSummary> {
+  const cacheKey = `wikisum_${slug}`
+  const cached = getCache<WikiSummary>(cacheKey)
+  if (cached) return cached
+
+  const empty: WikiSummary = { photo_url: null, fact: null }
   try {
     const res = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(slug)}`,
       { next: { revalidate: 86400 } }
     )
-    if (!res.ok) { setCache(cacheKey, null, 86400000); return null }
+    if (!res.ok) { setCache(cacheKey, empty, 86400000); return empty }
     const json = await res.json()
-    const url = json.thumbnail?.source ?? json.originalimage?.source ?? null
-    setCache(cacheKey, url, 86400000)
-    return url
+    // Common names (e.g. "Ma Ning") often resolve to a disambiguation page
+    // listing unrelated people instead of a real bio — that's worse than
+    // having no fact at all, so treat it the same as "not found".
+    const isDisambiguation = json.type === 'disambiguation'
+    const result: WikiSummary = {
+      photo_url: !isDisambiguation ? (json.thumbnail?.source ?? json.originalimage?.source ?? null) : null,
+      fact: !isDisambiguation && typeof json.extract === 'string' && json.extract ? firstSentences(json.extract, 2) : null,
+    }
+    setCache(cacheKey, result, 86400000)
+    return result
+  } catch { return empty }
+}
+
+export async function fetchWikipediaPhoto(slug: string): Promise<string | null> {
+  return (await fetchWikipediaSummary(slug)).photo_url
+}
+
+// Wikipedia doesn't auto-translate — but most well-known players have a
+// real, natively-written Hebrew article. langlinks finds that article's
+// actual title (which is rarely a direct translation of the English
+// slug), then we fetch ITS summary from he.wikipedia.org. Returns null
+// when no Hebrew article exists, rather than falling back to a machine
+// translation of the English text.
+async function fetchHebrewFact(enSlug: string): Promise<string | null> {
+  const cacheKey = `wikihe_${enSlug}`
+  const cached = getCache<string | null>(cacheKey)
+  if (cached !== null) return cached
+
+  try {
+    const linkRes = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(enSlug)}&prop=langlinks&lllang=he&format=json&origin=*`,
+      { next: { revalidate: 86400 } }
+    )
+    if (!linkRes.ok) { setCache(cacheKey, null, 86400000); return null }
+    const linkJson = await linkRes.json()
+    const pages = Object.values(linkJson.query?.pages ?? {}) as Record<string, unknown>[]
+    const heTitle = (pages[0]?.langlinks as Record<string, unknown>[] | undefined)?.[0]?.['*']
+    if (typeof heTitle !== 'string') { setCache(cacheKey, null, 86400000); return null }
+
+    const sumRes = await fetch(
+      `https://he.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(heTitle)}`,
+      { next: { revalidate: 86400 } }
+    )
+    if (!sumRes.ok) { setCache(cacheKey, null, 86400000); return null }
+    const sumJson = await sumRes.json()
+    if (sumJson.type === 'disambiguation' || typeof sumJson.extract !== 'string' || !sumJson.extract) {
+      setCache(cacheKey, null, 86400000)
+      return null
+    }
+    const fact = firstSentences(sumJson.extract, 2)
+    setCache(cacheKey, fact, 86400000)
+    return fact
   } catch { return null }
 }
 

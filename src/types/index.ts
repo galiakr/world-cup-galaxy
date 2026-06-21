@@ -89,6 +89,8 @@ export interface TopScorer {
   goals: number
   assists: number
   photo_url?: string
+  fact_en?: string        // English Wikipedia summary, best-effort
+  fact_he?: string        // native Hebrew Wikipedia article, when one exists
 }
 
 // ─── User & Auth ───────────────────────────────────────────────────────────

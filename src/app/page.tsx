@@ -1,5 +1,6 @@
 import { fetchMatches, fetchTopScorers, getTodayMatches, getYesterdayMatches, getTomorrowMatches } from '@/lib/api'
 import { Match } from '@/types'
+import { countRefereeMatches } from '@/lib/standings'
 import HomeClient from '@/components/pages/HomeClient'
 
 // fetchMatches retries against a slow/flaky upstream with a generous
@@ -18,6 +19,7 @@ export default async function HomePage() {
   const todayMatches = getTodayMatches(matches)
   const yesterdayMatches = getYesterdayMatches(matches)
   const tomorrowMatches = getTomorrowMatches(matches)
+  const refereeCounts = countRefereeMatches(matches)
 
   return (
     <HomeClient
@@ -29,6 +31,7 @@ export default async function HomePage() {
       matchesStale={stale}
       matchesUpdatedAt={updatedAt}
       matchesAttemptedAt={attemptedAt}
+      refereeCounts={refereeCounts}
     />
   )
 }

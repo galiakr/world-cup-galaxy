@@ -1,5 +1,6 @@
 import { fetchMatches, getPastMatches, getUpcomingMatches } from '@/lib/api'
 import { Match } from '@/types'
+import { countRefereeMatches } from '@/lib/standings'
 import MatchesClient from '@/components/pages/MatchesClient'
 
 // fetchMatches retries against a slow/flaky upstream with a generous
@@ -30,6 +31,7 @@ export default async function MatchesPage() {
       matchesStale={stale}
       matchesUpdatedAt={updatedAt}
       matchesAttemptedAt={attemptedAt}
+      refereeCounts={countRefereeMatches(matches)}
     />
   )
 }

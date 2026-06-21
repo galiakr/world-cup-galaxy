@@ -133,3 +133,17 @@ export function getGroupPosition(teamId: string, group: string, standings: Recor
   const r = rows[idx]
   return { position: idx + 1, played: r.played, won: r.won, drawn: r.drawn, lost: r.lost, points: r.points }
 }
+
+// football-data.org doesn't expose card/bookings stats on the free tier
+// (confirmed — checked both the match-list and single-match endpoints),
+// so "games judged" is the one referee stat we can actually offer —
+// computed from matches we already have, no extra API call needed.
+export function countRefereeMatches(matches: Match[]): Record<string, number> {
+  const counts: Record<string, number> = {}
+  for (const m of matches) {
+    if (m.status === 'finished' && m.referee) {
+      counts[m.referee] = (counts[m.referee] ?? 0) + 1
+    }
+  }
+  return counts
+}

@@ -54,6 +54,14 @@ export default function MatchCard({
   const isOngoing =
     match.status !== 'finished' && (match.status === 'live' || hasKickedOff);
 
+  // Highlight the winner once a result is in — losing side dims back,
+  // a draw leaves both sides as-is.
+  const isFinished = match.status === 'finished';
+  const homeWon =
+    isFinished && match.home_score != null && match.away_score != null && match.home_score > match.away_score;
+  const awayWon =
+    isFinished && match.home_score != null && match.away_score != null && match.away_score > match.home_score;
+
   // Combined goal timeline for the post-match summary — "45+5" sorts as 45.5
   // so stoppage-time goals land right after the minute they were added to.
   const allGoals = [
@@ -167,10 +175,16 @@ export default function MatchCard({
         className="order-1 lg:order-2 flex items-center justify-center gap-2 lg:basis-[70%] min-w-0 lg:shrink"
       >
         {/* Home team */}
-        <div className="flex items-center gap-1.5 min-w-0 flex-1 justify-end">
+        <div
+          className={`flex items-center gap-1.5 min-w-0 flex-1 justify-end ${
+            homeWon ? 'origin-right animate-winner-grow' : ''
+          }`}
+        >
           <span
             dir={isHe ? 'rtl' : 'ltr'}
-            className={`font-bold text-starlight text-sm leading-tight ${isHe ? 'text-right' : 'text-left'}`}
+            className={`text-sm leading-tight ${isHe ? 'text-right' : 'text-left'} ${
+              homeWon ? 'font-extrabold text-gold' : 'font-bold text-starlight'
+            }`}
           >
             {homeName}
           </span>
@@ -187,8 +201,10 @@ export default function MatchCard({
         {/* Score / Time */}
         <div className="flex flex-col items-center gap-1 flex-shrink-0">
           {match.status === 'finished' || isOngoing ? (
-            <div className="bg-space border border-ink/10 text-gold font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
-              {match.home_score} – {match.away_score}
+            <div className="bg-space border border-ink/10 font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
+              <span className={homeWon ? 'text-gold font-black' : 'text-gold'}>{match.home_score}</span>
+              <span className="text-gold/50"> – </span>
+              <span className={awayWon ? 'text-gold font-black' : 'text-gold'}>{match.away_score}</span>
             </div>
           ) : (
             <div className="bg-space border border-ink/10 text-gold/40 font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
@@ -203,10 +219,16 @@ export default function MatchCard({
         </div>
 
         {/* Away team */}
-        <div className="flex items-center gap-1.5 min-w-0 flex-1 justify-end flex-row-reverse">
+        <div
+          className={`flex items-center gap-1.5 min-w-0 flex-1 justify-end flex-row-reverse ${
+            awayWon ? 'origin-left animate-winner-grow' : ''
+          }`}
+        >
           <span
             dir={isHe ? 'rtl' : 'ltr'}
-            className={`font-bold text-starlight text-sm leading-tight ${isHe ? 'text-right' : 'text-left'}`}
+            className={`text-sm leading-tight ${isHe ? 'text-right' : 'text-left'} ${
+              awayWon ? 'font-extrabold text-gold' : 'font-bold text-starlight'
+            }`}
           >
             {awayName}
           </span>

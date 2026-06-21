@@ -108,6 +108,25 @@ button, a {
   }
 }
 
+/* Winning-team marker on match cards — the flag+name pop up larger with
+   a little overshoot, then settle at a size bigger than where they
+   started (and bigger than the losing side, which is untouched). */
+@keyframes winnerGrow {
+  0%   { transform: scale(1); }
+  55%  { transform: scale(1.28); }
+  100% { transform: scale(1.15); }
+}
+.animate-winner-grow {
+  animation: winnerGrow 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-winner-grow {
+    animation: none;
+    transform: scale(1.15);
+  }
+}
+
 /* Card hover */
 .hover-lift {
   transition: transform 0.15s ease, box-shadow 0.15s ease;

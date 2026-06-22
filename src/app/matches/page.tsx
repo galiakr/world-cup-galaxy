@@ -27,6 +27,7 @@ export default async function MatchesPage() {
     <MatchesClient
       pastMatches={getPastMatches(matches)}
       upcomingMatches={getUpcomingMatches(matches, 10)}
+      knockoutMatches={matches.filter(m => m.round !== 'group')}
       matchesError={error}
       matchesStale={stale}
       matchesUpdatedAt={updatedAt}

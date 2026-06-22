@@ -168,9 +168,9 @@ export default function MatchCard({
               🧑‍⚖️ {t(lang, 'match_referee')}:{' '}
               {match.referee ?? t(lang, 'match_referee_unknown')}
               {match.referee && !!refereeMatchCount && (
-                <span className="text-starlight/30">
-                  {' '}· {refereeMatchCount} {t(lang, 'referee_matches_judged')}
-                </span>
+                <div className="text-starlight/30">
+                  {refereeMatchCount} {t(lang, 'referee_matches_judged')}
+                </div>
               )}
             </div>
           )}

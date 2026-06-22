@@ -5,6 +5,7 @@ import { Match } from '@/types'
 import { useAppStore } from '@/store'
 import { t } from '@/lib/i18n'
 import MatchCard from '@/components/ui/MatchCard'
+import BracketView from '@/components/ui/BracketView'
 import StaleDataBanner from '@/components/ui/StaleDataBanner'
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab'
 import { format } from 'date-fns'
@@ -16,6 +17,7 @@ const StadiumsMap = dynamic(() => import('@/components/ui/StadiumsMap'), { ssr: 
 interface MatchesClientProps {
   pastMatches: Match[]
   upcomingMatches: Match[]
+  knockoutMatches?: Match[]
   matchesError?: boolean
   matchesStale?: boolean
   matchesUpdatedAt?: string | null
@@ -23,14 +25,14 @@ interface MatchesClientProps {
   refereeCounts?: Record<string, number>
 }
 
-type Tab = 'upcoming' | 'results'
+type Tab = 'upcoming' | 'results' | 'bracket'
 
-export default function MatchesClient({ pastMatches, upcomingMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt, refereeCounts }: MatchesClientProps) {
+export default function MatchesClient({ pastMatches, upcomingMatches, knockoutMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt, refereeCounts }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
   const [showMap, setShowMap] = useState(false)
 
-  const displayed = tab === 'upcoming' ? upcomingMatches : pastMatches
+  const displayed = tab === 'upcoming' ? upcomingMatches : tab === 'results' ? pastMatches : []
 
   // Group by date
   const grouped = displayed.reduce<Record<string, Match[]>>((acc, m) => {
@@ -54,6 +56,7 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
   const TABS: { key: Tab; label: string }[] = [
     { key: 'upcoming', label: t(lang, 'matches_upcoming') },
     { key: 'results', label: t(lang, 'matches_results') },
+    { key: 'bracket', label: t(lang, 'matches_bracket_tab') },
   ]
 
   return (
@@ -91,9 +94,14 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
         ))}
       </div>
 
+      {/* Bracket */}
+      {tab === 'bracket' && (
+        <BracketView matches={knockoutMatches ?? []} />
+      )}
+
       {/* Grouped matches — results show most recent first, upcoming
           show soonest first */}
-      {Object.keys(grouped)
+      {tab !== 'bracket' && Object.keys(grouped)
         .sort((a, b) => tab === 'results' ? b.localeCompare(a) : a.localeCompare(b))
         .map(dateStr => (
         <div key={dateStr} className="mb-4">
@@ -106,7 +114,7 @@ export default function MatchesClient({ pastMatches, upcomingMatches, matchesErr
         </div>
       ))}
 
-      {displayed.length === 0 && (
+      {tab !== 'bracket' && displayed.length === 0 && (
         <div className="text-center text-starlight/40 py-12">
           <div className="text-4xl mb-3">🛰️</div>
           <div>{t(lang, matchesError ? 'matches_load_error' : 'home_no_matches')}</div>

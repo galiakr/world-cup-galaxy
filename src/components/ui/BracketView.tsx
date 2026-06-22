@@ -4,6 +4,7 @@ import { Match } from '@/types'
 import { useAppStore } from '@/store'
 import { t, TranslationKey } from '@/lib/i18n'
 import { TEAMS_BY_ID, getTeamName } from '@/data/teams'
+import { getStadiumText } from '@/data/stadiums'
 import { BRACKET_ROUNDS, buildBracket, getCurrentRound } from '@/lib/bracket'
 import { format } from 'date-fns'
 
@@ -109,6 +110,7 @@ function BracketSlot({ match }: { match: Match }) {
   const isFinished = match.status === 'finished'
   const homeWon = isFinished && match.home_score != null && match.away_score != null && match.home_score > match.away_score
   const awayWon = isFinished && match.home_score != null && match.away_score != null && match.away_score > match.home_score
+  const stadiumText = getStadiumText(match.stadium_id, lang)
 
   return (
     <div dir="ltr" className="bg-spacelight border border-ink/10 rounded-xl px-2 py-1.5 text-xs">
@@ -130,8 +132,13 @@ function BracketSlot({ match }: { match: Match }) {
         isHe={isHe}
       />
       {!isFinished && match.kick_off_utc && (
-        <div className="text-[9px] text-starlight/30 text-center mt-1 font-readout">
+        <div className="text-[9px] text-starlight/60 text-center mt-1 font-readout">
           {format(new Date(match.kick_off_utc), 'dd/MM HH:mm')}
+        </div>
+      )}
+      {stadiumText.name && (
+        <div className="text-[9px] text-starlight/60 text-center mt-0.5 truncate">
+          {stadiumText.name}, {stadiumText.city}
         </div>
       )}
     </div>

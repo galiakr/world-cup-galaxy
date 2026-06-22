@@ -1,6 +1,8 @@
 import { fetchMatches, getPastMatches, getUpcomingMatches } from '@/lib/api'
 import { Match } from '@/types'
 import { countRefereeMatches } from '@/lib/standings'
+import { fetchForecastAtKickoff, ForecastWeather } from '@/lib/weather'
+import { STADIUMS_BY_ID } from '@/data/stadiums'
 import MatchesClient from '@/components/pages/MatchesClient'
 
 // fetchMatches retries against a slow/flaky upstream with a generous
@@ -23,16 +25,31 @@ export default async function MatchesPage() {
     error = true
   }
 
+  const upcomingMatches = getUpcomingMatches(matches, 10)
+
+  // Forecast at kickoff only makes sense for matches not too far out
+  // (free tier only covers ~5 days ahead) — fetched here rather than
+  // on every match so finished/distant fixtures never trigger a call.
+  const matchWeather: Record<string, ForecastWeather | null> = {}
+  await Promise.all(
+    upcomingMatches.map(async m => {
+      const stadium = STADIUMS_BY_ID[m.stadium_id]
+      if (!stadium || !m.kick_off_utc) return
+      matchWeather[m.id] = await fetchForecastAtKickoff(stadium.lat, stadium.lng, m.kick_off_utc)
+    }),
+  )
+
   return (
     <MatchesClient
       pastMatches={getPastMatches(matches)}
-      upcomingMatches={getUpcomingMatches(matches, 10)}
+      upcomingMatches={upcomingMatches}
       knockoutMatches={matches.filter(m => m.round !== 'group')}
       matchesError={error}
       matchesStale={stale}
       matchesUpdatedAt={updatedAt}
       matchesAttemptedAt={attemptedAt}
       refereeCounts={countRefereeMatches(matches)}
+      matchWeather={matchWeather}
     />
   )
 }

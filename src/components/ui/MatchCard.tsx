@@ -6,12 +6,15 @@ import { t } from '@/lib/i18n';
 import { format } from 'date-fns';
 import { TEAMS_BY_ID, getTeamName } from '@/data/teams';
 import { getStadiumText } from '@/data/stadiums';
+import type { ForecastWeather } from '@/lib/weather';
+import { weatherEmoji } from '@/lib/weatherDisplay';
 
 interface MatchCardProps {
   match: Match;
   compact?: boolean;
   showGroup?: boolean;
   refereeMatchCount?: number;
+  weather?: ForecastWeather | null;
 }
 
 export default function MatchCard({
@@ -19,6 +22,7 @@ export default function MatchCard({
   compact = false,
   showGroup = true,
   refereeMatchCount,
+  weather,
 }: MatchCardProps) {
   const lang = useAppStore((s) => s.lang);
   const isHe = lang === 'he';
@@ -156,6 +160,11 @@ export default function MatchCard({
                 ? `${stadiumText.name}, ${stadiumText.city}`
                 : match.stadium_id}{' '}
               · {matchDate} {kickoff && `· ${kickoff}`}
+              {weather && (
+                <div className="text-starlight/30">
+                  {weatherEmoji(weather.icon)} {weather.tempC}°C {t(lang, 'match_weather_forecast')}
+                </div>
+              )}
             </div>
           )}
 

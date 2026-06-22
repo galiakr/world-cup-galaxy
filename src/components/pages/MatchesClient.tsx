@@ -10,6 +10,7 @@ import StaleDataBanner from '@/components/ui/StaleDataBanner'
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab'
 import { format } from 'date-fns'
 import { israelDateString } from '@/lib/date'
+import type { ForecastWeather } from '@/lib/weather'
 
 // Leaflet touches `window` on import, so it can't render on the server.
 const StadiumsMap = dynamic(() => import('@/components/ui/StadiumsMap'), { ssr: false })
@@ -23,11 +24,12 @@ interface MatchesClientProps {
   matchesUpdatedAt?: string | null
   matchesAttemptedAt?: string
   refereeCounts?: Record<string, number>
+  matchWeather?: Record<string, ForecastWeather | null>
 }
 
 type Tab = 'upcoming' | 'results' | 'bracket'
 
-export default function MatchesClient({ pastMatches, upcomingMatches, knockoutMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt, refereeCounts }: MatchesClientProps) {
+export default function MatchesClient({ pastMatches, upcomingMatches, knockoutMatches, matchesError, matchesStale, matchesUpdatedAt, matchesAttemptedAt, refereeCounts, matchWeather }: MatchesClientProps) {
   const lang = useAppStore(s => s.lang)
   const [tab, setTab] = useState<Tab>('upcoming')
   const [showMap, setShowMap] = useState(false)
@@ -109,7 +111,12 @@ export default function MatchesClient({ pastMatches, upcomingMatches, knockoutMa
             {dateLabel(dateStr)}
           </div>
           {grouped[dateStr].map(m => (
-            <MatchCard key={m.id} match={m} refereeMatchCount={m.referee ? refereeCounts?.[m.referee] : undefined} />
+            <MatchCard
+              key={m.id}
+              match={m}
+              refereeMatchCount={m.referee ? refereeCounts?.[m.referee] : undefined}
+              weather={tab === 'upcoming' ? matchWeather?.[m.id] : undefined}
+            />
           ))}
         </div>
       ))}

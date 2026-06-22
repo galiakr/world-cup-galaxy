@@ -1,7 +1,7 @@
 import { fetchMatches, getPastMatches, getUpcomingMatches } from '@/lib/api'
 import { Match } from '@/types'
 import { countRefereeMatches } from '@/lib/standings'
-import { fetchForecastAtKickoff, ForecastWeather } from '@/lib/weather'
+import { fetchForecastAtKickoff, fetchCurrentWeather, WeatherInfo } from '@/lib/weather'
 import { STADIUMS_BY_ID } from '@/data/stadiums'
 import MatchesClient from '@/components/pages/MatchesClient'
 
@@ -30,12 +30,17 @@ export default async function MatchesPage() {
   // Forecast at kickoff only makes sense for matches not too far out
   // (free tier only covers ~5 days ahead) — fetched here rather than
   // on every match so finished/distant fixtures never trigger a call.
-  const matchWeather: Record<string, ForecastWeather | null> = {}
+  // A match already underway gets live current weather instead, since
+  // its kickoff time is in the past and has no forecast left.
+  const matchWeather: Record<string, WeatherInfo | null> = {}
   await Promise.all(
     upcomingMatches.map(async m => {
       const stadium = STADIUMS_BY_ID[m.stadium_id]
       if (!stadium || !m.kick_off_utc) return
-      matchWeather[m.id] = await fetchForecastAtKickoff(stadium.lat, stadium.lng, m.kick_off_utc)
+      const hasKickedOff = new Date(m.kick_off_utc).getTime() <= Date.now()
+      matchWeather[m.id] = hasKickedOff
+        ? await fetchCurrentWeather(stadium.lat, stadium.lng)
+        : await fetchForecastAtKickoff(stadium.lat, stadium.lng, m.kick_off_utc)
     }),
   )
 

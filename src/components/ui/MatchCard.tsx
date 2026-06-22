@@ -6,7 +6,7 @@ import { t } from '@/lib/i18n';
 import { format } from 'date-fns';
 import { TEAMS_BY_ID, getTeamName } from '@/data/teams';
 import { getStadiumText } from '@/data/stadiums';
-import type { ForecastWeather } from '@/lib/weather';
+import type { WeatherInfo } from '@/lib/weather';
 import { weatherEmoji } from '@/lib/weatherDisplay';
 
 interface MatchCardProps {
@@ -14,7 +14,7 @@ interface MatchCardProps {
   compact?: boolean;
   showGroup?: boolean;
   refereeMatchCount?: number;
-  weather?: ForecastWeather | null;
+  weather?: WeatherInfo | null;
 }
 
 export default function MatchCard({
@@ -64,9 +64,15 @@ export default function MatchCard({
   // a draw leaves both sides as-is.
   const isFinished = match.status === 'finished';
   const homeWon =
-    isFinished && match.home_score != null && match.away_score != null && match.home_score > match.away_score;
+    isFinished &&
+    match.home_score != null &&
+    match.away_score != null &&
+    match.home_score > match.away_score;
   const awayWon =
-    isFinished && match.home_score != null && match.away_score != null && match.away_score > match.home_score;
+    isFinished &&
+    match.home_score != null &&
+    match.away_score != null &&
+    match.away_score > match.home_score;
 
   // Combined goal timeline for the post-match summary — "45+5" sorts as 45.5
   // so stoppage-time goals land right after the minute they were added to.
@@ -111,7 +117,7 @@ export default function MatchCard({
         {hasInfo && (
           <button
             onClick={() => setShowInfo((s) => !s)}
-            className="lg:hidden w-full text-xs text-starlight/40 font-bold text-center py-1 hover:text-starlight/70 transition-colors"
+            className="lg:hidden w-full text-xs text-starlight/60 font-bold text-center py-1 hover:text-starlight transition-colors"
           >
             ⚽ {t(lang, 'match_summary')} {showInfo ? '▲' : '▼'}
           </button>
@@ -119,7 +125,7 @@ export default function MatchCard({
 
         <div className={`${showInfo ? 'block' : 'hidden'} lg:block`}>
           {showGroup && match.group_name && (
-            <div className="text-xs text-starlight/40 font-bold mb-2 uppercase tracking-wide">
+            <div className="text-xs text-starlight/60 font-bold mb-2 uppercase tracking-wide">
               {t(lang, 'match_group')} {match.group_name}
             </div>
           )}
@@ -130,9 +136,9 @@ export default function MatchCard({
               {allGoals.map((g, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2 text-xs text-starlight/70"
+                  className="flex items-center gap-2 text-xs text-starlight/60"
                 >
-                  <span className="font-readout text-starlight/40 w-10 text-right">
+                  <span className="font-readout text-starlight/60 w-10 text-right">
                     {g.minute}&apos;
                   </span>
                   <img
@@ -154,15 +160,19 @@ export default function MatchCard({
           {/* Stadium */}
           {match.stadium_id && (
             <div
-              className={`mb-3 text-xs text-starlight/40 ${isHe ? 'text-right' : 'text-left'}`}
+              className={`mb-3 text-xs text-starlight/60 ${isHe ? 'text-right' : 'text-left'}`}
             >
               {stadiumText.name
                 ? `${stadiumText.name}, ${stadiumText.city}`
                 : match.stadium_id}{' '}
               · {matchDate} {kickoff && `· ${kickoff}`}
               {weather && (
-                <div className="text-starlight/30">
-                  {weatherEmoji(weather.icon)} {weather.tempC}°C {t(lang, 'match_weather_forecast')}
+                <div className="text-starlight/60">
+                  {weatherEmoji(weather.icon)} {weather.tempC}°C{' '}
+                  {t(
+                    lang,
+                    isOngoing ? 'match_weather_now' : 'match_weather_forecast',
+                  )}
                 </div>
               )}
             </div>
@@ -172,12 +182,12 @@ export default function MatchCard({
               referees for scheduled matches simply aren't assigned yet */}
           {(match.referee || match.status === 'finished') && (
             <div
-              className={`mb-3 text-xs text-starlight/40 ${isHe ? 'text-right' : 'text-left'}`}
+              className={`mb-3 text-xs text-starlight/60 ${isHe ? 'text-right' : 'text-left'}`}
             >
               🧑‍⚖️ {t(lang, 'match_referee')}:{' '}
               {match.referee ?? t(lang, 'match_referee_unknown')}
               {match.referee && !!refereeMatchCount && (
-                <div className="text-starlight/30">
+                <div className="text-starlight/60">
                   {refereeMatchCount} {t(lang, 'referee_matches_judged')}
                 </div>
               )}
@@ -218,9 +228,13 @@ export default function MatchCard({
         <div className="flex flex-col items-center gap-1 flex-shrink-0">
           {match.status === 'finished' || isOngoing ? (
             <div className="bg-space border border-ink/10 font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
-              <span className={homeWon ? 'text-gold font-black' : 'text-gold'}>{match.home_score}</span>
+              <span className={homeWon ? 'text-gold font-black' : 'text-gold'}>
+                {match.home_score}
+              </span>
               <span className="text-gold/50"> – </span>
-              <span className={awayWon ? 'text-gold font-black' : 'text-gold'}>{match.away_score}</span>
+              <span className={awayWon ? 'text-gold font-black' : 'text-gold'}>
+                {match.away_score}
+              </span>
             </div>
           ) : (
             <div className="bg-space border border-ink/10 text-gold/40 font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">

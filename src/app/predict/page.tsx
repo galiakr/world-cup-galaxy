@@ -6,6 +6,14 @@ import PredictClient from '@/components/pages/PredictClient'
 // per-attempt timeout — give Vercel enough function budget for that.
 export const maxDuration = 30
 
+// Without this, Next treats the page itself as a separately-cached ISR
+// route (on top of fetchMatches' own 120s data cache) — a low-traffic
+// page like this one then only re-renders whenever it happens to get a
+// visit after its own cache expires, so it can lag well behind pages
+// that get hit more often. Forcing dynamic rendering means every visit
+// re-runs this page fresh, while still reusing the shared fetch cache.
+export const dynamic = 'force-dynamic'
+
 export default async function PredictPage() {
   let matches: Match[] = []
   let error = false

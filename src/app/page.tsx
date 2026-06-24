@@ -7,6 +7,11 @@ import HomeClient from '@/components/pages/HomeClient'
 // per-attempt timeout — give Vercel enough function budget for that.
 export const maxDuration = 30
 
+// See predict/page.tsx for why this matters: without it, this page is
+// its own separately-cached ISR route on top of fetchMatches' fetch
+// cache, and can go stale independently of how often other pages get hit.
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   const [matchesResult, scorers] = await Promise.all([
     fetchMatches()

@@ -16,6 +16,8 @@ export interface Team {
   coach_photo_url?: string
   team_photo_url?: string
   wikipedia_slug?: string // for coach/team photo lookup
+  lat?: number            // capital city coordinates, for the countries map
+  lng?: number
 }
 
 export interface Player {

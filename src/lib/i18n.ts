@@ -88,6 +88,7 @@ export const TRANSLATIONS = {
 
     // Teams
     teams_title: 'All Teams',
+    teams_map_toggle: 'Country Map',
     teams_search: 'Search teams...',
     teams_coach: 'Coach',
     teams_group: 'Group',
@@ -382,6 +383,7 @@ export const TRANSLATIONS = {
     match_live: 'מתקיים עכשיו',
 
     teams_title: 'כל הקבוצות',
+    teams_map_toggle: 'מפת המדינות',
     teams_search: 'חפשו קבוצה...',
     teams_coach: 'מאמן',
     teams_group: 'קבוצת בתים',

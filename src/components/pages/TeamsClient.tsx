@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { Team } from '@/types';
 import { useAppStore } from '@/store';
 import { t, TranslationKey } from '@/lib/i18n';
@@ -7,6 +8,9 @@ import { fetchWikipediaPhoto } from '@/lib/api';
 import { getTeamName } from '@/data/teams';
 import { TeamStage, GroupPosition } from '@/lib/standings';
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab';
+
+// Leaflet touches `window` on import, so it can't render on the server.
+const TeamsMap = dynamic(() => import('@/components/ui/TeamsMap'), { ssr: false });
 
 interface SquadResult {
   coachName: string | null;
@@ -62,6 +66,7 @@ const STAGE_KEY: Record<TeamStage, TranslationKey> = {
 export default function TeamsClient({ teams, stageById, standingById, matchesAttemptedAt }: TeamsClientProps) {
   const lang = useAppStore((s) => s.lang);
   const [search, setSearch] = useState('');
+  const [showMap, setShowMap] = useState(false);
   const [selected, setSelected] = useState<Team | null>(null);
   const [coachPhoto, setCoachPhoto] = useState<string | null>(null);
   const [coachName, setCoachName] = useState<string | null>(null);
@@ -126,6 +131,19 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
       <h1 className="font-display text-2xl text-starlight mb-3">
         🌍 {t(lang, 'teams_title')}
       </h1>
+
+      {/* Country map */}
+      <button
+        onClick={() => setShowMap((s) => !s)}
+        className="w-full flex items-center justify-center gap-2 bg-spacelight border border-ink/10 rounded-2xl py-2.5 mb-4 text-sm font-bold text-starlight/70 hover:text-starlight transition-colors"
+      >
+        🗺️ {t(lang, 'teams_map_toggle')} {showMap ? '▲' : '▼'}
+      </button>
+      {showMap && (
+        <div className="mb-4">
+          <TeamsMap />
+        </div>
+      )}
 
       {/* Search */}
       <div className="relative mb-4">

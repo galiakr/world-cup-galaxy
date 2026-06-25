@@ -10,7 +10,9 @@ import { TeamStage, GroupPosition } from '@/lib/standings';
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab';
 
 // Leaflet touches `window` on import, so it can't render on the server.
-const TeamsMap = dynamic(() => import('@/components/ui/TeamsMap'), { ssr: false });
+const TeamsMap = dynamic(() => import('@/components/ui/TeamsMap'), {
+  ssr: false,
+});
 
 interface SquadResult {
   coachName: string | null;
@@ -63,7 +65,12 @@ const STAGE_KEY: Record<TeamStage, TranslationKey> = {
   eliminated: 'stage_eliminated',
 };
 
-export default function TeamsClient({ teams, stageById, standingById, matchesAttemptedAt }: TeamsClientProps) {
+export default function TeamsClient({
+  teams,
+  stageById,
+  standingById,
+  matchesAttemptedAt,
+}: TeamsClientProps) {
   const lang = useAppStore((s) => s.lang);
   const [search, setSearch] = useState('');
   const [showMap, setShowMap] = useState(false);
@@ -137,7 +144,7 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
         onClick={() => setShowMap((s) => !s)}
         className="w-full flex items-center justify-center gap-2 bg-spacelight border border-ink/10 rounded-2xl py-2.5 mb-4 text-sm font-bold text-starlight/70 hover:text-starlight transition-colors"
       >
-        🗺️ {t(lang, 'teams_map_toggle')} {showMap ? '▲' : '▼'}
+        {t(lang, 'teams_map_toggle')} {showMap ? '▲' : '▼'}
       </button>
       {showMap && (
         <div className="mb-4">
@@ -199,7 +206,9 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
                       )}
                       {stage === 'group' && standing && (
                         <div className="text-[10px] text-starlight/40 mt-1">
-                          #{standing.position} · {standing.played} {t(lang, 'teams_played_label')} · {standing.points} {t(lang, 'teams_points_label')}
+                          #{standing.position} · {standing.played}{' '}
+                          {t(lang, 'teams_played_label')} · {standing.points}{' '}
+                          {t(lang, 'teams_points_label')}
                         </div>
                       )}
                     </div>
@@ -213,7 +222,7 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
       {/* Team detail modal */}
       {selected && (
         <div
-          className="fixed inset-0 bg-black/60 z-50 flex items-end justify-center"
+          className="fixed inset-0 bg-black/60 z-[2000] flex items-end justify-center"
           onClick={() => setSelected(null)}
         >
           <div
@@ -330,7 +339,9 @@ export default function TeamsClient({ teams, stageById, standingById, matchesAtt
           </div>
         </div>
       )}
-      {matchesAttemptedAt && <UpdateAttemptTab attemptedAt={matchesAttemptedAt} />}
+      {matchesAttemptedAt && (
+        <UpdateAttemptTab attemptedAt={matchesAttemptedAt} />
+      )}
     </div>
   );
 }

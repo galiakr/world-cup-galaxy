@@ -85,6 +85,7 @@ export const TRANSLATIONS = {
     match_summary: 'Match Summary',
     match_scheduled: 'Upcoming',
     match_live: 'IN PROGRESS',
+    match_pens: 'Pens.',
 
     // Teams
     teams_title: 'All Teams',
@@ -173,6 +174,7 @@ export const TRANSLATIONS = {
     predict_edit: 'Change prediction',
     predict_vs: 'VS',
     predict_loading: '...',
+    predict_pens_label: 'If it goes to penalties:',
 
     // Rules
     rules_title: 'The 17 Laws of Soccer',
@@ -381,6 +383,7 @@ export const TRANSLATIONS = {
     match_summary: 'סיכום המשחק',
     match_scheduled: 'קרוב',
     match_live: 'מתקיים עכשיו',
+    match_pens: 'פנדלים',
 
     teams_title: 'כל הקבוצות',
     teams_map_toggle: 'מפת המדינות',
@@ -463,6 +466,7 @@ export const TRANSLATIONS = {
     predict_edit: 'שנו ניחוש',
     predict_vs: 'נגד',
     predict_loading: '...',
+    predict_pens_label: 'אם יגיע לפנדלים:',
 
     rules_title: 'חוקי הכדורגל',
     rules_subtitle: 'מבוסס על חוקי המשחק הרשמיים של פיפ"א',

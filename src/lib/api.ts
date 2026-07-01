@@ -116,6 +116,8 @@ export async function fetchMatches(): Promise<MatchesResult> {
         stadium_id:   stadiumId,
         home_scorers: parseScorers(r.home_scorers),
         away_scorers: parseScorers(r.away_scorers),
+        home_penalty_score: parsePenaltyScore(r.home_penalty_score),
+        away_penalty_score: parsePenaltyScore(r.away_penalty_score),
         referee: homeTeam?.fifa_code && awayTeam?.fifa_code
           ? refereeMap[`${homeTeam.fifa_code.toUpperCase()}|${awayTeam.fifa_code.toUpperCase()}`]
           : undefined,
@@ -184,6 +186,16 @@ function parseScore(v: unknown): number {
   if (v == null) return 0
   const n = Number(v)
   return Number.isFinite(n) ? n : 0
+}
+
+// Penalty scores are only present when a shootout happened — absent means
+// no penalties were taken, which is different from "0 scored".
+function parsePenaltyScore(v: unknown): number | null {
+  if (v == null) return null
+  const s = String(v)
+  if (s === 'null' || s === '') return null
+  const n = Number(s)
+  return Number.isFinite(n) ? n : null
 }
 
 // worldcup26.ir sends goal scorers as a Postgres-array-literal string, e.g.

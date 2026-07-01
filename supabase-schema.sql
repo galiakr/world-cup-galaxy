@@ -55,12 +55,18 @@ CREATE TABLE IF NOT EXISTS predictions (
   match_id         TEXT NOT NULL,
   predicted_home   INTEGER NOT NULL DEFAULT 0,
   predicted_away   INTEGER NOT NULL DEFAULT 0,
+  predicted_home_pen INTEGER,
+  predicted_away_pen INTEGER,
   created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   is_correct_winner BOOLEAN,
   is_exact_score   BOOLEAN,
   sticker_awarded  BOOLEAN DEFAULT FALSE,
   UNIQUE(user_id, match_id)
 );
+
+-- Migration: add penalty columns to existing predictions tables
+ALTER TABLE predictions ADD COLUMN IF NOT EXISTS predicted_home_pen INTEGER;
+ALTER TABLE predictions ADD COLUMN IF NOT EXISTS predicted_away_pen INTEGER;
 
 -- ── Bug Reports ────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS bug_reports (

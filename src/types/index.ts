@@ -56,6 +56,8 @@ export interface Match {
   phase?: string
   home_scorers: GoalEvent[]
   away_scorers: GoalEvent[]
+  home_penalty_score?: number | null
+  away_penalty_score?: number | null
   referee?: string
 }
 
@@ -162,6 +164,8 @@ export interface Prediction {
   match?: Match
   predicted_home: number
   predicted_away: number
+  predicted_home_pen?: number | null
+  predicted_away_pen?: number | null
   created_at: string
   is_correct_winner?: boolean
   is_exact_score?: boolean

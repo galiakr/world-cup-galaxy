@@ -108,8 +108,16 @@ function BracketSlot({ match }: { match: Match }) {
   const awayKnown = match.away_team_id !== '0' && !!awayTeam
 
   const isFinished = match.status === 'finished'
-  const homeWon = isFinished && match.home_score != null && match.away_score != null && match.home_score > match.away_score
-  const awayWon = isFinished && match.home_score != null && match.away_score != null && match.away_score > match.home_score
+  const hasPenalties =
+    isFinished &&
+    match.home_penalty_score != null &&
+    match.away_penalty_score != null
+  const homeWon =
+    (isFinished && match.home_score != null && match.away_score != null && match.home_score > match.away_score) ||
+    (hasPenalties && match.home_penalty_score! > match.away_penalty_score!)
+  const awayWon =
+    (isFinished && match.home_score != null && match.away_score != null && match.away_score > match.home_score) ||
+    (hasPenalties && match.away_penalty_score! > match.home_penalty_score!)
   const stadiumText = getStadiumText(match.stadium_id, lang)
 
   return (
@@ -131,6 +139,13 @@ function BracketSlot({ match }: { match: Match }) {
         known={awayKnown}
         isHe={isHe}
       />
+      {hasPenalties && (
+        <div dir="ltr" className="text-[10px] font-bold text-starlight/90 text-center mt-1 font-readout tracking-wide">
+          {isHe
+            ? `${match.home_penalty_score}–${match.away_penalty_score} ${t(lang, 'match_pens')}`
+            : `${t(lang, 'match_pens')} ${match.home_penalty_score}–${match.away_penalty_score}`}
+        </div>
+      )}
       {!isFinished && match.kick_off_utc && (
         <div className="text-[9px] text-starlight/60 text-center mt-1 font-readout">
           {format(new Date(match.kick_off_utc), 'dd/MM HH:mm')}

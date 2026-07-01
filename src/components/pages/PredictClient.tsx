@@ -24,6 +24,8 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
   const [matchIdx, setMatchIdx] = useState(0)
   const [homeScore, setHomeScore] = useState(0)
   const [awayScore, setAwayScore] = useState(0)
+  const [homePenScore, setHomePenScore] = useState(0)
+  const [awayPenScore, setAwayPenScore] = useState(0)
   const [editingMatchId, setEditingMatchId] = useState<string | null>(null)
   const [myPredictions, setMyPredictions] = useState<Prediction[]>([])
   const [loading, setLoading] = useState(false)
@@ -36,6 +38,12 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
   const currentLocked = isLocked(current)
   const existingPrediction = current ? myPredictions.find(p => p.match_id === current.id) : undefined
   const isEditing = !existingPrediction || editingMatchId === current?.id
+
+  // Knockout matches can go to penalties when the score is level.
+  // Show the penalty steppers whenever the user has entered a draw score.
+  const isKnockoutMatch = current?.round !== 'group'
+  const isPredictedDraw = homeScore === awayScore
+  const showPenSteppers = isEditing && !currentLocked && isKnockoutMatch && isPredictedDraw
 
   useEffect(() => {
     if (!user) return
@@ -59,11 +67,7 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
     ;(async () => {
       for (const p of unscored) {
         const m = matchesById.get(p.match_id)!
-        const exact = p.predicted_home === m.home_score && p.predicted_away === m.away_score
-        const actualSign = Math.sign(m.home_score! - m.away_score!)
-        const predictedSign = Math.sign(p.predicted_home - p.predicted_away)
-        const correctWinner = exact || actualSign === predictedSign
-
+        const { correctWinner, exact } = scoreResult(p, m)
         await scorePrediction(p.id, correctWinner, exact)
         if (exact) { await awardSticker(user.id, 'a_exact_score'); addSticker('a_exact_score') }
         else if (correctWinner) { await awardSticker(user.id, 'a_predict_win'); addSticker('a_predict_win') }
@@ -82,6 +86,8 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
     const existing = current ? myPredictions.find(p => p.match_id === current.id) : undefined
     setHomeScore(existing?.predicted_home ?? 0)
     setAwayScore(existing?.predicted_away ?? 0)
+    setHomePenScore(existing?.predicted_home_pen ?? 0)
+    setAwayPenScore(existing?.predicted_away_pen ?? 0)
     setSubmitError(false)
   }, [current?.id, myPredictions])
 
@@ -91,15 +97,27 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
     else setAwayScore(s => Math.max(0, Math.min(9, s + delta)))
   }
 
+  function changePen(side: 'home' | 'away', delta: number) {
+    if (current && (!isEditing || currentLocked)) return
+    if (side === 'home') setHomePenScore(s => Math.max(0, Math.min(9, s + delta)))
+    else setAwayPenScore(s => Math.max(0, Math.min(9, s + delta)))
+  }
+
   async function handleSubmit() {
     if (!user || !current || currentLocked) return
     setLoading(true)
     setSubmitError(false)
-    const ok = await savePrediction(user.id, current.id, homeScore, awayScore)
+    // Only save penalty scores for knockout draws where they're distinct
+    // (a 0-0 tie in a penalty shootout is not a valid result).
+    const savePen = showPenSteppers && homePenScore !== awayPenScore
+    const ok = await savePrediction(
+      user.id, current.id, homeScore, awayScore,
+      savePen ? homePenScore : null,
+      savePen ? awayPenScore : null,
+    )
     if (ok) {
       addSticker('a_predict1')
       setEditingMatchId(null)
-      // Refresh predictions
       const updated = await getUserPredictions(user.id)
       setMyPredictions(updated)
     } else {
@@ -207,6 +225,21 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
               <div className="font-display text-3xl text-starlight/30">:</div>
               <Stepper value={awayScore} onChange={d => change('away', d)} />
             </div>
+
+            {/* Penalty steppers — only for knockout matches when the score is level */}
+            {showPenSteppers && (
+              <div className="mt-1 mb-5 pt-4 border-t border-ink/10">
+                <p className="text-xs text-starlight/50 font-bold text-center mb-3">
+                  🥅 {t(lang, 'predict_pens_label')}
+                </p>
+                <div className="flex items-center justify-center gap-6">
+                  <Stepper value={homePenScore} onChange={d => changePen('home', d)} small />
+                  <div className="font-display text-2xl text-starlight/30">:</div>
+                  <Stepper value={awayPenScore} onChange={d => changePen('away', d)} small />
+                </div>
+              </div>
+            )}
+
             <button
               onClick={handleSubmit}
               disabled={loading}
@@ -226,9 +259,14 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
             <div className="font-display text-teal text-xl mb-1">
               ✅ {t(lang, 'predict_submitted')}
             </div>
-            <div className="text-teal font-readout text-2xl mb-3">
+            <div dir="ltr" className="text-teal font-readout text-2xl mb-1">
               {existingPrediction.predicted_home} – {existingPrediction.predicted_away}
             </div>
+            {existingPrediction.predicted_home_pen != null && existingPrediction.predicted_away_pen != null && (
+              <div dir="ltr" className="text-teal/70 font-readout text-sm mb-2">
+                {t(lang, 'match_pens')} {existingPrediction.predicted_home_pen}–{existingPrediction.predicted_away_pen}
+              </div>
+            )}
             {!currentLocked && (
               <button
                 onClick={() => setEditingMatchId(current!.id)}
@@ -253,6 +291,8 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
               const m = matchesById.get(p.match_id)
               const h = m ? TEAMS_BY_ID[m.home_team_id] : undefined
               const a = m ? TEAMS_BY_ID[m.away_team_id] : undefined
+              const mHasPen = m?.home_penalty_score != null && m?.away_penalty_score != null
+              const pHasPen = p.predicted_home_pen != null && p.predicted_away_pen != null
               return (
                 <div key={p.id} className="py-2 border-b border-ink/10 last:border-0">
                   <div className="flex items-center gap-2 text-sm mb-1">
@@ -262,19 +302,35 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
                     </span>
                     <span>{a?.flag_emoji ?? '🏳️'}</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-starlight/50 text-xs">{t(lang, 'predict_guessed')} {p.predicted_home}–{p.predicted_away}</span>
+                  <div className="flex items-center justify-between text-sm gap-2">
+                    <div dir="ltr" className="text-starlight/50 text-xs">
+                      {t(lang, 'predict_guessed')} {p.predicted_home}–{p.predicted_away}
+                      {pHasPen && (
+                        <span className="text-starlight/40">
+                          {' '}({t(lang, 'match_pens')} {p.predicted_home_pen}–{p.predicted_away_pen})
+                        </span>
+                      )}
+                    </div>
                     {m?.status === 'finished' && (
-                      <span className="text-starlight text-xs font-bold">
+                      <div dir="ltr" className="text-starlight text-xs font-bold">
                         {t(lang, 'predict_result')} {m.home_score}–{m.away_score}
-                      </span>
+                        {mHasPen && (
+                          <span className="text-starlight/60 font-normal">
+                            {' '}({t(lang, 'match_pens')} {m.home_penalty_score}–{m.away_penalty_score})
+                          </span>
+                        )}
+                      </div>
                     )}
                     {m?.status === 'live' && (
                       <span className="text-coral text-xs font-bold animate-pulse">🔴 {t(lang, 'match_live')}</span>
                     )}
-                    {p.is_exact_score && <span className="text-gold text-xs font-bold">💎 {t(lang, 'predict_exact')}</span>}
-                    {p.is_correct_winner && !p.is_exact_score && <span className="text-teal text-xs font-bold">🎯 {t(lang, 'predict_winner')}</span>}
                   </div>
+                  {(p.is_exact_score || p.is_correct_winner) && (
+                    <div className="mt-1">
+                      {p.is_exact_score && <span className="text-gold text-xs font-bold">💎 {t(lang, 'predict_exact')}</span>}
+                      {p.is_correct_winner && !p.is_exact_score && <span className="text-teal text-xs font-bold">🎯 {t(lang, 'predict_winner')}</span>}
+                    </div>
+                  )}
                 </div>
               )
             })}
@@ -286,19 +342,70 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
   )
 }
 
-function Stepper({ value, onChange }: { value: number; onChange: (d: number) => void }) {
+// Scores a finished prediction against the actual match result, including
+// penalty shootout outcomes for knockout matches.
+function scoreResult(p: Prediction, m: Match): { correctWinner: boolean; exact: boolean } {
+  const hasPenalties = m.home_penalty_score != null && m.away_penalty_score != null
+  const homePenWon = hasPenalties && m.home_penalty_score! > m.away_penalty_score!
+  const awayPenWon = hasPenalties && m.away_penalty_score! > m.home_penalty_score!
+
+  if (hasPenalties) {
+    // Match went to a shootout — the penalty winner is the true outcome.
+    const predictedDraw = p.predicted_home === p.predicted_away
+    const hasPenGuess = p.predicted_home_pen != null && p.predicted_away_pen != null
+    const predictedHomePenWon = hasPenGuess && p.predicted_home_pen! > p.predicted_away_pen!
+    const predictedAwayPenWon = hasPenGuess && p.predicted_away_pen! > p.predicted_home_pen!
+
+    if (predictedDraw && hasPenGuess) {
+      const exact =
+        p.predicted_home === m.home_score &&
+        p.predicted_away === m.away_score &&
+        p.predicted_home_pen === m.home_penalty_score &&
+        p.predicted_away_pen === m.away_penalty_score
+      const correctWinner =
+        exact ||
+        (homePenWon && predictedHomePenWon) ||
+        (awayPenWon && predictedAwayPenWon)
+      return { exact, correctWinner }
+    }
+
+    if (predictedDraw) {
+      // Predicted a draw but didn't name a penalty winner — incomplete.
+      return { exact: false, correctWinner: false }
+    }
+
+    // Predicted a non-draw — check whether their chosen team won overall
+    // (including via the shootout).
+    const predictedHomeWins = p.predicted_home > p.predicted_away
+    const predictedAwayWins = p.predicted_away > p.predicted_home
+    const correctWinner =
+      (homePenWon && predictedHomeWins) ||
+      (awayPenWon && predictedAwayWins)
+    return { exact: false, correctWinner }
+  }
+
+  // No penalties — normal scoring.
+  const exact = p.predicted_home === m.home_score && p.predicted_away === m.away_score
+  const actualSign = Math.sign(m.home_score! - m.away_score!)
+  const predictedSign = Math.sign(p.predicted_home - p.predicted_away)
+  return { exact, correctWinner: exact || actualSign === predictedSign }
+}
+
+function Stepper({ value, onChange, small }: { value: number; onChange: (d: number) => void; small?: boolean }) {
+  const btnSize = small ? 'w-9 h-10' : 'w-10 h-12'
+  const numSize = small ? 'w-9 text-xl' : 'w-10 text-2xl'
   return (
     <div className="flex items-center gap-1 border-2 border-coral rounded-2xl overflow-hidden">
       <button
         onClick={() => onChange(-1)}
-        className="w-10 h-12 bg-coral text-white font-black text-2xl active:opacity-80"
+        className={`${btnSize} bg-coral text-white font-black text-2xl active:opacity-80`}
       >−</button>
-      <span className="w-10 text-center font-readout text-2xl text-starlight">
+      <span className={`${numSize} text-center font-readout text-starlight`}>
         {value}
       </span>
       <button
         onClick={() => onChange(1)}
-        className="w-10 h-12 bg-coral text-white font-black text-2xl active:opacity-80"
+        className={`${btnSize} bg-coral text-white font-black text-2xl active:opacity-80`}
       >+</button>
     </div>
   )

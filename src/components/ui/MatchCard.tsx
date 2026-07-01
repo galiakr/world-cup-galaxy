@@ -61,18 +61,30 @@ export default function MatchCard({
     match.status !== 'finished' && (match.status === 'live' || hasKickedOff);
 
   // Highlight the winner once a result is in — losing side dims back,
-  // a draw leaves both sides as-is.
+  // a draw leaves both sides as-is. In knockout matches that go to
+  // penalties the regular score stays level; use the penalty score to
+  // pick the winner instead.
   const isFinished = match.status === 'finished';
-  const homeWon =
+  const regularHomeWon =
     isFinished &&
     match.home_score != null &&
     match.away_score != null &&
     match.home_score > match.away_score;
-  const awayWon =
+  const regularAwayWon =
     isFinished &&
     match.home_score != null &&
     match.away_score != null &&
     match.away_score > match.home_score;
+  const hasPenalties =
+    isFinished &&
+    match.home_penalty_score != null &&
+    match.away_penalty_score != null;
+  const homeWon =
+    regularHomeWon ||
+    (hasPenalties && match.home_penalty_score! > match.away_penalty_score!);
+  const awayWon =
+    regularAwayWon ||
+    (hasPenalties && match.away_penalty_score! > match.home_penalty_score!);
 
   // Combined goal timeline for the post-match summary — "45+5" sorts as 45.5
   // so stoppage-time goals land right after the minute they were added to.
@@ -239,6 +251,13 @@ export default function MatchCard({
           ) : (
             <div className="bg-space border border-ink/10 text-gold/40 font-readout text-lg px-3 py-1 my-2 rounded-xl min-w-[64px] text-center tracking-wide">
               --:--
+            </div>
+          )}
+          {hasPenalties && (
+            <div dir="ltr" className="text-xs font-bold text-starlight/90 text-center font-readout tracking-wide">
+              {isHe
+                ? `${match.home_penalty_score}–${match.away_penalty_score} ${t(lang, 'match_pens')}`
+                : `${t(lang, 'match_pens')} ${match.home_penalty_score}–${match.away_penalty_score}`}
             </div>
           )}
           <span

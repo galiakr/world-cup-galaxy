@@ -230,13 +230,17 @@ export async function savePrediction(
   userId: string,
   matchId: string,
   homeGoals: number,
-  awayGoals: number
+  awayGoals: number,
+  homePen?: number | null,
+  awayPen?: number | null
 ): Promise<boolean> {
   const { error } = await supabase.from('predictions').upsert({
     user_id: userId,
     match_id: matchId,
     predicted_home: homeGoals,
     predicted_away: awayGoals,
+    predicted_home_pen: homePen ?? null,
+    predicted_away_pen: awayPen ?? null,
     created_at: new Date().toISOString(),
   }, { onConflict: 'user_id,match_id' })
 

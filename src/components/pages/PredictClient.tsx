@@ -71,6 +71,9 @@ export default function PredictClient({ upcomingMatches, allMatches, matchesErro
         await scorePrediction(p.id, correctWinner, exact)
         if (exact) { await awardSticker(user.id, 'a_exact_score'); addSticker('a_exact_score') }
         else if (correctWinner) { await awardSticker(user.id, 'a_predict_win'); addSticker('a_predict_win') }
+        // Correctly predicting a penalty winner is its own achievement
+        const mHasPen = m.home_penalty_score != null && m.away_penalty_score != null
+        if (correctWinner && mHasPen) { await awardSticker(user.id, 'a_pen_prophet'); addSticker('a_pen_prophet') }
       }
       if (!cancelled) {
         const updated = await getUserPredictions(user.id)

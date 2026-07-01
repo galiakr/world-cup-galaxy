@@ -114,6 +114,8 @@ export async function updateStreak(userId: string): Promise<{ streak: number; is
     last_login_date: today,
   }).eq('id', userId)
 
+  if (newStreak === 14) await awardSticker(userId, 'a_streak14')
+
   return { streak: newStreak, isNew: true }
 }
 
@@ -146,8 +148,16 @@ export async function awardSticker(userId: string, stickerId: string): Promise<b
   })
 
   if (!error) {
-    // Increment user sticker count
     await supabase.rpc('increment_sticker_count', { user_id_param: userId })
+    // Award collector milestones based on the new total count.
+    // This also fixes a prior bug where a_collector10 / a_collector30
+    // were defined but never actually triggered.
+    const { data: freshUser } = await supabase
+      .from('users').select('stickers_count').eq('id', userId).single()
+    const count = freshUser?.stickers_count ?? 0
+    if (count === 10) await awardSticker(userId, 'a_collector10')
+    if (count === 30) await awardSticker(userId, 'a_collector30')
+    if (count === 50) await awardSticker(userId, 'a_collector50')
   }
 
   return !error
@@ -165,8 +175,14 @@ export async function claimDailySticker(userId: string): Promise<{ claimed: bool
 
   if (existing) return { claimed: false, stickerId: null }
 
-  // Pick a random common country sticker
-  const commonStickerIds = ['c_mex','c_rsa','c_kor','c_can','c_bra','c_mar','c_usa','c_ger','c_ned','c_esp','c_fra','c_arg','c_por','c_eng']
+  // Pick a random common country sticker (all 48 teams in the pool)
+  const commonStickerIds = [
+    'c_mex','c_rsa','c_kor','c_can','c_bra','c_mar','c_usa','c_ger','c_ned','c_esp',
+    'c_fra','c_arg','c_por','c_eng','c_cro','c_jap',
+    'c_bih','c_qat','c_sui','c_hai','c_sco','c_par','c_aus','c_tur','c_cuw','c_civ',
+    'c_ecu','c_swe','c_tun','c_bel','c_egy','c_irn','c_nzl','c_cpv','c_ksa','c_uru',
+    'c_sen','c_irq','c_nor','c_alg','c_aut','c_jor','c_drc','c_uzb','c_col','c_gha','c_pan',
+  ]
   const stickerId = commonStickerIds[Math.floor(Math.random() * commonStickerIds.length)]
 
   const { error } = await supabase.from('daily_claims').insert({ user_id: userId, claimed_date: today, sticker_id: stickerId })
@@ -211,7 +227,8 @@ export async function saveQuizAnswer(
     .select('*', { count: 'exact', head: true })
     .eq('user_id', userId)
     .eq('is_correct', true)
-  if (count === 5) await awardSticker(userId, 'a_quiz5')
+  if (count === 5)  await awardSticker(userId, 'a_quiz5')
+  if (count === 10) await awardSticker(userId, 'a_quiz10')
   if (count === 20) await awardSticker(userId, 'a_quiz20')
 }
 
@@ -244,7 +261,12 @@ export async function savePrediction(
     created_at: new Date().toISOString(),
   }, { onConflict: 'user_id,match_id' })
 
-  if (!error) await awardSticker(userId, 'a_predict1')
+  if (!error) {
+    await awardSticker(userId, 'a_predict1')
+    if (homePen != null && awayPen != null && homePen !== awayPen) {
+      await awardSticker(userId, 'a_predict_pen')
+    }
+  }
   return !error
 }
 

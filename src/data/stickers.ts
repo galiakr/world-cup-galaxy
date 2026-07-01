@@ -23,6 +23,39 @@ export const STICKERS: StickerDefinition[] = [
   { id: 'c_cro', category: 'country', rarity: 'common', emoji: '🇭🇷', color_from: '#FF0000', color_to: '#171796', text_color: '#fff', team_id: '46' },
   { id: 'c_jap', category: 'country', rarity: 'common', emoji: '🇯🇵', color_from: '#003087', color_to: '#BC002D', text_color: '#fff', team_id: '22' },
 
+  // ── COUNTRY STICKERS (remaining 32 teams) ────────────────────────────────
+  { id: 'c_bih', category: 'country', rarity: 'common', emoji: '🇧🇦', color_from: '#003366', color_to: '#FFD700', text_color: '#fff', team_id: '6' },
+  { id: 'c_qat', category: 'country', rarity: 'common', emoji: '🇶🇦', color_from: '#8D1B3D', color_to: '#6B1230', text_color: '#fff', team_id: '7' },
+  { id: 'c_sui', category: 'country', rarity: 'common', emoji: '🇨🇭', color_from: '#D52B1E', color_to: '#B31217', text_color: '#fff', team_id: '8' },
+  { id: 'c_hai', category: 'country', rarity: 'common', emoji: '🇭🇹', color_from: '#00209F', color_to: '#D21034', text_color: '#fff', team_id: '11' },
+  { id: 'c_sco', category: 'country', rarity: 'common', emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', color_from: '#003F87', color_to: '#005EB8', text_color: '#fff', team_id: '12' },
+  { id: 'c_par', category: 'country', rarity: 'common', emoji: '🇵🇾', color_from: '#D52B1E', color_to: '#0038A8', text_color: '#fff', team_id: '14' },
+  { id: 'c_aus', category: 'country', rarity: 'common', emoji: '🇦🇺', color_from: '#00008B', color_to: '#FF0000', text_color: '#FFD700', team_id: '15' },
+  { id: 'c_tur', category: 'country', rarity: 'common', emoji: '🇹🇷', color_from: '#E30A17', color_to: '#C8102E', text_color: '#fff', team_id: '16' },
+  { id: 'c_cuw', category: 'country', rarity: 'common', emoji: '🇨🇼', color_from: '#003087', color_to: '#0099CC', text_color: '#FFD700', team_id: '18' },
+  { id: 'c_civ', category: 'country', rarity: 'common', emoji: '🇨🇮', color_from: '#F77F00', color_to: '#009A44', text_color: '#fff', team_id: '19' },
+  { id: 'c_ecu', category: 'country', rarity: 'common', emoji: '🇪🇨', color_from: '#FFD100', color_to: '#0033A0', text_color: '#fff', team_id: '20' },
+  { id: 'c_swe', category: 'country', rarity: 'common', emoji: '🇸🇪', color_from: '#006AA7', color_to: '#FECC02', text_color: '#fff', team_id: '23' },
+  { id: 'c_tun', category: 'country', rarity: 'common', emoji: '🇹🇳', color_from: '#E70013', color_to: '#C8102E', text_color: '#fff', team_id: '24' },
+  { id: 'c_bel', category: 'country', rarity: 'common', emoji: '🇧🇪', color_from: '#000000', color_to: '#E30C29', text_color: '#FFD700', team_id: '25' },
+  { id: 'c_egy', category: 'country', rarity: 'common', emoji: '🇪🇬', color_from: '#C8102E', color_to: '#000000', text_color: '#FFD700', team_id: '26' },
+  { id: 'c_irn', category: 'country', rarity: 'common', emoji: '🇮🇷', color_from: '#239F40', color_to: '#DA0000', text_color: '#fff', team_id: '27' },
+  { id: 'c_nzl', category: 'country', rarity: 'common', emoji: '🇳🇿', color_from: '#00247D', color_to: '#CC142B', text_color: '#fff', team_id: '28' },
+  { id: 'c_cpv', category: 'country', rarity: 'common', emoji: '🇨🇻', color_from: '#003893', color_to: '#CF2027', text_color: '#FFD700', team_id: '30' },
+  { id: 'c_ksa', category: 'country', rarity: 'common', emoji: '🇸🇦', color_from: '#006C35', color_to: '#008A2E', text_color: '#fff', team_id: '31' },
+  { id: 'c_uru', category: 'country', rarity: 'common', emoji: '🇺🇾', color_from: '#75AADB', color_to: '#4A90D9', text_color: '#fff', team_id: '32' },
+  { id: 'c_sen', category: 'country', rarity: 'common', emoji: '🇸🇳', color_from: '#00853F', color_to: '#E31B23', text_color: '#FDEF42', team_id: '34' },
+  { id: 'c_irq', category: 'country', rarity: 'common', emoji: '🇮🇶', color_from: '#CE1126', color_to: '#007A3D', text_color: '#fff', team_id: '35' },
+  { id: 'c_nor', category: 'country', rarity: 'common', emoji: '🇳🇴', color_from: '#EF2B2D', color_to: '#003087', text_color: '#fff', team_id: '36' },
+  { id: 'c_alg', category: 'country', rarity: 'common', emoji: '🇩🇿', color_from: '#006233', color_to: '#D21034', text_color: '#fff', team_id: '38' },
+  { id: 'c_aut', category: 'country', rarity: 'common', emoji: '🇦🇹', color_from: '#ED2939', color_to: '#C8102E', text_color: '#fff', team_id: '39' },
+  { id: 'c_jor', category: 'country', rarity: 'common', emoji: '🇯🇴', color_from: '#007A3D', color_to: '#CE1126', text_color: '#fff', team_id: '40' },
+  { id: 'c_drc', category: 'country', rarity: 'common', emoji: '🇨🇩', color_from: '#007FFF', color_to: '#CE1021', text_color: '#F7D618', team_id: '42' },
+  { id: 'c_uzb', category: 'country', rarity: 'common', emoji: '🇺🇿', color_from: '#1EB53A', color_to: '#0099B5', text_color: '#fff', team_id: '43' },
+  { id: 'c_col', category: 'country', rarity: 'common', emoji: '🇨🇴', color_from: '#FCD116', color_to: '#003087', text_color: '#CE1126', team_id: '44' },
+  { id: 'c_gha', category: 'country', rarity: 'common', emoji: '🇬🇭', color_from: '#CE1126', color_to: '#006B3F', text_color: '#FCD116', team_id: '47' },
+  { id: 'c_pan', category: 'country', rarity: 'common', emoji: '🇵🇦', color_from: '#C8102E', color_to: '#003087', text_color: '#fff', team_id: '48' },
+
   // ── PLAYER STICKERS (rare) ───────────────────────────────────────────────
   { id: 'p_mbappe', category: 'player', rarity: 'rare', emoji: '⚡', color_from: '#002395', color_to: '#ED2939', text_color: '#FFD700', player_name: 'Kylian Mbappé' },
   { id: 'p_vini', category: 'player', rarity: 'rare', emoji: '🌟', color_from: '#009c3b', color_to: '#FFDF00', text_color: '#002776', player_name: 'Vinicius Jr.' },
@@ -32,6 +65,10 @@ export const STICKERS: StickerDefinition[] = [
   { id: 'p_haaland', category: 'player', rarity: 'rare', emoji: '🚀', color_from: '#EF0107', color_to: '#6CABDD', text_color: '#fff', player_name: 'Erling Haaland' },
   { id: 'p_pedri', category: 'player', rarity: 'rare', emoji: '✨', color_from: '#AA151B', color_to: '#F1BF00', text_color: '#fff', player_name: 'Pedri' },
   { id: 'p_neuer', category: 'player', rarity: 'rare', emoji: '🧤', color_from: '#000000', color_to: '#DD0000', text_color: '#FFCE00', player_name: 'Manuel Neuer' },
+  { id: 'p_yamal', category: 'player', rarity: 'epic', emoji: '⭐', color_from: '#AA151B', color_to: '#F1BF00', text_color: '#fff', player_name: 'Lamine Yamal' },
+  { id: 'p_saka', category: 'player', rarity: 'rare', emoji: '💫', color_from: '#C8102E', color_to: '#012169', text_color: '#FFD700', player_name: 'Bukayo Saka' },
+  { id: 'p_lautaro', category: 'player', rarity: 'rare', emoji: '🐉', color_from: '#74ACDF', color_to: '#FFD700', text_color: '#002776', player_name: 'Lautaro Martínez' },
+  { id: 'p_odegaard', category: 'player', rarity: 'rare', emoji: '🎼', color_from: '#EF2B2D', color_to: '#003087', text_color: '#fff', player_name: 'Martin Ødegaard' },
 
   // ── MOMENT STICKERS (epic) ───────────────────────────────────────────────
   { id: 'm_hattrick', category: 'moment', rarity: 'epic', emoji: '🎩', color_from: '#7B2D8B', color_to: '#FF6B6B', text_color: '#FFD700' },
@@ -43,6 +80,10 @@ export const STICKERS: StickerDefinition[] = [
   { id: 'm_last_min', category: 'moment', rarity: 'epic', emoji: '💥', color_from: '#d62828', color_to: '#f77f00', text_color: '#fff' },
   { id: 'm_clean_sheet', category: 'moment', rarity: 'rare', emoji: '🛡️', color_from: '#2b9348', color_to: '#55a630', text_color: '#fff' },
   { id: 'm_big_win', category: 'moment', rarity: 'rare', emoji: '🏅', color_from: '#e9c46a', color_to: '#f4a261', text_color: '#264653' },
+  { id: 'm_freekick', category: 'moment', rarity: 'rare', emoji: '🌀', color_from: '#2193b0', color_to: '#6dd5ed', text_color: '#fff' },
+  { id: 'm_comeback', category: 'moment', rarity: 'epic', emoji: '🔄', color_from: '#f46b45', color_to: '#eea849', text_color: '#fff' },
+  { id: 'm_brace', category: 'moment', rarity: 'rare', emoji: '✌️', color_from: '#7B2D8B', color_to: '#c471ed', text_color: '#fff' },
+  { id: 'm_golden_goal', category: 'moment', rarity: 'legend', emoji: '🥇', color_from: '#FFD700', color_to: '#FF8C00', text_color: '#000' },
 
   // ── ACHIEVEMENT STICKERS (epic/legend) ───────────────────────────────────
   { id: 'a_welcome', category: 'achievement', rarity: 'common', emoji: '🎉', color_from: '#48cae4', color_to: '#0096c7', text_color: '#fff' },
@@ -56,7 +97,12 @@ export const STICKERS: StickerDefinition[] = [
   { id: 'a_bug', category: 'achievement', rarity: 'common', emoji: '🐛', color_from: '#52b788', color_to: '#40916c', text_color: '#fff' },
   { id: 'a_collector10', category: 'achievement', rarity: 'rare', emoji: '📚', color_from: '#e9c46a', color_to: '#2a9d8f', text_color: '#fff' },
   { id: 'a_collector30', category: 'achievement', rarity: 'epic', emoji: '🌟', color_from: '#FFD700', color_to: '#FF6B6B', text_color: '#fff' },
+  { id: 'a_collector50', category: 'achievement', rarity: 'legend', emoji: '👑', color_from: '#FFD700', color_to: '#FF8C00', text_color: '#000' },
   { id: 'a_all_groups', category: 'achievement', rarity: 'legend', emoji: '🌍', color_from: '#023e8a', color_to: '#00b4d8', text_color: '#FFD700' },
+  { id: 'a_streak14', category: 'achievement', rarity: 'legend', emoji: '🌙', color_from: '#240090', color_to: '#7400b8', text_color: '#e040fb' },
+  { id: 'a_quiz10', category: 'achievement', rarity: 'rare', emoji: '🎓', color_from: '#023e8a', color_to: '#90e0ef', text_color: '#fff' },
+  { id: 'a_predict_pen', category: 'achievement', rarity: 'rare', emoji: '🥅', color_from: '#5390d9', color_to: '#4361ee', text_color: '#fff' },
+  { id: 'a_pen_prophet', category: 'achievement', rarity: 'epic', emoji: '🎱', color_from: '#00b4d8', color_to: '#0077b6', text_color: '#caf0f8' },
 ]
 
 export const STICKERS_BY_ID = Object.fromEntries(STICKERS.map(s => [s.id, s]))

@@ -372,17 +372,20 @@ export async function fetchTopScorers(): Promise<TopScorer[]> {
       const tm = s.team   as Record<string, unknown>
       const code = String(tm?.tla ?? '').toUpperCase()
       const playerName = String(pl?.name ?? '')
-      const [summary, factHe] = playerName
+      const [summary, heResult] = playerName
         ? await Promise.all([fetchWikipediaSummary(playerName), fetchHebrewFact(playerName)])
-        : [{ photo_url: null, fact: null }, null]
+        : [{ photo_url: null, fact: null, page_url: null }, { fact: null, url: null }]
       return {
-        player_name: playerName,
-        team_id:     code,
-        goals:       Number(s.goals  ?? 0),
-        assists:     Number(s.assists ?? 0),
-        photo_url:   summary.photo_url ?? undefined,
-        fact_en:     summary.fact ?? undefined,
-        fact_he:     factHe ?? undefined,
+        player_name:  playerName,
+        team_id:      code,
+        goals:        Number(s.goals  ?? 0),
+        assists:      Number(s.assists ?? 0),
+        photo_url:    summary.photo_url ?? undefined,
+        fact_en:      summary.fact ?? undefined,
+        fact_he:      heResult.fact ?? undefined,
+        wiki_url:     summary.page_url ?? undefined,
+        wiki_url_he:  heResult.url ?? undefined,
+        name_he:      heResult.name ?? undefined,
       }
     }))
     setCache(cacheKey, scorers, 3600000)
@@ -399,6 +402,7 @@ export async function fetchTopScorers(): Promise<TopScorer[]> {
 interface WikiSummary {
   photo_url: string | null
   fact: string | null   // first ~2 sentences of the page extract, as a quick "fun fact"
+  page_url: string | null
 }
 
 function firstSentences(text: string, count: number): string {
@@ -411,7 +415,7 @@ async function fetchWikipediaSummary(slug: string): Promise<WikiSummary> {
   const cached = getCache<WikiSummary>(cacheKey)
   if (cached) return cached
 
-  const empty: WikiSummary = { photo_url: null, fact: null }
+  const empty: WikiSummary = { photo_url: null, fact: null, page_url: null }
   try {
     const res = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(slug)}`,
@@ -426,6 +430,7 @@ async function fetchWikipediaSummary(slug: string): Promise<WikiSummary> {
     const result: WikiSummary = {
       photo_url: !isDisambiguation ? (json.thumbnail?.source ?? json.originalimage?.source ?? null) : null,
       fact: !isDisambiguation && typeof json.extract === 'string' && json.extract ? firstSentences(json.extract, 2) : null,
+      page_url: !isDisambiguation ? (json.content_urls?.desktop?.page ?? null) : null,
     }
     setCache(cacheKey, result, 86400000)
     return result
@@ -442,36 +447,45 @@ export async function fetchWikipediaPhoto(slug: string): Promise<string | null> 
 // slug), then we fetch ITS summary from he.wikipedia.org. Returns null
 // when no Hebrew article exists, rather than falling back to a machine
 // translation of the English text.
-async function fetchHebrewFact(enSlug: string): Promise<string | null> {
+// getCache() returns null for both "cache miss" and "cached null value" — we
+// can't use null in the cache to mean "no Hebrew article exists". Use a sentinel
+// string so the two cases are distinguishable, avoiding repeated Wikipedia calls.
+// The cache stores a JSON string: either the sentinel or { fact, url }.
+const HE_CACHE_MISS = '__no_he__'
+async function fetchHebrewFact(enSlug: string): Promise<{ fact: string | null; url: string | null; name: string | null }> {
   const cacheKey = `wikihe_${enSlug}`
-  const cached = getCache<string | null>(cacheKey)
-  if (cached !== null) return cached
+  const cached = getCache<string>(cacheKey)
+  if (cached === HE_CACHE_MISS) return { fact: null, url: null, name: null }
+  if (cached !== null) {
+    try { return JSON.parse(cached) as { fact: string; url: string; name: string } } catch { /* re-fetch */ }
+  }
 
   try {
     const linkRes = await fetch(
-      `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(enSlug)}&prop=langlinks&lllang=he&format=json&origin=*`,
+      `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(enSlug)}&prop=langlinks&lllang=he&format=json&origin=*&redirects=1`,
       { next: { revalidate: 86400 } }
     )
-    if (!linkRes.ok) { setCache(cacheKey, null, 86400000); return null }
+    if (!linkRes.ok) { setCache(cacheKey, HE_CACHE_MISS, 86400000); return { fact: null, url: null, name: null } }
     const linkJson = await linkRes.json()
     const pages = Object.values(linkJson.query?.pages ?? {}) as Record<string, unknown>[]
     const heTitle = (pages[0]?.langlinks as Record<string, unknown>[] | undefined)?.[0]?.['*']
-    if (typeof heTitle !== 'string') { setCache(cacheKey, null, 86400000); return null }
+    if (typeof heTitle !== 'string') { setCache(cacheKey, HE_CACHE_MISS, 86400000); return { fact: null, url: null, name: null } }
 
+    const heUrl = `https://he.wikipedia.org/wiki/${encodeURIComponent(heTitle)}`
     const sumRes = await fetch(
       `https://he.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(heTitle)}`,
       { next: { revalidate: 86400 } }
     )
-    if (!sumRes.ok) { setCache(cacheKey, null, 86400000); return null }
+    if (!sumRes.ok) { setCache(cacheKey, HE_CACHE_MISS, 86400000); return { fact: null, url: null, name: null } }
     const sumJson = await sumRes.json()
     if (sumJson.type === 'disambiguation' || typeof sumJson.extract !== 'string' || !sumJson.extract) {
-      setCache(cacheKey, null, 86400000)
-      return null
+      setCache(cacheKey, HE_CACHE_MISS, 86400000)
+      return { fact: null, url: null, name: null }
     }
     const fact = firstSentences(sumJson.extract, 2)
-    setCache(cacheKey, fact, 86400000)
-    return fact
-  } catch { return null }
+    setCache(cacheKey, JSON.stringify({ fact, url: heUrl, name: heTitle }), 86400000)
+    return { fact, url: heUrl, name: heTitle }
+  } catch { return { fact: null, url: null, name: null } }
 }
 
 // ─── Match helpers ─────────────────────────────────────────────────────────

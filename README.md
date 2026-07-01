@@ -16,22 +16,22 @@ There are no passwords and no emails — your child just picks an avatar and typ
 
 ## What's built
 
-| Feature                                            | Done |
-| -------------------------------------------------- | ---- |
-| Hebrew / English toggle                            | ✅   |
-| Child login (name + avatar, no password)           | ✅   |
-| Switch between up to 4 players on a shared device  | ✅   |
-| Home: yesterday results + today + tomorrow matches | ✅   |
-| Match history page (all 104 matches)               | ✅   |
-| Teams page with search, flags, squad detail        | ✅   |
-| Photos from Wikipedia                              | ✅   |
-| 40+ sticker album with rarity system               | ✅   |
-| Daily sticker on login                             | ✅   |
-| Streak tracking                                    | ✅   |
-| Daily quiz (Hebrew + English)                      | ✅   |
-| Sticker rewards for quiz answers                   | ✅   |
-| Score predictions with +/− buttons                 | ✅   |
-| Soccer rules page                                  | ✅   |
-| Bug report form                                    | ✅   |
-| Responsive                                         | ✅   |
-| Fully free — no paid APIs                          | ✅   |
+| Feature  
+| --------------------------------------------------
+| Hebrew / English toggle  
+| Child login (name + avatar, no password)  
+| Switch between up to 4 players on a shared device  
+| Home: yesterday results + today + tomorrow matches
+| Match history page (all 104 matches)  
+| Teams page with search, flags, squad detail  
+| Photos from Wikipedia  
+| 80+ sticker album with rarity system  
+| Daily sticker on login  
+| Streak tracking  
+| Daily quiz (Hebrew + English)  
+| Sticker rewards for quiz answers  
+| Score predictions with +/− buttons  
+| Soccer rules page  
+| Bug report form  
+| Responsive  
+| Fully free — no paid APIs

@@ -95,6 +95,9 @@ export interface TopScorer {
   photo_url?: string
   fact_en?: string        // English Wikipedia summary, best-effort
   fact_he?: string        // native Hebrew Wikipedia article, when one exists
+  wiki_url?: string       // canonical English Wikipedia page URL
+  wiki_url_he?: string    // canonical Hebrew Wikipedia page URL
+  name_he?: string        // Hebrew name from Wikipedia langlink title
 }
 
 // ─── User & Auth ───────────────────────────────────────────────────────────

@@ -1,37 +1,124 @@
-# ⚽ World Cup Kids App
+# ⚽ World Cup Galaxy
+
+A bilingual (Hebrew/English) kids' app for the 2026 FIFA World Cup with stickers, quizzes, match data, and predictions, built for children aged 6–12 to enjoy with or without their parents.
 
 🔗 **Live app:** [world-cup-galaxy.vercel.app](https://world-cup-galaxy.vercel.app/)
 
-👤 **Created by:** [Galia Kropach](https://www.linkedin.com/in/galiakr/)
+> Part of the [AI Learning for Kids suite](https://www.youtube.com/watch?v=BVCtD6OQlsk): tools built for a talk on co-learning with children using AI.
 
-## For parents: how login works
+---
 
-There are no passwords and no emails — your child just picks an avatar and types a name to play. A few things worth knowing:
+## Screenshots
 
-- **Each device remembers them.** Once they've logged in on a phone or tablet, that device stays signed in — no need to log in again next time.
-- **Up to 4 kids can share one device.** Tap the 👥 button at the top to switch between players already added on that device — instantly, no code needed, since the device already knows it's allowed to act as each of them. The same button lets you add a new player (up to the limit of 4).
-- **A recovery code is only needed to add a profile from a _different_ device.** The first time a profile is created (either at signup or via "Add a player" in the switcher), the app shows a one-time code (e.g. `XJ4M-7QPR`). To bring that same player to another phone/tablet, enter that code there. **Write it down somewhere safe** — it's shown only once and can't be recovered later.
-- **No code, no recovery.** If a browser's data is cleared (or you try a different, not-yet-trusted device without the code), there's no way to get that profile back on it — it would start a new one instead. Nothing is lost except in-game progress (stickers, streak, predictions) for that one device; no personal data is collected in the first place.
-- **What's stored:** just a chosen name, an avatar emoji, and in-app activity (stickers, quiz answers, predictions) per player. No email, no real name required, no payment info.
+> _Coming soon — screenshots of the home screen, sticker album, and quiz_
+
+---
+
+## Why I built this
+
+I wanted a World Cup app my kids could actually use, in Hebrew, without passwords, without accounts, and without ads. Everything that exists is either adult-oriented or requires an email. So I built one.
+
+It's also a technical playground: I used it to explore anonymous device-based auth, bilingual RTL without an i18n library, and a two-layer caching strategy that survives Vercel Lambda cold starts.
+
+---
+
+## Tech stack
+
+### Frontend
+
+- **Next.js 14** - App Router with a mix of server and client components
+- **TypeScript**
+- **Tailwind CSS v3.4**
+- **Zustand** - client state and persistence via localStorage
+
+### Backend / Data
+
+- **Supabase** - PostgreSQL with Row Level Security, anonymous auth, and RPCs
+- **Next.js server components** as the primary data-fetching layer
+- **Next.js API routes** for client-side fetches (`/api/squad/[code]`, `/api/stadiums-weather`)
+
+### External APIs
+
+- **worldcup26.ir** - live match data (scores, kickoff times, penalties)
+- **football-data.org** - squads, top scorers, referees
+- **Wikipedia REST API + MediaWiki API** - player photos, bios, Hebrew articles
+
+### Hosting
+
+- **Vercel** - with `maxDuration` exports and Next.js Data Cache
+
+---
+
+## Notable architecture decisions
+
+**Two-layer cache for live data**
+Live match data is cached in-memory (a `Map` with TTL) as the first layer. Supabase tables (`matches_cache`, `scorers_cache`) serve as a fallback that survives Lambda cold starts. This avoids hammering external APIs on every cold request while keeping data reasonably fresh.
+
+**Device-based anonymous auth**
+No passwords, no emails. Children log in by picking an avatar and typing a name. Device trust is handled via Supabase anonymous auth, up to 4 profiles can share one device, with a one-time recovery code to migrate a profile to a new device.
+
+**Manual Hebrew/RTL i18n**
+No i18n library. A `LangSync` component patches `<html dir>` on the client when the language switches between Hebrew and English. All content is stored in bilingual objects and rendered based on the active language state.
+
+**PWA**
+Includes `manifest.json` and `themeColor` meta, installable on mobile home screens.
+
+---
+
+## Running locally
+
+```bash
+git clone https://github.com/galiakr/world-cup-galaxy.git
+cd world-cup-galaxy
+npm install
+cp .env.example .env.local   # fill in your Supabase and API keys
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Required environment variables
+
+See `.env.example` for the full list. You'll need:
+
+- Supabase project URL and anon key
+- football-data.org API key (free tier works)
+- worldcup26.ir does not require a key
+- openweathermap.org API key (free tier works)
+
+---
 
 ## What's built
 
-| Feature  
-| --------------------------------------------------
-| Hebrew / English toggle  
-| Child login (name + avatar, no password)  
-| Switch between up to 4 players on a shared device  
-| Home: yesterday results + today + tomorrow matches
-| Match history page (all 104 matches)  
-| Teams page with search, flags, squad detail  
-| Photos from Wikipedia  
-| 80+ sticker album with rarity system  
-| Daily sticker on login  
-| Streak tracking  
-| Daily quiz (Hebrew + English)  
-| Sticker rewards for quiz answers  
-| Score predictions with +/− buttons  
-| Soccer rules page  
-| Bug report form  
-| Responsive  
-| Fully free — no paid APIs
+| Feature                                           |
+| ------------------------------------------------- |
+| Hebrew / English toggle with manual RTL handling  |
+| Child login — name + avatar, no password          |
+| Switch between up to 4 players on a shared device |
+| Home: yesterday's results + today + tomorrow      |
+| Match history — all 104 matches                   |
+| Teams page with search, flags, and squad detail   |
+| Player photos and bios from Wikipedia             |
+| 80+ sticker album with rarity system              |
+| Daily sticker on login                            |
+| Streak tracking                                   |
+| Daily quiz (Hebrew + English)                     |
+| Sticker rewards for quiz answers                  |
+| Score predictions with +/− buttons                |
+| Soccer rules page                                 |
+| Bug report form                                   |
+| Fully responsive                                  |
+| PWA — installable on mobile                       |
+| Fully free — no paid APIs                         |
+
+---
+
+## For parents: how login works
+
+There are no passwords and no emails. Your child just picks an avatar and types a name to play. A few things worth knowing:
+
+- **Each device remembers them.** Once they've logged in on a phone or tablet, that device stays signed in. No need to log in again next time.
+- **Up to 4 kids can share one device.** Tap the 👥 button at the top to switch between players already added on that device, instantly, no code needed. The same button lets you add a new player.
+- **A recovery code is only needed to add a profile from a _different_ device.** The first time a profile is created, the app shows a one-time code (e.g. `XJ4M-7QPR`). To bring that player to another device, enter that code there. **Write it down somewhere safe** - it's shown only once.
+- **No code, no recovery.** If a browser's data is cleared or you try a different device without the code, that profile can't be recovered, but nothing personal is lost since no personal data is collected.
+- **What's stored:** a chosen name, an avatar emoji, and in-app activity (stickers, quiz answers, predictions) per player. No email, no real name, no payment info.

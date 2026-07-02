@@ -4,8 +4,6 @@ A bilingual (Hebrew/English) kids' app for the 2026 FIFA World Cup with stickers
 
 🔗 **Live app:** [world-cup-galaxy.vercel.app](https://world-cup-galaxy.vercel.app/)
 
-> Part of the [AI Learning for Kids suite](https://www.youtube.com/watch?v=BVCtD6OQlsk): tools built for a talk on co-learning with children using AI.
-
 ---
 
 ## Screenshots
@@ -42,6 +40,7 @@ It's also a technical playground: I used it to explore anonymous device-based au
 - **worldcup26.ir** - live match data (scores, kickoff times, penalties)
 - **football-data.org** - squads, top scorers, referees
 - **Wikipedia REST API + MediaWiki API** - player photos, bios, Hebrew articles
+- **OpenWeatherMap API** - current weather at match stadiums
 
 ### Hosting
 

@@ -8,7 +8,15 @@ A bilingual (Hebrew/English) kids' app for the 2026 FIFA World Cup with stickers
 
 ## Screenshots
 
-> _Coming soon — screenshots of the home screen, sticker album, and quiz_
+<img width="322" height="557" alt="Screenshot 2026-07-05 at 14 15 31" src="https://github.com/user-attachments/assets/eb16ea5e-00eb-4881-85af-e56bdbfcf3d8" />
+
+<img width="322" height="557" alt="Screenshot 2026-07-05 at 14 16 10" src="https://github.com/user-attachments/assets/e402dc02-6ddb-4ce8-bac3-a29fad37856b" />
+
+<img width="322" height="557" alt="Screenshot 2026-07-05 at 14 16 49" src="https://github.com/user-attachments/assets/e4d98b0d-fdc9-4399-8760-6cc6d39ebf64" />
+
+<img width="322" height="557" alt="Screenshot 2026-07-05 at 14 17 11" src="https://github.com/user-attachments/assets/faf3774a-49dc-4e43-afb7-9f4e6ca8a3a4" />
+
+<img width="322" height="557" alt="Screenshot 2026-07-05 at 14 18 13" src="https://github.com/user-attachments/assets/1a6a9182-ec8d-4921-a474-9863355e5b48" />
 
 ---
 

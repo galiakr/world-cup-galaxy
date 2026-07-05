@@ -2,7 +2,7 @@
 
 A bilingual (Hebrew/English) kids' app for the 2026 FIFA World Cup with stickers, quizzes, match data, and predictions, built for children aged 6–12 to enjoy with or without their parents.
 
-🔗 **Live app:** [world-cup-galaxy.vercel.app](https://world-cup-galaxy.vercel.app/)
+🔗 **Live app:** [ world-cup-galaxy.vercel.app ](https://world-cup-galaxy.vercel.app/)
 
 ---
 

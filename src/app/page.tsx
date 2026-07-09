@@ -1,4 +1,4 @@
-import { fetchMatches, fetchTopScorers, getTodayMatches, getYesterdayMatches, getTomorrowMatches } from '@/lib/api'
+import { fetchMatches, fetchTopScorers, getTodayMatches, getYesterdayMatches, getTomorrowMatches, isArchiveMode } from '@/lib/api'
 import { Match } from '@/types'
 import { countRefereeMatches } from '@/lib/standings'
 import HomeClient from '@/components/pages/HomeClient'
@@ -37,6 +37,7 @@ export default async function HomePage() {
       matchesUpdatedAt={updatedAt}
       matchesAttemptedAt={attemptedAt}
       refereeCounts={refereeCounts}
+      archiveMode={isArchiveMode()}
     />
   )
 }

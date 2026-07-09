@@ -1,0 +1,204 @@
+{
+ "updatedAt": "2026-07-09T20:54:49.027Z",
+ "scorers": [
+  {
+   "player_name": "Lionel Messi",
+   "team_id": "ARG",
+   "goals": 8,
+   "assists": 1,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Lionel_Messi_NE_Revolution_Inter_Miami_7.9.25-178.jpg/330px-Lionel_Messi_NE_Revolution_Inter_Miami_7.9.25-178.jpg",
+   "fact_en": "Lionel Andrés \"Leo\" Messi is an Argentine professional footballer who plays as a forward for and captains both Major League Soccer club Inter Miami and the Argentina national team. Widely regarded as one of the greatest players in history, Messi has set numerous records for individual accolades won throughout his professional footballing career, including eight Ballons d'Or, six European Golden Shoes, and being named the world's best player by FIFA eight times.",
+   "fact_he": "לְיוֹנֵל אַנדְרֶס \"לֵאוֹ\" מֶסִי קוּצִ'יטִינִי הוא כדורגלן ארגנטינאי המשחק בעמדות החלוץ והקשר ההתקפי באינטר מיאמי ובנבחרת ארגנטינה, בהן הוא משמש כקפטן. מכונה \"הפרעוש\", בשל זריזותו וקומתו הנמוכה.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Lionel_Messi",
+   "wiki_url_he": "https://he.wikipedia.org/wiki/%D7%9C%D7%99%D7%95%D7%A0%D7%9C%20%D7%9E%D7%A1%D7%99",
+   "name_he": "ליונל מסי"
+  },
+  {
+   "player_name": "Kylian Mbappé",
+   "team_id": "FRA",
+   "goals": 7,
+   "assists": 2,
+   "played_matches": 6,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Kylian_Mbappe_-_France_v_Norway_-_26_June_2026_%28cropped%29.jpg/330px-Kylian_Mbappe_-_France_v_Norway_-_26_June_2026_%28cropped%29.jpg",
+   "fact_en": "Kylian Mbappé Lottin is a French professional footballer who plays as a forward for La Liga club Real Madrid and captains the France national team. Widely regarded as one of the best players in the world, he is known for his pace, dribbling, and clinical finishing.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Kylian_Mbapp%C3%A9"
+  },
+  {
+   "player_name": "Erling Haaland",
+   "team_id": "NOR",
+   "goals": 7,
+   "assists": 0,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg/330px-Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg",
+   "fact_en": "Erling Braut Haaland is a Norwegian professional footballer who plays as a striker for Premier League club Manchester City and the Norway national team. Regarded as one of the best players in the world and the greatest Norwegian player of all time, he is known for his speed, strength, positioning, and finishing inside the box.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Erling_Haaland"
+  },
+  {
+   "player_name": "Harry Kane",
+   "team_id": "ENG",
+   "goals": 6,
+   "assists": 1,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Harry_Kane_England_v_Ghana_23_June_2026-219_%28cropped%29.jpg/330px-Harry_Kane_England_v_Ghana_23_June_2026-219_%28cropped%29.jpg",
+   "fact_en": "Harry Edward Kane is an English professional footballer who plays as a striker for Bundesliga club Bayern Munich and captains the England national team. Regarded as one of the best players in the world, he has scored over 500 career goals for club and country.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Harry_Kane"
+  },
+  {
+   "player_name": "Julián Quiñones",
+   "team_id": "MEX",
+   "goals": 4,
+   "assists": 1,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Juli%C3%A1n_Qui%C3%B1ones.png",
+   "fact_en": "Julián Andrés Quiñones Quiñones is a professional footballer who plays as a forward or winger for Saudi Pro League club Al-Qadsiah. Born in Colombia, he represents the Mexico national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Juli%C3%A1n_Qui%C3%B1ones"
+  },
+  {
+   "player_name": "Vinicius Junior",
+   "team_id": "BRA",
+   "goals": 4,
+   "assists": 1,
+   "played_matches": 5
+  },
+  {
+   "player_name": "Jude Bellingham",
+   "team_id": "ENG",
+   "goals": 4,
+   "assists": 1,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Jude_Bellingham_England_v_Ghana_23_June_2026-061_%28cropped%29.jpg/330px-Jude_Bellingham_England_v_Ghana_23_June_2026-061_%28cropped%29.jpg",
+   "fact_en": "Jude Victor William Bellingham is an English professional footballer who plays as a midfielder for La Liga club Real Madrid and the England national team. Regarded as one of the best players in the world, he is known for his athleticism and ball winning ability.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Jude_Bellingham"
+  },
+  {
+   "player_name": "Mikel Oyarzabal",
+   "team_id": "ESP",
+   "goals": 4,
+   "assists": 1,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_108_%28cropped%29.jpg/330px-UEFA_EURO_qualifiers_Sweden_vs_Spain_20191015_108_%28cropped%29.jpg",
+   "fact_en": "Mikel Oyarzabal Ugarte is a Spanish professional footballer who plays as a forward for La Liga club Real Sociedad, who he captains, and the Spain national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Mikel_Oyarzabal"
+  },
+  {
+   "player_name": "Ousmane Dembélé",
+   "team_id": "FRA",
+   "goals": 4,
+   "assists": 2,
+   "played_matches": 6,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Ousmane_Dembele_France_v_Senegal_16_June_2026-341_%28cropped%29_2.jpg/330px-Ousmane_Dembele_France_v_Senegal_16_June_2026-341_%28cropped%29_2.jpg",
+   "fact_en": "Masour Ousmane Dembélé is a French professional footballer who plays as a forward or right winger for Ligue 1 club Paris Saint-Germain and the France national team. Regarded as one of the best players in the world, he is one of ten players to have won the FIFA World Cup, UEFA Champions League, and Ballon d'Or in their career.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Ousmane_Demb%C3%A9l%C3%A9"
+  },
+  {
+   "player_name": "Ismaïla Sarr",
+   "team_id": "SEN",
+   "goals": 4,
+   "assists": 1,
+   "played_matches": 4,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Ismaila_Sarr_France_v_Senegal_16_June_2026-425_%28cropped%29.jpg/330px-Ismaila_Sarr_France_v_Senegal_16_June_2026-425_%28cropped%29.jpg",
+   "fact_en": "Ismaïla Sarr is a Senegalese professional footballer who plays as a forward or\nwinger for Premier League club Crystal Palace and the Senegal national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Isma%C3%AFla_Sarr"
+  },
+  {
+   "player_name": "Raúl Jiménez",
+   "team_id": "MEX",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Ra%C3%BAl_Jim%C3%A9nez_04032026_%281%29.jpg/330px-Ra%C3%BAl_Jim%C3%A9nez_04032026_%281%29.jpg",
+   "fact_en": "Raúl Alonso Jiménez Rodríguez is a Mexican professional footballer who plays as a striker for EFL Championship club Wolverhampton Wanderers and the Mexico national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Ra%C3%BAl_Jim%C3%A9nez"
+  },
+  {
+   "player_name": "Folarin Balogun",
+   "team_id": "USA",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Folarin_Balogun_Australia_v_USA_19_June_2026-64.jpg/330px-Folarin_Balogun_Australia_v_USA_19_June_2026-64.jpg",
+   "fact_en": "Folarin Jerry Balogun is a professional soccer player who plays as a striker for Ligue 1 club Monaco and the United States national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Folarin_Balogun"
+  },
+  {
+   "player_name": "Ismael Saibari",
+   "team_id": "MAR",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 6,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Ismael_Saibari_Brazil_V_Morocco_13_June_2026-152.jpg/330px-Ismael_Saibari_Brazil_V_Morocco_13_June_2026-152.jpg",
+   "fact_en": "Ismael Saibari Ben El Basra is a professional footballer who plays as an attacking midfielder for Bundesliga club Bayern Munich. Born in Spain, he represents the Morocco national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Ismael_Saibari"
+  },
+  {
+   "player_name": "Kai Havertz",
+   "team_id": "GER",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 4,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Kai_Havertz_Ecuador_v_Germany_25_June_2026-118.jpg/330px-Kai_Havertz_Ecuador_v_Germany_25_June_2026-118.jpg",
+   "fact_en": "Kai Lukas Havertz is a German professional footballer who plays as a forward or attacking midfielder for Premier League club Arsenal and the Germany national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Kai_Havertz"
+  },
+  {
+   "player_name": "Deniz Undav",
+   "team_id": "GER",
+   "goals": 3,
+   "assists": 2,
+   "played_matches": 4,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Deniz_undav.jpg/330px-Deniz_undav.jpg",
+   "fact_en": "Deniz Undav is a German professional footballer who plays as a forward for Bundesliga club VfB Stuttgart and the Germany national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Deniz_Undav"
+  },
+  {
+   "player_name": "Elijah Just",
+   "team_id": "NZL",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 3,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Elijah_Just_%28cropped%29.jpg/330px-Elijah_Just_%28cropped%29.jpg",
+   "fact_en": "Elijah Henry Just is a New Zealand professional footballer who plays as a winger for Scottish Premiership club Motherwell and the New Zealand national team. Just is New Zealand's all-time leading scorer at the FIFA World Cup with three goals.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Elijah_Just"
+  },
+  {
+   "player_name": "Yoane Wissa",
+   "team_id": "COD",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 3,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/CAN_2023RD_Congo_2-1_Guin%C3%A9e_9939_%28cropped%29.jpg/330px-CAN_2023RD_Congo_2-1_Guin%C3%A9e_9939_%28cropped%29.jpg",
+   "fact_en": "Yoane Wissa is a professional footballer who plays as a forward or left winger for Premier League club Newcastle United. Born in France, he represents the DR Congo national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Yoane_Wissa"
+  },
+  {
+   "player_name": "Johan Manzambi",
+   "team_id": "SUI",
+   "goals": 3,
+   "assists": 2,
+   "played_matches": 4,
+   "fact_en": "Johan Manzambi is a Swiss professional footballer who plays as a midfielder for Bundesliga club SC Freiburg and the Switzerland national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Johan_Manzambi"
+  },
+  {
+   "player_name": "Jonathan David",
+   "team_id": "CAN",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Jonathan_David_Canada_v_Qatar_18_June_2026-242_%28cropped%29.jpg/330px-Jonathan_David_Canada_v_Qatar_18_June_2026-242_%28cropped%29.jpg",
+   "fact_en": "Jonathan Christian David is a professional soccer player who plays as a forward for Serie A club Juventus. Born in the United States, he represents the Canada national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Jonathan_David"
+  },
+  {
+   "player_name": "Matheus Cunha",
+   "team_id": "BRA",
+   "goals": 3,
+   "assists": 0,
+   "played_matches": 5,
+   "photo_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Matheus_Cunha_Brazil_V_Morocco_13_June_2026-178_%28cropped%29.jpg/330px-Matheus_Cunha_Brazil_V_Morocco_13_June_2026-178_%28cropped%29.jpg",
+   "fact_en": "Matheus Santos Carneiro da Cunha is a Brazilian professional footballer who plays as a forward, attacking midfielder, or winger for Premier League club Manchester United and the Brazil national team.",
+   "wiki_url": "https://en.wikipedia.org/wiki/Matheus_Cunha"
+  }
+ ]
+}

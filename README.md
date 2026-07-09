@@ -70,6 +70,9 @@ No i18n library. A `LangSync` component patches `<html dir>` on the client when 
 **PWA**
 Includes `manifest.json` and `themeColor` meta, installable on mobile home screens.
 
+**Archive mode — life after the final**
+The live-data APIs won't outlive the tournament: worldcup26.ir is a hobby project, and football-data.org rotates out past seasons. So the app can freeze the whole tournament into the repo: `npm run snapshot-archive` captures every match (scores, scorers, penalties, referees, half-time), the top scorers (with their Wikipedia facts already resolved), and all 48 squads into `src/data/archive/*.json`. After a cutoff date one week past the final (or with `WC_ARCHIVE_MODE=1`), the fetchers serve those files directly — no flaky-API retries, no Supabase dependency, and the app keeps working as a self-contained memento of the 2026 World Cup. The snapshot script is safe to run any time as a dry run; the one that counts is run right after the final, while the APIs still have the data.
+
 ---
 
 ## Running locally

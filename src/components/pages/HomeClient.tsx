@@ -19,6 +19,7 @@ interface HomeClientProps {
   matchesUpdatedAt?: string | null;
   matchesAttemptedAt?: string;
   refereeCounts?: Record<string, number>;
+  archiveMode?: boolean;
 }
 
 export default function HomeClient({
@@ -31,6 +32,7 @@ export default function HomeClient({
   matchesUpdatedAt,
   matchesAttemptedAt,
   refereeCounts,
+  archiveMode,
 }: HomeClientProps) {
   const { lang, user, dailyClaimedDate, setDailyClaimedDate, addSticker } =
     useAppStore();
@@ -109,6 +111,22 @@ export default function HomeClient({
           </span>
         </div>
       </div>
+
+      {/* Next World Cup banner — shown once the 2026 tournament is over
+          (same trigger as archive mode) */}
+      {archiveMode && (
+        <div className="flex items-center gap-4 rounded-2xl p-4 mb-4 bg-spacelight border-2 border-gold">
+          <div className="text-5xl">🏆</div>
+          <div>
+            <div className="font-display text-lg text-gold">
+              {t(lang, 'next_wc_title')}
+            </div>
+            <div className="text-xs mt-0.5 text-starlight/70">
+              {t(lang, 'next_wc_sub')}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Daily sticker banner */}
       <button

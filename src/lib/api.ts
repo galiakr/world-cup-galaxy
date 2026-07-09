@@ -59,6 +59,47 @@ async function fetchWithRetry(url: string, init: RequestInit, attempts = 3, time
   throw lastErr
 }
 
+// ─── Archive mode ──────────────────────────────────────────────────────────
+// After the tournament, the upstream APIs will die or archive their data
+// (worldcup26.ir is a hobby project; football-data.org rotates seasons).
+// `npm run snapshot-archive` freezes the final state of everything into
+// src/data/archive/*.json, and past the cutoff date the fetchers serve
+// those files directly — no flaky-API retries, no Supabase dependency.
+// WC_ARCHIVE_MODE=1 forces it on (for testing), =0 forces it off.
+
+const ARCHIVE_CUTOFF_DATE = '2026-07-26' // a week after the July 19 final
+
+export function isArchiveMode(): boolean {
+  if (process.env.WC_ARCHIVE_MODE === '1') return true
+  if (process.env.WC_ARCHIVE_MODE === '0') return false
+  return israelDateString() >= ARCHIVE_CUTOFF_DATE
+}
+
+// Dynamic imports so the archive JSON is code-split out of pages that
+// never enter archive mode (and out of the client bundle entirely).
+// Each loader returns null when the snapshot hasn't been generated yet,
+// letting callers fall through to the live path.
+async function loadArchivedMatches(): Promise<{ updatedAt: string; matches: Match[] } | null> {
+  try {
+    const mod = await import('@/data/archive/matches.json')
+    return (mod.default ?? mod) as unknown as { updatedAt: string; matches: Match[] }
+  } catch { return null }
+}
+
+async function loadArchivedScorers(): Promise<TopScorer[] | null> {
+  try {
+    const mod = await import('@/data/archive/scorers.json')
+    return ((mod.default ?? mod) as unknown as { scorers: TopScorer[] }).scorers
+  } catch { return null }
+}
+
+async function loadArchivedSquads(): Promise<Record<string, SquadResult> | null> {
+  try {
+    const mod = await import('@/data/archive/squads.json')
+    return ((mod.default ?? mod) as unknown as { squads: Record<string, SquadResult> }).squads
+  } catch { return null }
+}
+
 // ─── Matches ───────────────────────────────────────────────────────────────
 
 export interface MatchesResult {
@@ -74,6 +115,16 @@ export async function fetchMatches(): Promise<MatchesResult> {
   if (cached) return cached
 
   const attemptedAt = new Date().toISOString()
+
+  if (isArchiveMode()) {
+    const archive = await loadArchivedMatches()
+    if (archive) {
+      const result: MatchesResult = { matches: archive.matches, stale: false, updatedAt: archive.updatedAt, attemptedAt }
+      setCache(cacheKey, result, 24 * 60 * 60 * 1000)
+      return result
+    }
+    // No snapshot generated yet — fall through to the live path.
+  }
 
   try {
     const res = await fetchWithRetry(`${WC_BASE}/get/games`, {
@@ -127,6 +178,25 @@ export async function fetchMatches(): Promise<MatchesResult> {
         half_time_away: details?.half_time_away,
       }
     })
+
+    // If football-data.org failed outright (empty details map), the
+    // matches built above are missing referees / half-time / duration.
+    // Re-attach those from the previous snapshot before overwriting it,
+    // so one bad football-data.org fetch can't degrade the archive.
+    if (Object.keys(detailsMap).length === 0) {
+      const prev = await loadMatchesFallback()
+      if (prev) {
+        const prevById = new Map(prev.matches.map(m => [m.id, m]))
+        for (const m of matches) {
+          const old = prevById.get(m.id)
+          if (!old) continue
+          m.referee ??= old.referee
+          m.duration ??= old.duration
+          m.half_time_home ??= old.half_time_home
+          m.half_time_away ??= old.half_time_away
+        }
+      }
+    }
 
     const updatedAt = new Date().toISOString()
     const result: MatchesResult = { matches, stale: false, updatedAt, attemptedAt }
@@ -319,6 +389,16 @@ export async function fetchSquad(teamCode: string): Promise<SquadResult> {
   if (cached) return cached
 
   const empty: SquadResult = { coachName: null, crest: null, clubColors: null, founded: null, players: [] }
+
+  if (isArchiveMode()) {
+    const squads = await loadArchivedSquads()
+    const archived = squads?.[teamCode.toUpperCase()]
+    if (archived) {
+      setCache(cacheKey, archived, 24 * 60 * 60 * 1000)
+      return archived
+    }
+  }
+
   try {
     const res = await fetch(`${FDORG_BASE}/competitions/WC/teams`, {
       headers: { 'X-Auth-Token': FDORG_KEY },
@@ -435,6 +515,14 @@ export async function fetchTopScorers(): Promise<TopScorer[]> {
   const cacheKey = 'scorers'
   const cached = getCache<TopScorer[]>(cacheKey)
   if (cached) return cached
+
+  if (isArchiveMode()) {
+    const archived = await loadArchivedScorers()
+    if (archived) {
+      setCache(cacheKey, archived, 24 * 60 * 60 * 1000)
+      return archived
+    }
+  }
 
   try {
     const res = await fetch(`${FDORG_BASE}/competitions/WC/scorers?limit=20`, {

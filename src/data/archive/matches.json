@@ -1,0 +1,3752 @@
+{
+ "updatedAt": "2026-07-09T20:54:49.027Z",
+ "matches": [
+  {
+   "id": "6",
+   "match_number": 1,
+   "home_team_id": "15",
+   "away_team_id": "16",
+   "home_score": 2,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "D",
+   "match_date": "2026-06-14",
+   "kick_off_utc": "2026-06-14T04:00:00.000Z",
+   "stadium_id": "13",
+   "home_scorers": [
+    {
+     "scorer": "Nestory Irankunda",
+     "minute": "27",
+     "own_goal": false
+    },
+    {
+     "scorer": "C. Metcalfe",
+     "minute": "75",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Jesús Valenzuela",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "8",
+   "match_number": 1,
+   "home_team_id": "7",
+   "away_team_id": "8",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "B",
+   "match_date": "2026-06-13",
+   "kick_off_utc": "2026-06-13T19:00:00.000Z",
+   "stadium_id": "15",
+   "home_scorers": [
+    {
+     "scorer": "B. Khoukhi 90'+5'",
+     "minute": "",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Breel Embolo 17' (p)",
+     "minute": "",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Said Martinez",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "31",
+   "match_number": 2,
+   "home_team_id": "13",
+   "away_team_id": "15",
+   "home_score": 2,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "D",
+   "match_date": "2026-06-19",
+   "kick_off_utc": "2026-06-19T19:00:00.000Z",
+   "stadium_id": "14",
+   "home_scorers": [
+    {
+     "scorer": "Kamrvn Bargs",
+     "minute": "11",
+     "own_goal": false
+    },
+    {
+     "scorer": "Alex Freeman",
+     "minute": "43",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Felix Zwayer",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 0
+  },
+  {
+   "id": "33",
+   "match_number": 2,
+   "home_team_id": "17",
+   "away_team_id": "19",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "E",
+   "match_date": "2026-06-20",
+   "kick_off_utc": "2026-06-20T20:00:00.000Z",
+   "stadium_id": "12",
+   "home_scorers": [
+    {
+     "scorer": "Dniz Avndav",
+     "minute": "68",
+     "own_goal": false
+    },
+    {
+     "scorer": "Dniz Avndav",
+     "minute": "90+4",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Franck Kessié",
+     "minute": "30",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Juan Benítez",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "35",
+   "match_number": 2,
+   "home_team_id": "21",
+   "away_team_id": "23",
+   "home_score": 5,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "F",
+   "match_date": "2026-06-20",
+   "kick_off_utc": "2026-06-20T17:00:00.000Z",
+   "stadium_id": "5",
+   "home_scorers": [
+    {
+     "scorer": "Brian Brobbey",
+     "minute": "5",
+     "own_goal": false
+    },
+    {
+     "scorer": "Brian Brobbey",
+     "minute": "17",
+     "own_goal": false
+    },
+    {
+     "scorer": "Kvdi Khakpv",
+     "minute": "47",
+     "own_goal": false
+    },
+    {
+     "scorer": "Kvdi Khakpv",
+     "minute": "54",
+     "own_goal": false
+    },
+    {
+     "scorer": "Crysencio Summerville",
+     "minute": "89",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Anthony Elanga",
+     "minute": "59",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Michael Oliver",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 0
+  },
+  {
+   "id": "41",
+   "match_number": 2,
+   "home_team_id": "33",
+   "away_team_id": "35",
+   "home_score": 3,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "I",
+   "match_date": "2026-06-23",
+   "kick_off_utc": "2026-06-22T21:00:00.000Z",
+   "stadium_id": "10",
+   "home_scorers": [
+    {
+     "scorer": "Kylian Mbappé",
+     "minute": "14",
+     "own_goal": false
+    },
+    {
+     "scorer": "Kylian Mbappé",
+     "minute": "54",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ousmane Dembélé",
+     "minute": "66",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Drew Fischer",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "42",
+   "match_number": 2,
+   "home_team_id": "36",
+   "away_team_id": "34",
+   "home_score": 3,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "I",
+   "match_date": "2026-06-23",
+   "kick_off_utc": "2026-06-23T00:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [
+    {
+     "scorer": "Markvs Hlmgrn Pdrsn",
+     "minute": "43",
+     "own_goal": false
+    },
+    {
+     "scorer": "Erling Haaland",
+     "minute": "48",
+     "own_goal": false
+    },
+    {
+     "scorer": "Erling Haaland",
+     "minute": "58",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Ismaïla Sarr",
+     "minute": "53",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ismaïla Sarr",
+     "minute": "90+3",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Wilton Sampaio",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "59",
+   "match_number": 3,
+   "home_team_id": "22",
+   "away_team_id": "23",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "F",
+   "match_date": "2026-06-26",
+   "kick_off_utc": "2026-06-25T23:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [
+    {
+     "scorer": "Daizen Maeda",
+     "minute": "56",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Anthony Elanga",
+     "minute": "62",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ivan Barton",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "95",
+   "match_number": 5,
+   "home_team_id": "37",
+   "away_team_id": "26",
+   "home_score": 3,
+   "away_score": 2,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-07",
+   "kick_off_utc": "2026-07-07T16:00:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [
+    {
+     "scorer": "Cristian Romero",
+     "minute": "79",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lionel Messi",
+     "minute": "83",
+     "own_goal": false
+    },
+    {
+     "scorer": "Enzo Fernández",
+     "minute": "90+2",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Yasser Ibrahim",
+     "minute": "15",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mostafa Ziko",
+     "minute": "67",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "François Letexier",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "101",
+   "match_number": 7,
+   "home_team_id": "0",
+   "away_team_id": "0",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "scheduled",
+   "round": "semi",
+   "group_name": "SF",
+   "match_date": "2026-07-14",
+   "kick_off_utc": "2026-07-14T19:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null
+  },
+  {
+   "id": "102",
+   "match_number": 7,
+   "home_team_id": "0",
+   "away_team_id": "0",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "scheduled",
+   "round": "semi",
+   "group_name": "SF",
+   "match_date": "2026-07-15",
+   "kick_off_utc": "2026-07-15T19:00:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null
+  },
+  {
+   "id": "5",
+   "match_number": 1,
+   "home_team_id": "11",
+   "away_team_id": "12",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "C",
+   "match_date": "2026-06-14",
+   "kick_off_utc": "2026-06-14T01:00:00.000Z",
+   "stadium_id": "9",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "J. McGinn",
+     "minute": "28",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Mustapha Ghorbal",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "22",
+   "match_number": 1,
+   "home_team_id": "45",
+   "away_team_id": "46",
+   "home_score": 4,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "L",
+   "match_date": "2026-06-17",
+   "kick_off_utc": "2026-06-17T20:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [
+    {
+     "scorer": "H. Kane 12'(p)",
+     "minute": "",
+     "own_goal": false
+    },
+    {
+     "scorer": "H. Kane",
+     "minute": "42",
+     "own_goal": false
+    },
+    {
+     "scorer": "J. Bellingham",
+     "minute": "47",
+     "own_goal": false
+    },
+    {
+     "scorer": "M. Rashford",
+     "minute": "85",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "M. Baturina",
+     "minute": "36",
+     "own_goal": false
+    },
+    {
+     "scorer": "P. Musa",
+     "minute": "45+5",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Clément Turpin",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 2
+  },
+  {
+   "id": "39",
+   "match_number": 2,
+   "home_team_id": "29",
+   "away_team_id": "31",
+   "home_score": 4,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "H",
+   "match_date": "2026-06-21",
+   "kick_off_utc": "2026-06-21T16:00:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [
+    {
+     "scorer": "Lamine Yamal",
+     "minute": "10",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mikel Oyarzabal",
+     "minute": "21",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mikel Oyarzabal",
+     "minute": "24",
+     "own_goal": false
+    },
+    {
+     "scorer": "Hassan Mohamed Altmbkti",
+     "minute": "49",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Raphael Claus",
+   "duration": "regular",
+   "half_time_home": 3,
+   "half_time_away": 0
+  },
+  {
+   "id": "44",
+   "match_number": 2,
+   "home_team_id": "40",
+   "away_team_id": "38",
+   "home_score": 1,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "J",
+   "match_date": "2026-06-23",
+   "kick_off_utc": "2026-06-23T03:00:00.000Z",
+   "stadium_id": "15",
+   "home_scorers": [
+    {
+     "scorer": "Al Rashdan",
+     "minute": "36",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Nzir Bnbvali",
+     "minute": "69",
+     "own_goal": false
+    },
+    {
+     "scorer": "Amine Gouiri",
+     "minute": "82",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Slavko Vinčič",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "45",
+   "match_number": 2,
+   "home_team_id": "41",
+   "away_team_id": "43",
+   "home_score": 5,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "K",
+   "match_date": "2026-06-23",
+   "kick_off_utc": "2026-06-23T17:00:00.000Z",
+   "stadium_id": "5",
+   "home_scorers": [
+    {
+     "scorer": "Cristiano Ronaldo",
+     "minute": "6",
+     "own_goal": false
+    },
+    {
+     "scorer": "Nvnv Mndz",
+     "minute": "17",
+     "own_goal": false
+    },
+    {
+     "scorer": "Cristiano Ronaldo",
+     "minute": "39",
+     "own_goal": false
+    },
+    {
+     "scorer": "Abdalvhid Namtvf",
+     "minute": "60",
+     "own_goal": false
+    },
+    {
+     "scorer": "Rafael Leão",
+     "minute": "87",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Jalal Jayed",
+   "duration": "regular",
+   "half_time_home": 3,
+   "half_time_away": 0
+  },
+  {
+   "id": "46",
+   "match_number": 2,
+   "home_team_id": "48",
+   "away_team_id": "46",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "L",
+   "match_date": "2026-06-24",
+   "kick_off_utc": "2026-06-23T23:00:00.000Z",
+   "stadium_id": "12",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Ante Budimir",
+     "minute": "54",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "52",
+   "match_number": 3,
+   "home_team_id": "4",
+   "away_team_id": "1",
+   "home_score": 0,
+   "away_score": 3,
+   "status": "finished",
+   "round": "group",
+   "group_name": "A",
+   "match_date": "2026-06-25",
+   "kick_off_utc": "2026-06-25T01:00:00.000Z",
+   "stadium_id": "1",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Mateo Chávez",
+     "minute": "55",
+     "own_goal": false
+    },
+    {
+     "scorer": "Jvlian Kviinvnz",
+     "minute": "61",
+     "own_goal": false
+    },
+    {
+     "scorer": "Álvaro Fidalgo",
+     "minute": "90+4",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Yael Falcón",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "60",
+   "match_number": 3,
+   "home_team_id": "24",
+   "away_team_id": "21",
+   "home_score": 1,
+   "away_score": 3,
+   "status": "finished",
+   "round": "group",
+   "group_name": "F",
+   "match_date": "2026-06-26",
+   "kick_off_utc": "2026-06-25T23:00:00.000Z",
+   "stadium_id": "6",
+   "home_scorers": [
+    {
+     "scorer": "Hazm Mstvri",
+     "minute": "54",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Alis Skhiri",
+     "minute": "3",
+     "own_goal": false
+    },
+    {
+     "scorer": "Brian Brobbey",
+     "minute": "7",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ian Fn Hkh",
+     "minute": "62",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Katia García",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 2
+  },
+  {
+   "id": "61",
+   "match_number": 3,
+   "home_team_id": "34",
+   "away_team_id": "35",
+   "home_score": 5,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "I",
+   "match_date": "2026-06-26",
+   "kick_off_utc": "2026-06-26T19:00:00.000Z",
+   "stadium_id": "12",
+   "home_scorers": [
+    {
+     "scorer": "Habib Diarra",
+     "minute": "4",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ismaïla Sarr",
+     "minute": "56",
+     "own_goal": false
+    },
+    {
+     "scorer": "Paph Gviih",
+     "minute": "59",
+     "own_goal": false
+    },
+    {
+     "scorer": "Paph Gviih",
+     "minute": "71",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ailman Andiaih",
+     "minute": "82",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Anthony Taylor",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "67",
+   "match_number": 3,
+   "home_team_id": "48",
+   "away_team_id": "45",
+   "home_score": 0,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "L",
+   "match_date": "2026-06-28",
+   "kick_off_utc": "2026-06-27T21:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Jvd Blingham",
+     "minute": "62",
+     "own_goal": false
+    },
+    {
+     "scorer": "Hri Kin",
+     "minute": "67",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Abdulrahman Al Jassim",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "72",
+   "match_number": 3,
+   "home_team_id": "42",
+   "away_team_id": "43",
+   "home_score": 3,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "K",
+   "match_date": "2026-06-28",
+   "kick_off_utc": "2026-06-27T23:30:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [
+    {
+     "scorer": "Fistvn Mail",
+     "minute": "78",
+     "own_goal": false
+    },
+    {
+     "scorer": "Yoane Wissa",
+     "minute": "90+1",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Aldvr Shvmvrvdvf",
+     "minute": "10",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Felix Zwayer",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "86",
+   "match_number": 4,
+   "home_team_id": "37",
+   "away_team_id": "30",
+   "home_score": 3,
+   "away_score": 2,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-04",
+   "kick_off_utc": "2026-07-03T22:00:00.000Z",
+   "stadium_id": "8",
+   "home_scorers": [
+    {
+     "scorer": "Lionel Messi",
+     "minute": "29",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lisandro Martínez",
+     "minute": "92",
+     "own_goal": false
+    },
+    {
+     "scorer": "Dini Bvrgs",
+     "minute": "111",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Drvi Dviart",
+     "minute": "59",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lvpz Kabral",
+     "minute": "103",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Drew Fischer",
+   "duration": "extra_time",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "88",
+   "match_number": 4,
+   "home_team_id": "15",
+   "away_team_id": "26",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-03",
+   "kick_off_utc": "2026-07-03T18:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [
+    {
+     "scorer": "Mohamed Hany",
+     "minute": "55",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Emam Ashour",
+     "minute": "13",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": 2,
+   "away_penalty_score": 4,
+   "referee": "Gustavo Tejera",
+   "duration": "penalty_shootout",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "100",
+   "match_number": 6,
+   "home_team_id": "37",
+   "away_team_id": "8",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "scheduled",
+   "round": "quarter",
+   "group_name": "QF",
+   "match_date": "2026-07-12",
+   "kick_off_utc": "2026-07-12T01:00:00.000Z",
+   "stadium_id": "6",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null
+  },
+  {
+   "id": "2",
+   "match_number": 1,
+   "home_team_id": "3",
+   "away_team_id": "4",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "A",
+   "match_date": "2026-06-12",
+   "kick_off_utc": "2026-06-12T02:00:00.000Z",
+   "stadium_id": "2",
+   "home_scorers": [
+    {
+     "scorer": "I.B. Hwang",
+     "minute": "67",
+     "own_goal": false
+    },
+    {
+     "scorer": "H.G. Oh",
+     "minute": "80",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "L. Krejčí",
+     "minute": "59",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Amin Omar",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "4",
+   "match_number": 1,
+   "home_team_id": "13",
+   "away_team_id": "14",
+   "home_score": 4,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "D",
+   "match_date": "2026-06-13",
+   "kick_off_utc": "2026-06-13T01:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [
+    {
+     "scorer": "D. Bobadilla",
+     "minute": "7",
+     "own_goal": true
+    },
+    {
+     "scorer": "F. Balogun",
+     "minute": "31",
+     "own_goal": false
+    },
+    {
+     "scorer": "F. Balogun 45'+5'",
+     "minute": "",
+     "own_goal": false
+    },
+    {
+     "scorer": "G. Reyna 90'+8'",
+     "minute": "",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Maurício",
+     "minute": "73",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Danny Makkelie",
+   "duration": "regular",
+   "half_time_home": 3,
+   "half_time_away": 0
+  },
+  {
+   "id": "17",
+   "match_number": 1,
+   "home_team_id": "33",
+   "away_team_id": "34",
+   "home_score": 3,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "I",
+   "match_date": "2026-06-16",
+   "kick_off_utc": "2026-06-16T19:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [
+    {
+     "scorer": "K. Mbappé",
+     "minute": "66",
+     "own_goal": false
+    },
+    {
+     "scorer": "B. Barcola",
+     "minute": "82",
+     "own_goal": false
+    },
+    {
+     "scorer": "K. Mbappé",
+     "minute": "90+6",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "I. Mbaye",
+     "minute": "90+5",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Alireza Faghani",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "18",
+   "match_number": 1,
+   "home_team_id": "35",
+   "away_team_id": "36",
+   "home_score": 1,
+   "away_score": 4,
+   "status": "finished",
+   "round": "group",
+   "group_name": "I",
+   "match_date": "2026-06-17",
+   "kick_off_utc": "2026-06-16T22:00:00.000Z",
+   "stadium_id": "9",
+   "home_scorers": [
+    {
+     "scorer": "Aymen Hussein",
+     "minute": "39",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Erling Haaland",
+     "minute": "29",
+     "own_goal": false
+    },
+    {
+     "scorer": "Erling Haaland",
+     "minute": "43",
+     "own_goal": false
+    },
+    {
+     "scorer": "Leo Østigård",
+     "minute": "76",
+     "own_goal": false
+    },
+    {
+     "scorer": "Aymen Hussein",
+     "minute": "90+7",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Pierre Atcho",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 2
+  },
+  {
+   "id": "21",
+   "match_number": 1,
+   "home_team_id": "41",
+   "away_team_id": "42",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "K",
+   "match_date": "2026-06-17",
+   "kick_off_utc": "2026-06-17T17:00:00.000Z",
+   "stadium_id": "5",
+   "home_scorers": [
+    {
+     "scorer": "J. Neves",
+     "minute": "6",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Y. Wissa",
+     "minute": "45+5",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Abdulrahman Al Jassim",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 1
+  },
+  {
+   "id": "37",
+   "match_number": 2,
+   "home_team_id": "25",
+   "away_team_id": "27",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "G",
+   "match_date": "2026-06-21",
+   "kick_off_utc": "2026-06-21T19:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Darío Herrera",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "50",
+   "match_number": 3,
+   "home_team_id": "10",
+   "away_team_id": "11",
+   "home_score": 4,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "C",
+   "match_date": "2026-06-25",
+   "kick_off_utc": "2026-06-24T22:00:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [
+    {
+     "scorer": "Achraf Hakimi",
+     "minute": "39",
+     "own_goal": false
+    },
+    {
+     "scorer": "Asmaail Saibari",
+     "minute": "45+1",
+     "own_goal": false
+    },
+    {
+     "scorer": "Svfian Rhimi",
+     "minute": "78",
+     "own_goal": false
+    },
+    {
+     "scorer": "Gessime Yassine",
+     "minute": "89",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Yassine Bounou",
+     "minute": "10",
+     "own_goal": false
+    },
+    {
+     "scorer": "Wilson Isidor",
+     "minute": "43",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Danny Makkelie",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 2
+  },
+  {
+   "id": "51",
+   "match_number": 3,
+   "home_team_id": "2",
+   "away_team_id": "3",
+   "home_score": 1,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "A",
+   "match_date": "2026-06-25",
+   "kick_off_utc": "2026-06-25T01:00:00.000Z",
+   "stadium_id": "3",
+   "home_scorers": [
+    {
+     "scorer": "Taplv Maskv",
+     "minute": "63",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Facundo Tello",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "87",
+   "match_number": 4,
+   "home_team_id": "44",
+   "away_team_id": "47",
+   "home_score": 1,
+   "away_score": 0,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-04",
+   "kick_off_utc": "2026-07-04T01:30:00.000Z",
+   "stadium_id": "6",
+   "home_scorers": [
+    {
+     "scorer": "Jan Arias",
+     "minute": "14",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Clément Turpin",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "98",
+   "match_number": 6,
+   "home_team_id": "29",
+   "away_team_id": "25",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "scheduled",
+   "round": "quarter",
+   "group_name": "QF",
+   "match_date": "2026-07-10",
+   "kick_off_utc": "2026-07-10T19:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null
+  },
+  {
+   "id": "9",
+   "match_number": 1,
+   "home_team_id": "19",
+   "away_team_id": "20",
+   "home_score": 1,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "E",
+   "match_date": "2026-06-15",
+   "kick_off_utc": "2026-06-14T23:00:00.000Z",
+   "stadium_id": "10",
+   "home_scorers": [
+    {
+     "scorer": "A. Diallo",
+     "minute": "90",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "François Letexier",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "10",
+   "match_number": 1,
+   "home_team_id": "17",
+   "away_team_id": "18",
+   "home_score": 7,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "E",
+   "match_date": "2026-06-14",
+   "kick_off_utc": "2026-06-14T17:00:00.000Z",
+   "stadium_id": "5",
+   "home_scorers": [
+    {
+     "scorer": "Felix Nmecha",
+     "minute": "7",
+     "own_goal": false
+    },
+    {
+     "scorer": "N. Schlotterbeck",
+     "minute": "38",
+     "own_goal": false
+    },
+    {
+     "scorer": "K. Havertz 45'+5'(p)",
+     "minute": "",
+     "own_goal": false
+    },
+    {
+     "scorer": "J. Musiala",
+     "minute": "47",
+     "own_goal": false
+    },
+    {
+     "scorer": "N. Brown",
+     "minute": "68",
+     "own_goal": false
+    },
+    {
+     "scorer": "D. Undav",
+     "minute": "78",
+     "own_goal": false
+    },
+    {
+     "scorer": "K. Havertz",
+     "minute": "88",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "L. Comenencia",
+     "minute": "21",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Jalal Jayed",
+   "duration": "regular",
+   "half_time_home": 3,
+   "half_time_away": 1
+  },
+  {
+   "id": "12",
+   "match_number": 1,
+   "home_team_id": "23",
+   "away_team_id": "24",
+   "home_score": 5,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "F",
+   "match_date": "2026-06-15",
+   "kick_off_utc": "2026-06-15T02:00:00.000Z",
+   "stadium_id": "3",
+   "home_scorers": [
+    {
+     "scorer": "Y.Ayari",
+     "minute": "7",
+     "own_goal": false
+    },
+    {
+     "scorer": "A. Isak",
+     "minute": "30",
+     "own_goal": false
+    },
+    {
+     "scorer": "V. Gyökeres",
+     "minute": "59",
+     "own_goal": false
+    },
+    {
+     "scorer": "M. Svanberg",
+     "minute": "84",
+     "own_goal": false
+    },
+    {
+     "scorer": "Y.Ayari 90'+6'",
+     "minute": "",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "O. Rekik",
+     "minute": "43",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Yael Falcón",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 1
+  },
+  {
+   "id": "25",
+   "match_number": 2,
+   "home_team_id": "1",
+   "away_team_id": "3",
+   "home_score": 1,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "A",
+   "match_date": "2026-06-19",
+   "kick_off_utc": "2026-06-19T01:00:00.000Z",
+   "stadium_id": "2",
+   "home_scorers": [
+    {
+     "scorer": "Luis Romo",
+     "minute": "50",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Gustavo Tejera",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "27",
+   "match_number": 2,
+   "home_team_id": "5",
+   "away_team_id": "7",
+   "home_score": 6,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "B",
+   "match_date": "2026-06-19",
+   "kick_off_utc": "2026-06-18T22:00:00.000Z",
+   "stadium_id": "13",
+   "home_scorers": [
+    {
+     "scorer": "Kail Larin",
+     "minute": "16",
+     "own_goal": false
+    },
+    {
+     "scorer": "Jonathan David",
+     "minute": "29",
+     "own_goal": false
+    },
+    {
+     "scorer": "Jonathan David",
+     "minute": "45+3",
+     "own_goal": false
+    },
+    {
+     "scorer": "Nathan Saliba",
+     "minute": "64",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mohamed Almnai",
+     "minute": "75",
+     "own_goal": false
+    },
+    {
+     "scorer": "Jonathan David",
+     "minute": "90+2",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Cristián Garay",
+   "duration": "regular",
+   "half_time_home": 3,
+   "half_time_away": 0
+  },
+  {
+   "id": "30",
+   "match_number": 2,
+   "home_team_id": "12",
+   "away_team_id": "10",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "C",
+   "match_date": "2026-06-20",
+   "kick_off_utc": "2026-06-19T22:00:00.000Z",
+   "stadium_id": "9",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Asmaail Saibari",
+     "minute": "2",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Il'giz Tantashev",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "32",
+   "match_number": 2,
+   "home_team_id": "16",
+   "away_team_id": "14",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "D",
+   "match_date": "2026-06-20",
+   "kick_off_utc": "2026-06-20T03:00:00.000Z",
+   "stadium_id": "15",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Matías Galarza",
+     "minute": "2",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ivan Barton",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "43",
+   "match_number": 2,
+   "home_team_id": "37",
+   "away_team_id": "39",
+   "home_score": 2,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "J",
+   "match_date": "2026-06-22",
+   "kick_off_utc": "2026-06-22T17:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [
+    {
+     "scorer": "Lionel Messi",
+     "minute": "38",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lionel Messi",
+     "minute": "90+5",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Amin Omar",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "49",
+   "match_number": 3,
+   "home_team_id": "12",
+   "away_team_id": "9",
+   "home_score": 0,
+   "away_score": 3,
+   "status": "finished",
+   "round": "group",
+   "group_name": "C",
+   "match_date": "2026-06-25",
+   "kick_off_utc": "2026-06-24T22:00:00.000Z",
+   "stadium_id": "8",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Vinícius Júnior",
+     "minute": "7",
+     "own_goal": false
+    },
+    {
+     "scorer": "Vinícius Júnior",
+     "minute": "45+3",
+     "own_goal": false
+    },
+    {
+     "scorer": "Matheus Cunha",
+     "minute": "60",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "César Ramos",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 2
+  },
+  {
+   "id": "53",
+   "match_number": 3,
+   "home_team_id": "6",
+   "away_team_id": "7",
+   "home_score": 3,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "B",
+   "match_date": "2026-06-24",
+   "kick_off_utc": "2026-06-24T19:00:00.000Z",
+   "stadium_id": "14",
+   "home_scorers": [
+    {
+     "scorer": "Karim Alaibgvvich",
+     "minute": "29",
+     "own_goal": false
+    },
+    {
+     "scorer": "Abvnad",
+     "minute": "34",
+     "own_goal": false
+    },
+    {
+     "scorer": "Armin Mhmich",
+     "minute": "80",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Hassan Al-Haydos",
+     "minute": "42",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Jesús Valenzuela",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 1
+  },
+  {
+   "id": "58",
+   "match_number": 3,
+   "home_team_id": "16",
+   "away_team_id": "13",
+   "home_score": 3,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "D",
+   "match_date": "2026-06-26",
+   "kick_off_utc": "2026-06-26T02:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [
+    {
+     "scorer": "Arda Güler",
+     "minute": "10",
+     "own_goal": false
+    },
+    {
+     "scorer": "Baris Alpr Ailmaz",
+     "minute": "31",
+     "own_goal": false
+    },
+    {
+     "scorer": "Kan Aihan",
+     "minute": "90+8",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Auston Trusty",
+     "minute": "3",
+     "own_goal": false
+    },
+    {
+     "scorer": "Sebastian Berhalter",
+     "minute": "49",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Mustapha Ghorbal",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 1
+  },
+  {
+   "id": "62",
+   "match_number": 3,
+   "home_team_id": "36",
+   "away_team_id": "33",
+   "home_score": 1,
+   "away_score": 4,
+   "status": "finished",
+   "round": "group",
+   "group_name": "I",
+   "match_date": "2026-06-26",
+   "kick_off_utc": "2026-06-26T19:00:00.000Z",
+   "stadium_id": "9",
+   "home_scorers": [
+    {
+     "scorer": "Thelo Aasgaard",
+     "minute": "21",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Ousmane Dembélé",
+     "minute": "7",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ousmane Dembélé",
+     "minute": "20",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ousmane Dembélé",
+     "minute": "32",
+     "own_goal": false
+    },
+    {
+     "scorer": "Désiré Doué",
+     "minute": "90+4",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Michael Oliver",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 3
+  },
+  {
+   "id": "63",
+   "match_number": 3,
+   "home_team_id": "26",
+   "away_team_id": "27",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "G",
+   "match_date": "2026-06-27",
+   "kick_off_utc": "2026-06-27T03:00:00.000Z",
+   "stadium_id": "14",
+   "home_scorers": [
+    {
+     "scorer": "Mahmoud Saber",
+     "minute": "5",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Ramin Rezaeian",
+     "minute": "14",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Szymon Marciniak",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 1
+  },
+  {
+   "id": "65",
+   "match_number": 3,
+   "home_team_id": "30",
+   "away_team_id": "31",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "H",
+   "match_date": "2026-06-27",
+   "kick_off_utc": "2026-06-27T00:00:00.000Z",
+   "stadium_id": "5",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "François Letexier",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "66",
+   "match_number": 3,
+   "home_team_id": "32",
+   "away_team_id": "29",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "H",
+   "match_date": "2026-06-27",
+   "kick_off_utc": "2026-06-27T00:00:00.000Z",
+   "stadium_id": "2",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Álex Baena",
+     "minute": "42",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ismail Elfath",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "70",
+   "match_number": 3,
+   "home_team_id": "40",
+   "away_team_id": "37",
+   "home_score": 1,
+   "away_score": 3,
+   "status": "finished",
+   "round": "group",
+   "group_name": "J",
+   "match_date": "2026-06-28",
+   "kick_off_utc": "2026-06-28T02:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [
+    {
+     "scorer": "Mvsi Altmari",
+     "minute": "55",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Jivani Lv Slsv",
+     "minute": "19",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lautaro Martínez 31'(P)",
+     "minute": "",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lionel Messi",
+     "minute": "80",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "István Kovács",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 2
+  },
+  {
+   "id": "76",
+   "match_number": 4,
+   "home_team_id": "9",
+   "away_team_id": "22",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-06-29",
+   "kick_off_utc": "2026-06-29T17:00:00.000Z",
+   "stadium_id": "5",
+   "home_scorers": [
+    {
+     "scorer": "Casemiro",
+     "minute": "56",
+     "own_goal": false
+    },
+    {
+     "scorer": "Gabriel Martinelli",
+     "minute": "90+5",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Kaishū Sano",
+     "minute": "29",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Maurizio Mariani",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "83",
+   "match_number": 4,
+   "home_team_id": "41",
+   "away_team_id": "46",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-03",
+   "kick_off_utc": "2026-07-02T23:00:00.000Z",
+   "stadium_id": "12",
+   "home_scorers": [
+    {
+     "scorer": "Gvnchalv Ramvs",
+     "minute": "90+4",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Ivan Perišić",
+     "minute": "53",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Espen Eskås",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "85",
+   "match_number": 4,
+   "home_team_id": "8",
+   "away_team_id": "38",
+   "home_score": 2,
+   "away_score": 0,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-03",
+   "kick_off_utc": "2026-07-03T03:00:00.000Z",
+   "stadium_id": "13",
+   "home_scorers": [
+    {
+     "scorer": "Breel Embolo",
+     "minute": "10",
+     "own_goal": false
+    },
+    {
+     "scorer": "Dn Andvi",
+     "minute": "46",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Yael Falcón",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "93",
+   "match_number": 5,
+   "home_team_id": "41",
+   "away_team_id": "29",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-06",
+   "kick_off_utc": "2026-07-06T19:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Mikel Merino",
+     "minute": "90+1",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Anthony Taylor",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "96",
+   "match_number": 5,
+   "home_team_id": "8",
+   "away_team_id": "44",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-07",
+   "kick_off_utc": "2026-07-07T20:00:00.000Z",
+   "stadium_id": "13",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": 4,
+   "away_penalty_score": 3,
+   "referee": "Ivan Barton",
+   "duration": "penalty_shootout",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "1",
+   "match_number": 1,
+   "home_team_id": "1",
+   "away_team_id": "2",
+   "home_score": 2,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "A",
+   "match_date": "2026-06-11",
+   "kick_off_utc": "2026-06-11T19:00:00.000Z",
+   "stadium_id": "1",
+   "home_scorers": [
+    {
+     "scorer": "J. Quiñones",
+     "minute": "9",
+     "own_goal": false
+    },
+    {
+     "scorer": "R. Jiménez",
+     "minute": "67",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Wilton Sampaio",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "7",
+   "match_number": 1,
+   "home_team_id": "9",
+   "away_team_id": "10",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "C",
+   "match_date": "2026-06-14",
+   "kick_off_utc": "2026-06-13T22:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [
+    {
+     "scorer": "V. Júnior",
+     "minute": "32",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "I. Saibari",
+     "minute": "21",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Slavko Vinčič",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 1
+  },
+  {
+   "id": "11",
+   "match_number": 1,
+   "home_team_id": "21",
+   "away_team_id": "22",
+   "home_score": 2,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "F",
+   "match_date": "2026-06-14",
+   "kick_off_utc": "2026-06-14T20:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [
+    {
+     "scorer": "Virgil van Dijk",
+     "minute": "51",
+     "own_goal": false
+    },
+    {
+     "scorer": "C. Summerville",
+     "minute": "64",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "K. Nakamura",
+     "minute": "57",
+     "own_goal": false
+    },
+    {
+     "scorer": "K. Ogawa",
+     "minute": "89",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ismail Elfath",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "26",
+   "match_number": 2,
+   "home_team_id": "8",
+   "away_team_id": "6",
+   "home_score": 4,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "B",
+   "match_date": "2026-06-18",
+   "kick_off_utc": "2026-06-18T19:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [
+    {
+     "scorer": "Jvhan Mnzambi",
+     "minute": "74",
+     "own_goal": false
+    },
+    {
+     "scorer": "Rvbn Vargas",
+     "minute": "84",
+     "own_goal": false
+    },
+    {
+     "scorer": "Jvhan Mnzambi",
+     "minute": "90",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Armin Mhmich",
+     "minute": "90+3",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "João Pinheiro",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "29",
+   "match_number": 2,
+   "home_team_id": "9",
+   "away_team_id": "11",
+   "home_score": 3,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "C",
+   "match_date": "2026-06-20",
+   "kick_off_utc": "2026-06-20T01:00:00.000Z",
+   "stadium_id": "10",
+   "home_scorers": [
+    {
+     "scorer": "Matheus Cunha",
+     "minute": "23",
+     "own_goal": false
+    },
+    {
+     "scorer": "Matheus Cunha",
+     "minute": "36",
+     "own_goal": false
+    },
+    {
+     "scorer": "Vinícius Júnior",
+     "minute": "45+3",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Alejandro Hernández Hernández",
+   "duration": "regular",
+   "half_time_home": 3,
+   "half_time_away": 0
+  },
+  {
+   "id": "36",
+   "match_number": 2,
+   "home_team_id": "24",
+   "away_team_id": "22",
+   "home_score": 0,
+   "away_score": 4,
+   "status": "finished",
+   "round": "group",
+   "group_name": "F",
+   "match_date": "2026-06-21",
+   "kick_off_utc": "2026-06-21T04:00:00.000Z",
+   "stadium_id": "3",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Daichi Kamada",
+     "minute": "4",
+     "own_goal": false
+    },
+    {
+     "scorer": "Aiash Ivida",
+     "minute": "31",
+     "own_goal": false
+    },
+    {
+     "scorer": "Junya Itō",
+     "minute": "69",
+     "own_goal": false
+    },
+    {
+     "scorer": "Aiash Ivida",
+     "minute": "83",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "István Kovács",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 2
+  },
+  {
+   "id": "38",
+   "match_number": 2,
+   "home_team_id": "28",
+   "away_team_id": "26",
+   "home_score": 1,
+   "away_score": 3,
+   "status": "finished",
+   "round": "group",
+   "group_name": "G",
+   "match_date": "2026-06-22",
+   "kick_off_utc": "2026-06-22T01:00:00.000Z",
+   "stadium_id": "13",
+   "home_scorers": [
+    {
+     "scorer": "Fin Svrman",
+     "minute": "15",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Mostafa Ziko",
+     "minute": "58",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mohamed Salah",
+     "minute": "67",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mahmoud Hassan Trezeguet",
+     "minute": "82",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Omar Mohamed Al Ali",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "40",
+   "match_number": 2,
+   "home_team_id": "32",
+   "away_team_id": "30",
+   "home_score": 2,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "H",
+   "match_date": "2026-06-22",
+   "kick_off_utc": "2026-06-21T22:00:00.000Z",
+   "stadium_id": "8",
+   "home_scorers": [
+    {
+     "scorer": "Maximiliano Araújo",
+     "minute": "44",
+     "own_goal": false
+    },
+    {
+     "scorer": "Agustín Canobbio",
+     "minute": "45+6",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Kevin Pina",
+     "minute": "21",
+     "own_goal": false
+    },
+    {
+     "scorer": "Hliv Varla",
+     "minute": "61",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Espen Eskås",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 1
+  },
+  {
+   "id": "47",
+   "match_number": 2,
+   "home_team_id": "44",
+   "away_team_id": "42",
+   "home_score": 1,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "K",
+   "match_date": "2026-06-24",
+   "kick_off_utc": "2026-06-24T02:00:00.000Z",
+   "stadium_id": "2",
+   "home_scorers": [
+    {
+     "scorer": "Dnil Mvnvz",
+     "minute": "76",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "71",
+   "match_number": 3,
+   "home_team_id": "44",
+   "away_team_id": "41",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "K",
+   "match_date": "2026-06-28",
+   "kick_off_utc": "2026-06-27T23:30:00.000Z",
+   "stadium_id": "8",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Alireza Faghani",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "73",
+   "match_number": 4,
+   "home_team_id": "2",
+   "away_team_id": "5",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-06-28",
+   "kick_off_utc": "2026-06-28T19:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Astfan Avstakviv",
+     "minute": "90+2",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "João Pinheiro",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "77",
+   "match_number": 4,
+   "home_team_id": "33",
+   "away_team_id": "23",
+   "home_score": 3,
+   "away_score": 0,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-01",
+   "kick_off_utc": "2026-06-30T21:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [
+    {
+     "scorer": "Kylian Mbappé",
+     "minute": "45",
+     "own_goal": false
+    },
+    {
+     "scorer": "Bradley Barcola",
+     "minute": "53",
+     "own_goal": false
+    },
+    {
+     "scorer": "Kylian Mbappé",
+     "minute": "74",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Danny Makkelie",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "84",
+   "match_number": 4,
+   "home_team_id": "29",
+   "away_team_id": "39",
+   "home_score": 3,
+   "away_score": 0,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-02",
+   "kick_off_utc": "2026-07-02T19:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [
+    {
+     "scorer": "Mikel Oyarzabal",
+     "minute": "36",
+     "own_goal": false
+    },
+    {
+     "scorer": "Pedro Porro",
+     "minute": "66",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mikel Oyarzabal",
+     "minute": "89",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Glenn Nyberg",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "90",
+   "match_number": 5,
+   "home_team_id": "5",
+   "away_team_id": "10",
+   "home_score": 0,
+   "away_score": 3,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-04",
+   "kick_off_utc": "2026-07-04T17:00:00.000Z",
+   "stadium_id": "5",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Azdin Avnahi",
+     "minute": "50",
+     "own_goal": false
+    },
+    {
+     "scorer": "Azdin Avnahi",
+     "minute": "82",
+     "own_goal": false
+    },
+    {
+     "scorer": "Svfian Rhimi",
+     "minute": "90+8",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Michael Oliver",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "92",
+   "match_number": 5,
+   "home_team_id": "1",
+   "away_team_id": "45",
+   "home_score": 2,
+   "away_score": 3,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-06",
+   "kick_off_utc": "2026-07-06T00:00:00.000Z",
+   "stadium_id": "1",
+   "home_scorers": [
+    {
+     "scorer": "Jvlian Kviinvnz",
+     "minute": "42",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Jvd Blingham",
+     "minute": "36",
+     "own_goal": false
+    },
+    {
+     "scorer": "Jvd Blingham",
+     "minute": "38",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Alireza Faghani",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 2
+  },
+  {
+   "id": "94",
+   "match_number": 5,
+   "home_team_id": "13",
+   "away_team_id": "25",
+   "home_score": 1,
+   "away_score": 4,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-07",
+   "kick_off_utc": "2026-07-07T00:00:00.000Z",
+   "stadium_id": "14",
+   "home_scorers": [
+    {
+     "scorer": "Malik Tillman",
+     "minute": "31",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Sharl D Ktlar",
+     "minute": "9",
+     "own_goal": false
+    },
+    {
+     "scorer": "Sharl D Ktlar",
+     "minute": "33",
+     "own_goal": false
+    },
+    {
+     "scorer": "Hans Vanaken",
+     "minute": "57",
+     "own_goal": false
+    },
+    {
+     "scorer": "Romelu Lukaku",
+     "minute": "90+3",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Adham Makhadmeh",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 2
+  },
+  {
+   "id": "14",
+   "match_number": 1,
+   "home_team_id": "29",
+   "away_team_id": "30",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "H",
+   "match_date": "2026-06-15",
+   "kick_off_utc": "2026-06-15T16:00:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Adham Makhadmeh",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "16",
+   "match_number": 1,
+   "home_team_id": "31",
+   "away_team_id": "32",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "H",
+   "match_date": "2026-06-16",
+   "kick_off_utc": "2026-06-15T22:00:00.000Z",
+   "stadium_id": "8",
+   "home_scorers": [
+    {
+     "scorer": "Abdulelah Al-Amri",
+     "minute": "41",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Maximiliano Araújo",
+     "minute": "80",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Maurizio Mariani",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "20",
+   "match_number": 1,
+   "home_team_id": "39",
+   "away_team_id": "40",
+   "home_score": 3,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "J",
+   "match_date": "2026-06-17",
+   "kick_off_utc": "2026-06-17T04:00:00.000Z",
+   "stadium_id": "15",
+   "home_scorers": [
+    {
+     "scorer": "Rvmanv Ashmid",
+     "minute": "21",
+     "own_goal": false
+    },
+    {
+     "scorer": "Izn Alarb",
+     "minute": "76",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Ali Avlvan",
+     "minute": "50",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Dahane Beida",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "23",
+   "match_number": 1,
+   "home_team_id": "43",
+   "away_team_id": "44",
+   "home_score": 1,
+   "away_score": 3,
+   "status": "finished",
+   "round": "group",
+   "group_name": "K",
+   "match_date": "2026-06-18",
+   "kick_off_utc": "2026-06-18T02:00:00.000Z",
+   "stadium_id": "1",
+   "home_scorers": [
+    {
+     "scorer": "Abas Bk Fiz Allh Af",
+     "minute": "60",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Dnil Mvnvz",
+     "minute": "40",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lviiz Diaz",
+     "minute": "65",
+     "own_goal": false
+    },
+    {
+     "scorer": "Khamintvn Kampaz",
+     "minute": "90+9",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Anthony Taylor",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "91",
+   "match_number": 5,
+   "home_team_id": "9",
+   "away_team_id": "36",
+   "home_score": 1,
+   "away_score": 2,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-05",
+   "kick_off_utc": "2026-07-05T20:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Erling Haaland",
+     "minute": "79",
+     "own_goal": false
+    },
+    {
+     "scorer": "Erling Haaland",
+     "minute": "90",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ismail Elfath",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "97",
+   "match_number": 6,
+   "home_team_id": "33",
+   "away_team_id": "10",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "live",
+   "round": "quarter",
+   "group_name": "QF",
+   "match_date": "2026-07-09",
+   "kick_off_utc": "2026-07-09T20:00:00.000Z",
+   "stadium_id": "9",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Facundo Tello"
+  },
+  {
+   "id": "104",
+   "match_number": 9,
+   "home_team_id": "0",
+   "away_team_id": "0",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "scheduled",
+   "round": "final",
+   "group_name": "FINAL",
+   "match_date": "2026-07-19",
+   "kick_off_utc": "2026-07-19T19:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null
+  },
+  {
+   "id": "3",
+   "match_number": 1,
+   "home_team_id": "5",
+   "away_team_id": "6",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "B",
+   "match_date": "2026-06-12",
+   "kick_off_utc": "2026-06-12T19:00:00.000Z",
+   "stadium_id": "12",
+   "home_scorers": [
+    {
+     "scorer": "C. Larin",
+     "minute": "11",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Jovo Lukić",
+     "minute": "21",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Facundo Tello",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "13",
+   "match_number": 1,
+   "home_team_id": "27",
+   "away_team_id": "28",
+   "home_score": 2,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "G",
+   "match_date": "2026-06-16",
+   "kick_off_utc": "2026-06-16T01:00:00.000Z",
+   "stadium_id": "16",
+   "home_scorers": [
+    {
+     "scorer": "Ramin Rezaiian",
+     "minute": "32",
+     "own_goal": false
+    },
+    {
+     "scorer": "Mohammad Mohebi",
+     "minute": "64",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Elijah Just",
+     "minute": "7",
+     "own_goal": false
+    },
+    {
+     "scorer": "Elijah Just",
+     "minute": "54",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "César Ramos",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 1
+  },
+  {
+   "id": "19",
+   "match_number": 1,
+   "home_team_id": "37",
+   "away_team_id": "38",
+   "home_score": 3,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "J",
+   "match_date": "2026-06-17",
+   "kick_off_utc": "2026-06-17T01:00:00.000Z",
+   "stadium_id": "6",
+   "home_scorers": [
+    {
+     "scorer": "Lionel Messi",
+     "minute": "17",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lionel Messi",
+     "minute": "60",
+     "own_goal": false
+    },
+    {
+     "scorer": "Lionel Messi",
+     "minute": "76",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Szymon Marciniak",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "24",
+   "match_number": 1,
+   "home_team_id": "47",
+   "away_team_id": "48",
+   "home_score": 1,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "L",
+   "match_date": "2026-06-18",
+   "kick_off_utc": "2026-06-17T23:00:00.000Z",
+   "stadium_id": "12",
+   "home_scorers": [
+    {
+     "scorer": "Kalb Iirnki",
+     "minute": "90+5",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Glenn Nyberg",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "28",
+   "match_number": 2,
+   "home_team_id": "4",
+   "away_team_id": "2",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "A",
+   "match_date": "2026-06-18",
+   "kick_off_utc": "2026-06-18T16:00:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [
+    {
+     "scorer": "‫mikhal Sadilk",
+     "minute": "6",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Tori Penso",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "48",
+   "match_number": 2,
+   "home_team_id": "45",
+   "away_team_id": "47",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "L",
+   "match_date": "2026-06-23",
+   "kick_off_utc": "2026-06-23T20:00:00.000Z",
+   "stadium_id": "9",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Said Martinez",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "55",
+   "match_number": 3,
+   "home_team_id": "18",
+   "away_team_id": "19",
+   "home_score": 0,
+   "away_score": 2,
+   "status": "finished",
+   "round": "group",
+   "group_name": "E",
+   "match_date": "2026-06-25",
+   "kick_off_utc": "2026-06-25T20:00:00.000Z",
+   "stadium_id": "10",
+   "home_scorers": [],
+   "away_scorers": [
+    {
+     "scorer": "Nikvlas Ph Ph",
+     "minute": "7",
+     "own_goal": false
+    },
+    {
+     "scorer": "Nikvlas Ph Ph",
+     "minute": "64",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Glenn Nyberg",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "56",
+   "match_number": 3,
+   "home_team_id": "20",
+   "away_team_id": "17",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "E",
+   "match_date": "2026-06-25",
+   "kick_off_utc": "2026-06-25T20:00:00.000Z",
+   "stadium_id": "11",
+   "home_scorers": [
+    {
+     "scorer": "Nilsvn Angvlv",
+     "minute": "9",
+     "own_goal": false
+    },
+    {
+     "scorer": "Gvnzalv Plata",
+     "minute": "77",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Leroy Sané",
+     "minute": "2",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Tori Penso",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 1
+  },
+  {
+   "id": "68",
+   "match_number": 3,
+   "home_team_id": "46",
+   "away_team_id": "47",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "L",
+   "match_date": "2026-06-28",
+   "kick_off_utc": "2026-06-27T21:00:00.000Z",
+   "stadium_id": "10",
+   "home_scorers": [
+    {
+     "scorer": "Petar Sučić",
+     "minute": "31",
+     "own_goal": false
+    },
+    {
+     "scorer": "Nikola Vlašić",
+     "minute": "83",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Drik Lvkasn",
+     "minute": "73",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Drew Fischer",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "69",
+   "match_number": 3,
+   "home_team_id": "38",
+   "away_team_id": "39",
+   "home_score": 3,
+   "away_score": 3,
+   "status": "finished",
+   "round": "group",
+   "group_name": "J",
+   "match_date": "2026-06-28",
+   "kick_off_utc": "2026-06-28T02:00:00.000Z",
+   "stadium_id": "6",
+   "home_scorers": [
+    {
+     "scorer": "Rafik Blghali",
+     "minute": "45",
+     "own_goal": false
+    },
+    {
+     "scorer": "Riyad Mahrez",
+     "minute": "60",
+     "own_goal": false
+    },
+    {
+     "scorer": "Riyad Mahrez",
+     "minute": "90+3",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Marko Arnautović",
+     "minute": "28",
+     "own_goal": false
+    },
+    {
+     "scorer": "Marcel Sabitzer",
+     "minute": "55",
+     "own_goal": false
+    },
+    {
+     "scorer": "Saša Kalajdžić",
+     "minute": "90+6",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Il'giz Tantashev",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 1
+  },
+  {
+   "id": "74",
+   "match_number": 4,
+   "home_team_id": "17",
+   "away_team_id": "14",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-06-29",
+   "kick_off_utc": "2026-06-29T20:30:00.000Z",
+   "stadium_id": "9",
+   "home_scorers": [
+    {
+     "scorer": "Kai Havertz",
+     "minute": "54",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Khvliv Ansisv",
+     "minute": "42",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": 3,
+   "away_penalty_score": 4,
+   "referee": "Jalal Jayed",
+   "duration": "penalty_shootout",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "81",
+   "match_number": 4,
+   "home_team_id": "13",
+   "away_team_id": "6",
+   "home_score": 2,
+   "away_score": 0,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-02",
+   "kick_off_utc": "2026-07-02T00:00:00.000Z",
+   "stadium_id": "15",
+   "home_scorers": [
+    {
+     "scorer": "Flvrin Balvgan",
+     "minute": "45",
+     "own_goal": false
+    },
+    {
+     "scorer": "Malik Tillman",
+     "minute": "82",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Raphael Claus",
+   "duration": "regular",
+   "half_time_home": 1,
+   "half_time_away": 0
+  },
+  {
+   "id": "103",
+   "match_number": 8,
+   "home_team_id": "0",
+   "away_team_id": "0",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "scheduled",
+   "round": "third_place",
+   "group_name": "3RD",
+   "match_date": "2026-07-19",
+   "kick_off_utc": "2026-07-18T21:00:00.000Z",
+   "stadium_id": "8",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null
+  },
+  {
+   "id": "15",
+   "match_number": 1,
+   "home_team_id": "25",
+   "away_team_id": "26",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "G",
+   "match_date": "2026-06-15",
+   "kick_off_utc": "2026-06-15T19:00:00.000Z",
+   "stadium_id": "14",
+   "home_scorers": [
+    {
+     "scorer": "Mohamed Hany",
+     "minute": "66",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Emam Ashour",
+     "minute": "20",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ramon Abatti Abel",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "34",
+   "match_number": 2,
+   "home_team_id": "20",
+   "away_team_id": "18",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "E",
+   "match_date": "2026-06-21",
+   "kick_off_utc": "2026-06-21T00:00:00.000Z",
+   "stadium_id": "6",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ning Ma",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "54",
+   "match_number": 3,
+   "home_team_id": "8",
+   "away_team_id": "5",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "group",
+   "group_name": "B",
+   "match_date": "2026-06-24",
+   "kick_off_utc": "2026-06-24T19:00:00.000Z",
+   "stadium_id": "13",
+   "home_scorers": [
+    {
+     "scorer": "Rubén Vargas",
+     "minute": "46",
+     "own_goal": false
+    },
+    {
+     "scorer": "Jvhan Mnzambi",
+     "minute": "57",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Prvmis Divid",
+     "minute": "76",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Ramon Abatti Abel",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "57",
+   "match_number": 3,
+   "home_team_id": "14",
+   "away_team_id": "15",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "finished",
+   "round": "group",
+   "group_name": "D",
+   "match_date": "2026-06-26",
+   "kick_off_utc": "2026-06-26T02:00:00.000Z",
+   "stadium_id": "15",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Clément Turpin",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "64",
+   "match_number": 3,
+   "home_team_id": "28",
+   "away_team_id": "25",
+   "home_score": 1,
+   "away_score": 5,
+   "status": "finished",
+   "round": "group",
+   "group_name": "G",
+   "match_date": "2026-06-27",
+   "kick_off_utc": "2026-06-27T03:00:00.000Z",
+   "stadium_id": "13",
+   "home_scorers": [
+    {
+     "scorer": "Ali Jast",
+     "minute": "84",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Leandro Trossard",
+     "minute": "28",
+     "own_goal": false
+    },
+    {
+     "scorer": "Leandro Trossard",
+     "minute": "50",
+     "own_goal": false
+    },
+    {
+     "scorer": "Kevin De Bruyne",
+     "minute": "66",
+     "own_goal": false
+    },
+    {
+     "scorer": "Romelu Lukaku",
+     "minute": "86",
+     "own_goal": false
+    },
+    {
+     "scorer": "Alexis Saelemaekers",
+     "minute": "90+4",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Adham Makhadmeh",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "75",
+   "match_number": 4,
+   "home_team_id": "21",
+   "away_team_id": "10",
+   "home_score": 1,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-06-30",
+   "kick_off_utc": "2026-06-30T01:00:00.000Z",
+   "stadium_id": "3",
+   "home_scorers": [
+    {
+     "scorer": "Kvdi Khakpv",
+     "minute": "72",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Issa Diop",
+     "minute": "90+1",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": 2,
+   "away_penalty_score": 3,
+   "referee": "Wilton Sampaio",
+   "duration": "penalty_shootout",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "78",
+   "match_number": 4,
+   "home_team_id": "19",
+   "away_team_id": "36",
+   "home_score": 1,
+   "away_score": 2,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-06-30",
+   "kick_off_utc": "2026-06-30T17:00:00.000Z",
+   "stadium_id": "4",
+   "home_scorers": [
+    {
+     "scorer": "Amad Diallo",
+     "minute": "74",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Antonio Nusa",
+     "minute": "39",
+     "own_goal": false
+    },
+    {
+     "scorer": "Erling Haaland",
+     "minute": "86",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Jesús Valenzuela",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "79",
+   "match_number": 4,
+   "home_team_id": "1",
+   "away_team_id": "20",
+   "home_score": 2,
+   "away_score": 0,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-01",
+   "kick_off_utc": "2026-07-01T01:00:00.000Z",
+   "stadium_id": "1",
+   "home_scorers": [
+    {
+     "scorer": "Jvlian Kviinvnz",
+     "minute": "22",
+     "own_goal": false
+    },
+    {
+     "scorer": "Raúl Jiménez",
+     "minute": "31",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Slavko Vinčič",
+   "duration": "regular",
+   "half_time_home": 2,
+   "half_time_away": 0
+  },
+  {
+   "id": "80",
+   "match_number": 4,
+   "home_team_id": "45",
+   "away_team_id": "42",
+   "home_score": 2,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-01",
+   "kick_off_utc": "2026-07-01T16:00:00.000Z",
+   "stadium_id": "7",
+   "home_scorers": [
+    {
+     "scorer": "Hri Kin",
+     "minute": "75",
+     "own_goal": false
+    },
+    {
+     "scorer": "Hri Kin",
+     "minute": "86",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Braian Sipnga",
+     "minute": "7",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Adham Makhadmeh",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "82",
+   "match_number": 4,
+   "home_team_id": "25",
+   "away_team_id": "34",
+   "home_score": 3,
+   "away_score": 2,
+   "status": "finished",
+   "round": "round_of_32",
+   "group_name": "R32",
+   "match_date": "2026-07-01",
+   "kick_off_utc": "2026-07-01T20:00:00.000Z",
+   "stadium_id": "14",
+   "home_scorers": [
+    {
+     "scorer": "Romelu Lukaku",
+     "minute": "86",
+     "own_goal": false
+    },
+    {
+     "scorer": "Youri Tielemans",
+     "minute": "89",
+     "own_goal": false
+    },
+    {
+     "scorer": "Youri Tielemans 125(P)'",
+     "minute": "",
+     "own_goal": false
+    }
+   ],
+   "away_scorers": [
+    {
+     "scorer": "Habib Diarra",
+     "minute": "25",
+     "own_goal": false
+    },
+    {
+     "scorer": "Ismaïla Sarr",
+     "minute": "51",
+     "own_goal": false
+    }
+   ],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Said Martinez",
+   "duration": "extra_time",
+   "half_time_home": 0,
+   "half_time_away": 1
+  },
+  {
+   "id": "89",
+   "match_number": 5,
+   "home_team_id": "14",
+   "away_team_id": "33",
+   "home_score": 0,
+   "away_score": 1,
+   "status": "finished",
+   "round": "round_of_16",
+   "group_name": "R16",
+   "match_date": "2026-07-05",
+   "kick_off_utc": "2026-07-04T21:00:00.000Z",
+   "stadium_id": "10",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null,
+   "referee": "Il'giz Tantashev",
+   "duration": "regular",
+   "half_time_home": 0,
+   "half_time_away": 0
+  },
+  {
+   "id": "99",
+   "match_number": 6,
+   "home_team_id": "36",
+   "away_team_id": "45",
+   "home_score": 0,
+   "away_score": 0,
+   "status": "scheduled",
+   "round": "quarter",
+   "group_name": "QF",
+   "match_date": "2026-07-12",
+   "kick_off_utc": "2026-07-11T21:00:00.000Z",
+   "stadium_id": "8",
+   "home_scorers": [],
+   "away_scorers": [],
+   "home_penalty_score": null,
+   "away_penalty_score": null
+  }
+ ]
+}

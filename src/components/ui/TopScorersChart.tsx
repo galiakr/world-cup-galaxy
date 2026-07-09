@@ -87,9 +87,6 @@ export default function TopScorersChart({
                 <div className="flex items-baseline justify-between gap-2">
                   <div className="font-bold text-sm truncate">
                     {lang === 'he' && s.name_he ? s.name_he : s.player_name}
-                    <span className="font-normal text-xs text-starlight/40 ms-1.5">
-                      {getTeamName(scorerTeam?.id, lang)}
-                    </span>
                   </div>
                   <div
                     className="font-readout text-sm text-starlight flex-shrink-0"
@@ -97,6 +94,13 @@ export default function TopScorersChart({
                   >
                     {s.goals} ⚽
                   </div>
+                </div>
+                <div className="text-xs text-starlight/40 truncate">
+                  {getTeamName(scorerTeam?.id, lang)}
+                  {/* played_matches is absent in older cached snapshots */}
+                  {!!s.played_matches && (
+                    <> · {s.played_matches} {t(lang, 'scorer_games')}</>
+                  )}
                 </div>
                 {/* Bar track: same-ramp light teal; fill square at the
                     baseline (inline-start), 4px rounded at the data end.

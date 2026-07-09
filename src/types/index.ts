@@ -59,6 +59,11 @@ export interface Match {
   home_penalty_score?: number | null
   away_penalty_score?: number | null
   referee?: string
+  // From football-data.org (joined by team-code pair, like referee) —
+  // how the match was decided and where it stood at the break.
+  duration?: 'regular' | 'extra_time' | 'penalty_shootout'
+  half_time_home?: number | null
+  half_time_away?: number | null
 }
 
 export interface Stadium {
@@ -92,6 +97,7 @@ export interface TopScorer {
   team_id: string        // FIFA code — look up via TEAMS_BY_FIFA_CODE
   goals: number
   assists: number
+  played_matches?: number  // absent in older cached snapshots
   photo_url?: string
   fact_en?: string        // English Wikipedia summary, best-effort
   fact_he?: string        // native Hebrew Wikipedia article, when one exists

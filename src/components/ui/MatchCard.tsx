@@ -169,6 +169,19 @@ export default function MatchCard({
             </div>
           )}
 
+          {/* Half-time score (football-data.org; absent when the join
+              by team-code pair found no counterpart match) */}
+          {isFinished && match.half_time_home != null && match.half_time_away != null && (
+            <div
+              className={`mb-3 text-xs text-starlight/60 ${isHe ? 'text-right' : 'text-left'}`}
+            >
+              {t(lang, 'match_halftime')}:{' '}
+              <span dir="ltr" className="font-readout">
+                {match.half_time_home}–{match.half_time_away}
+              </span>
+            </div>
+          )}
+
           {/* Stadium */}
           {match.stadium_id && (
             <div
@@ -258,6 +271,11 @@ export default function MatchCard({
               {isHe
                 ? `${match.home_penalty_score}–${match.away_penalty_score} ${t(lang, 'match_pens')}`
                 : `${t(lang, 'match_pens')} ${match.home_penalty_score}–${match.away_penalty_score}`}
+            </div>
+          )}
+          {isFinished && match.duration === 'extra_time' && (
+            <div className="text-[10px] font-bold text-starlight/60 text-center">
+              ⏱ {t(lang, 'match_after_extra_time')}
             </div>
           )}
           <span

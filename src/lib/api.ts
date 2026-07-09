@@ -82,7 +82,7 @@ export async function fetchMatches(): Promise<MatchesResult> {
     const json = await res.json()
 
     const raw: unknown[] = Array.isArray(json) ? json : (json.data ?? json.games ?? [])
-    const refereeMap = await fetchRefereeMap()
+    const detailsMap = await fetchMatchDetailsMap()
 
     const matches: Match[] = raw.map((m: unknown) => {
       const r = m as Record<string, unknown>
@@ -100,6 +100,9 @@ export async function fetchMatches(): Promise<MatchesResult> {
 
       const homeTeam = TEAMS_BY_ID[homeId]
       const awayTeam = TEAMS_BY_ID[awayId]
+      const details = homeTeam?.fifa_code && awayTeam?.fifa_code
+        ? detailsMap[`${homeTeam.fifa_code.toUpperCase()}|${awayTeam.fifa_code.toUpperCase()}`]
+        : undefined
 
       return {
         id:           String(r.id ?? r._id ?? Math.random()),
@@ -118,9 +121,10 @@ export async function fetchMatches(): Promise<MatchesResult> {
         away_scorers: parseScorers(r.away_scorers),
         home_penalty_score: parsePenaltyScore(r.home_penalty_score),
         away_penalty_score: parsePenaltyScore(r.away_penalty_score),
-        referee: homeTeam?.fifa_code && awayTeam?.fifa_code
-          ? refereeMap[`${homeTeam.fifa_code.toUpperCase()}|${awayTeam.fifa_code.toUpperCase()}`]
-          : undefined,
+        referee: details?.referee,
+        duration: details?.duration,
+        half_time_home: details?.half_time_home,
+        half_time_away: details?.half_time_away,
       }
     })
 
@@ -325,9 +329,22 @@ export async function fetchSquad(teamCode: string): Promise<SquadResult> {
 // IDs with the worldcup26.ir feed — so matches are joined by FIFA team-code
 // pair instead (team *names* differ between the two sources, e.g. "Czechia"
 // vs "Czech Republic", but the 3-letter codes match).
-async function fetchRefereeMap(): Promise<Record<string, string>> {
-  const cacheKey = 'wc_referees'
-  const cached = getCache<Record<string, string>>(cacheKey)
+interface MatchDetails {
+  referee?: string
+  duration?: Match['duration']
+  half_time_home?: number
+  half_time_away?: number
+}
+
+const DURATION_MAP: Record<string, Match['duration']> = {
+  REGULAR: 'regular',
+  EXTRA_TIME: 'extra_time',
+  PENALTY_SHOOTOUT: 'penalty_shootout',
+}
+
+async function fetchMatchDetailsMap(): Promise<Record<string, MatchDetails>> {
+  const cacheKey = 'wc_match_details'
+  const cached = getCache<Record<string, MatchDetails>>(cacheKey)
   if (cached) return cached
 
   try {
@@ -340,15 +357,29 @@ async function fetchRefereeMap(): Promise<Record<string, string>> {
     }).finally(() => clearTimeout(timer))
     if (!res.ok) return {}
     const json = await res.json()
-    const map: Record<string, string> = {}
+    const map: Record<string, MatchDetails> = {}
     for (const m of (json.matches ?? []) as Record<string, unknown>[]) {
-      const referees = (m.referees ?? []) as Record<string, unknown>[]
-      const referee = referees.find(r => r.type === 'REFEREE')
-      if (!referee) continue
       const homeTla = (m.homeTeam as Record<string, unknown>)?.tla
       const awayTla = (m.awayTeam as Record<string, unknown>)?.tla
       if (!homeTla || !awayTla) continue
-      map[`${String(homeTla).toUpperCase()}|${String(awayTla).toUpperCase()}`] = String(referee.name)
+
+      const details: MatchDetails = {}
+      const referees = (m.referees ?? []) as Record<string, unknown>[]
+      const referee = referees.find(r => r.type === 'REFEREE')
+      if (referee) details.referee = String(referee.name)
+
+      const score = m.score as Record<string, unknown> | undefined
+      if (m.status === 'FINISHED' && score) {
+        details.duration = DURATION_MAP[String(score.duration)]
+        const ht = score.halfTime as Record<string, unknown> | undefined
+        if (typeof ht?.home === 'number' && typeof ht?.away === 'number') {
+          details.half_time_home = ht.home
+          details.half_time_away = ht.away
+        }
+      }
+
+      if (Object.keys(details).length === 0) continue
+      map[`${String(homeTla).toUpperCase()}|${String(awayTla).toUpperCase()}`] = details
     }
     setCache(cacheKey, map, 3600000)
     return map
@@ -380,6 +411,7 @@ export async function fetchTopScorers(): Promise<TopScorer[]> {
         team_id:      code,
         goals:        Number(s.goals  ?? 0),
         assists:      Number(s.assists ?? 0),
+        played_matches: Number(s.playedMatches) || undefined,
         photo_url:    summary.photo_url ?? undefined,
         fact_en:      summary.fact ?? undefined,
         fact_he:      heResult.fact ?? undefined,

@@ -49,6 +49,7 @@ export const TRANSLATIONS = {
     home_daily_claimed: 'Come back tomorrow for another sticker!',
     home_top_scorers: 'Top Scorers',
     home_goals: 'goals',
+    scorer_games: 'games',
     home_yesterday: "Yesterday's Results",
     home_today: "Today's Matches",
     home_tomorrow: "Tomorrow's Matches",
@@ -87,6 +88,8 @@ export const TRANSLATIONS = {
     match_scheduled: 'Upcoming',
     match_live: 'IN PROGRESS',
     match_pens: 'Pens.',
+    match_after_extra_time: 'After extra time',
+    match_halftime: 'Half-time',
 
     // Teams
     teams_title: 'All Teams',
@@ -353,6 +356,7 @@ export const TRANSLATIONS = {
     home_daily_claimed: 'חזרו מחר למדבקה נוספת!',
     home_top_scorers: 'מלכי השערים',
     home_goals: 'שערים',
+    scorer_games: 'משחקים',
     home_yesterday: 'תוצאות אתמול',
     home_today: 'משחקי היום',
     home_tomorrow: 'משחקי מחר',
@@ -389,6 +393,8 @@ export const TRANSLATIONS = {
     match_scheduled: 'קרוב',
     match_live: 'מתקיים עכשיו',
     match_pens: 'פנדלים',
+    match_after_extra_time: 'אחרי הארכה',
+    match_halftime: 'מחצית',
 
     teams_title: 'כל הקבוצות',
     teams_map_toggle: 'מפת המדינות',

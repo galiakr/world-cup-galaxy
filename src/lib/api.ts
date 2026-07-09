@@ -1,5 +1,5 @@
 import { GoalEvent, Match, TopScorer } from '@/types'
-import { TEAMS_BY_ID } from '@/data/teams'
+import { TEAMS_BY_ID, TEAMS_BY_FIFA_CODE, getTeamName } from '@/data/teams'
 import { israelDateString } from '@/lib/date'
 import { supabase } from '@/lib/supabase'
 
@@ -288,7 +288,29 @@ function normalizePosition(position: string): string {
 
 interface SquadResult {
   coachName: string | null
-  players: { name: string; position: string; jersey: number; photo_url?: string }[]
+  crest: string | null        // federation emblem (SVG/PNG URL)
+  clubColors: string | null   // e.g. "Sky Blue / White / Black"
+  founded: number | null      // federation founding year
+  players: {
+    name: string
+    position: string
+    jersey: number
+    photo_url?: string
+    date_of_birth?: string    // ISO date
+    nationality?: string      // only when it differs from the team's country
+  }[]
+}
+
+// Country names differ in form across sources ("Bosnia-Herzegovina" vs
+// "Bosnia and Herzegovina", "Czech Republic" vs "Czechia") — compare as
+// word sets, ignoring punctuation and "and", so those still count as
+// the same country.
+function sameCountry(a: string, b: string): boolean {
+  const words = (s: string) =>
+    new Set(s.toLowerCase().split(/[^a-z]+/).filter(w => w && w !== 'and'))
+  const wa = words(a)
+  const wb = words(b)
+  return wa.size === wb.size && [...wa].every(w => wb.has(w))
 }
 
 export async function fetchSquad(teamCode: string): Promise<SquadResult> {
@@ -296,7 +318,7 @@ export async function fetchSquad(teamCode: string): Promise<SquadResult> {
   const cached = getCache<SquadResult>(cacheKey)
   if (cached) return cached
 
-  const empty: SquadResult = { coachName: null, players: [] }
+  const empty: SquadResult = { coachName: null, crest: null, clubColors: null, founded: null, players: [] }
   try {
     const res = await fetch(`${FDORG_BASE}/competitions/WC/teams`, {
       headers: { 'X-Auth-Token': FDORG_KEY },
@@ -308,17 +330,40 @@ export async function fetchSquad(teamCode: string): Promise<SquadResult> {
       (t: Record<string, unknown>) => String(t.tla ?? '').toUpperCase() === teamCode.toUpperCase()
     )
     if (!team) return empty
+
+    // Nationality is only interesting when it differs from the team's
+    // country (naturalized players) — a whole squad repeating its own
+    // country is noise. The sources spell countries differently, so a
+    // nationality is "the team's own" if it matches any of: the
+    // football-data.org team name, the FIFA code, or our English name.
+    const ownCountryNames = [
+      String(team.name ?? ''),
+      teamCode,
+      getTeamName(TEAMS_BY_FIFA_CODE[teamCode.toUpperCase()]?.id, 'en'),
+    ].filter(Boolean)
+
     const players = await Promise.all((team.squad ?? []).map(async (p: Record<string, unknown>) => {
       const name = String(p.name)
+      const nationality = p.nationality ? String(p.nationality) : undefined
       return {
         name,
         position:  normalizePosition(String(p.position ?? 'Midfielder')),
         jersey:    Number(p.shirtNumber ?? 0),
         photo_url: (await fetchWikipediaPhoto(name)) ?? undefined,
+        date_of_birth: p.dateOfBirth ? String(p.dateOfBirth) : undefined,
+        nationality: nationality && !ownCountryNames.some(c => sameCountry(nationality, c))
+          ? nationality
+          : undefined,
       }
     }))
     const coach = team.coach as Record<string, unknown> | undefined
-    const result: SquadResult = { coachName: coach?.name ? String(coach.name) : null, players }
+    const result: SquadResult = {
+      coachName:  coach?.name ? String(coach.name) : null,
+      crest:      team.crest ? String(team.crest) : null,
+      clubColors: team.clubColors ? String(team.clubColors) : null,
+      founded:    Number(team.founded) || null,
+      players,
+    }
     setCache(cacheKey, result, 86400000)
     return result
   } catch { return empty }

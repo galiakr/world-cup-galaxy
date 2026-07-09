@@ -89,7 +89,7 @@ export default function MatchesClient({
       {/* Stadium map */}
       <button
         onClick={() => setShowMap((s) => !s)}
-        className="w-full flex items-center justify-center gap-2 bg-spacelight border border-ink/10 rounded-2xl py-2.5 mb-4 text-sm font-bold text-starlight/70 hover:text-starlight transition-colors"
+        className="w-full flex items-center justify-center gap-2 bg-violet/15 border border-violet/40 rounded-2xl py-2.5 mb-4 text-sm font-bold text-violet hover:bg-violet/25 transition-colors"
       >
         {t(lang, 'matches_map_toggle')} {showMap ? '▲' : '▼'}
       </button>

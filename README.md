@@ -24,7 +24,7 @@ A bilingual (Hebrew/English) kids' app for the 2026 FIFA World Cup with stickers
 
 I wanted a World Cup app my kids could actually use, in Hebrew, without passwords, without accounts, and without ads. Everything that exists is either adult-oriented or requires an email. So I built one.
 
-It's also a technical playground: I used it to explore anonymous device-based auth, bilingual RTL without an i18n library, and a two-layer caching strategy that survives Vercel Lambda cold starts.
+It's also a technical playground: I used it to explore anonymous device-based auth, bilingual RTL without an i18n library, a two-layer caching strategy that survives Vercel Lambda cold starts, and hand-rolled data visualization — animated top-scorer bars and bar-in-cell group standings built with Tailwind and framer-motion instead of a chart library, with a colorblind-validated palette and bars that mirror correctly in RTL via CSS logical properties.
 
 ---
 

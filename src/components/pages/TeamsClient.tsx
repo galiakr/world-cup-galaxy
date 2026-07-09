@@ -9,6 +9,7 @@ import { getTeamName } from '@/data/teams';
 import { TeamStage, GroupPosition } from '@/lib/standings';
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab';
 import GroupStandingsTable from '@/components/ui/GroupStandingsTable';
+import { format, differenceInYears } from 'date-fns';
 
 // Leaflet touches `window` on import, so it can't render on the server.
 const TeamsMap = dynamic(() => import('@/components/ui/TeamsMap'), {
@@ -17,18 +18,51 @@ const TeamsMap = dynamic(() => import('@/components/ui/TeamsMap'), {
 
 interface SquadResult {
   coachName: string | null;
+  crest: string | null;
+  clubColors: string | null;
+  founded: number | null;
   players: {
     name: string;
     position: string;
     jersey: number;
     photo_url?: string;
+    date_of_birth?: string;
+    nationality?: string;
   }[];
 }
 
+const EMPTY_SQUAD: SquadResult = {
+  coachName: null,
+  crest: null,
+  clubColors: null,
+  founded: null,
+  players: [],
+};
+
 async function fetchSquad(code: string): Promise<SquadResult> {
   const res = await fetch(`/api/squad/${code}`);
-  if (!res.ok) return { coachName: null, players: [] };
+  if (!res.ok) return EMPTY_SQUAD;
   return res.json();
+}
+
+// football-data.org sends colors as display text ("Sky Blue / White /
+// Black"); most entries happen to be valid CSS color names once the
+// spaces are stripped. Keep only the ones the browser actually
+// recognizes — a wrong-looking swatch is worse than none.
+function parseClubColors(clubColors: string | null): string[] {
+  if (!clubColors || typeof CSS === 'undefined' || !CSS.supports) return [];
+  return clubColors
+    .split('/')
+    .map((c) => c.trim().toLowerCase().replace(/\s+/g, ''))
+    .filter((c) => c && CSS.supports('color', c));
+}
+
+// "39 years old" / "בן 39" — the age word precedes the number in Hebrew
+function playerAge(dateOfBirth: string, lang: 'he' | 'en'): string {
+  const age = differenceInYears(new Date(), new Date(dateOfBirth));
+  return lang === 'he'
+    ? `${t(lang, 'squad_age')} ${age}`
+    : `${age} ${t(lang, 'squad_age')}`;
 }
 
 interface TeamsClientProps {
@@ -81,6 +115,10 @@ export default function TeamsClient({
   const [coachPhoto, setCoachPhoto] = useState<string | null>(null);
   const [coachName, setCoachName] = useState<string | null>(null);
   const [squad, setSquad] = useState<SquadResult['players']>([]);
+  const [teamFacts, setTeamFacts] =
+    useState<Pick<SquadResult, 'crest' | 'clubColors' | 'founded'>>(
+      EMPTY_SQUAD,
+    );
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   const filtered = teams.filter((team) => {
@@ -114,6 +152,7 @@ export default function TeamsClient({
     setCoachPhoto(null);
     setCoachName(null);
     setSquad([]);
+    setTeamFacts(EMPTY_SQUAD);
     setLoadingDetail(true);
     try {
       const [photo, squadResult] = await Promise.all([
@@ -125,6 +164,7 @@ export default function TeamsClient({
       setCoachPhoto(photo);
       setCoachName(squadResult.coachName);
       setSquad(squadResult.players);
+      setTeamFacts(squadResult);
     } catch {}
     setLoadingDetail(false);
   }
@@ -145,7 +185,7 @@ export default function TeamsClient({
       {/* Country map */}
       <button
         onClick={() => setShowMap((s) => !s)}
-        className="w-full flex items-center justify-center gap-2 bg-spacelight border border-ink/10 rounded-2xl py-2.5 mb-4 text-sm font-bold text-starlight/70 hover:text-starlight transition-colors"
+        className="w-full flex items-center justify-center gap-2 bg-violet/15 border border-violet/40 rounded-2xl py-2.5 mb-4 text-sm font-bold text-violet hover:bg-violet/25 transition-colors"
       >
         {t(lang, 'teams_map_toggle')} {showMap ? '▲' : '▼'}
       </button>
@@ -182,10 +222,9 @@ export default function TeamsClient({
                 (a search filter would misalign it with the cards below)
                 and at least one match has been played, so a pre-tournament
                 table of zeros doesn't add noise. */}
-            {!search &&
-              standings?.[group]?.some((r) => r.played > 0) && (
-                <GroupStandingsTable rows={standings[group]} lang={lang} />
-              )}
+            {!search && standings?.[group]?.some((r) => r.played > 0) && (
+              <GroupStandingsTable rows={standings[group]} lang={lang} />
+            )}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {byGroup[group].map((team) => {
                 const stage = stageById?.[team.id];
@@ -252,7 +291,7 @@ export default function TeamsClient({
                 alt={getTeamName(selected.id, lang)}
                 className="w-16 h-11 object-cover rounded-lg shadow"
               />
-              <div>
+              <div className="min-w-0 flex-1">
                 <div className="font-display text-2xl text-starlight">
                   {getTeamName(selected.id, lang)}
                 </div>
@@ -261,7 +300,43 @@ export default function TeamsClient({
                   {selected.fifa_code}
                 </div>
               </div>
+              {/* Federation emblem */}
+              {teamFacts.crest && (
+                <img
+                  src={teamFacts.crest}
+                  alt=""
+                  className="w-12 h-12 object-contain flex-shrink-0"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              )}
             </div>
+
+            {/* Federation facts — founding year + team colors */}
+            {(teamFacts.founded ||
+              parseClubColors(teamFacts.clubColors).length > 0) && (
+              <div className="px-5 pt-3 flex items-center flex-wrap gap-x-4 gap-y-1 text-xs text-starlight/60">
+                {teamFacts.founded && (
+                  <span>
+                    ⭐ {t(lang, 'team_founded')} {teamFacts.founded}
+                  </span>
+                )}
+                {parseClubColors(teamFacts.clubColors).length > 0 && (
+                  <span className="flex items-center gap-1.5">
+                    {t(lang, 'team_colors')}:
+                    {parseClubColors(teamFacts.clubColors).map((c) => (
+                      <span
+                        key={c}
+                        className="w-3.5 h-3.5 rounded-full border border-ink/20 inline-block"
+                        style={{ backgroundColor: c }}
+                        title={c}
+                      />
+                    ))}
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* Team photo */}
             {coachPhoto && (
@@ -333,7 +408,16 @@ export default function TeamsClient({
                     </div>
                     <div className="text-xs text-starlight/40">
                       {posMap[player.position] ?? player.position}
+                      {player.nationality && <> · {player.nationality}</>}
                     </div>
+                    {player.date_of_birth && (
+                      <div className="text-[11px] text-starlight/40">
+                        🎂{' '}
+                        {format(new Date(player.date_of_birth), 'dd/MM/yyyy')}
+                        {' · '}
+                        {playerAge(player.date_of_birth, lang)}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

@@ -40,6 +40,7 @@ export default async function TeamsPage() {
       teams={TEAMS}
       stageById={stageById}
       standingById={standingById}
+      standings={standings}
       matchesAttemptedAt={attemptedAt}
     />
   )

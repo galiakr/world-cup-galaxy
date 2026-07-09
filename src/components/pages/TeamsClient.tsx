@@ -1,13 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { Team } from '@/types';
+import { Team, GroupTeamRow } from '@/types';
 import { useAppStore } from '@/store';
 import { t, TranslationKey } from '@/lib/i18n';
 import { fetchWikipediaPhoto } from '@/lib/api';
 import { getTeamName } from '@/data/teams';
 import { TeamStage, GroupPosition } from '@/lib/standings';
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab';
+import GroupStandingsTable from '@/components/ui/GroupStandingsTable';
 
 // Leaflet touches `window` on import, so it can't render on the server.
 const TeamsMap = dynamic(() => import('@/components/ui/TeamsMap'), {
@@ -34,6 +35,7 @@ interface TeamsClientProps {
   teams: Team[];
   stageById?: Record<string, TeamStage>;
   standingById?: Record<string, GroupPosition>;
+  standings?: Record<string, GroupTeamRow[]>;
   matchesAttemptedAt?: string;
 }
 
@@ -69,6 +71,7 @@ export default function TeamsClient({
   teams,
   stageById,
   standingById,
+  standings,
   matchesAttemptedAt,
 }: TeamsClientProps) {
   const lang = useAppStore((s) => s.lang);
@@ -175,6 +178,14 @@ export default function TeamsClient({
             <div className="text-xs font-black text-teal uppercase tracking-wider mb-2">
               {t(lang, 'teams_group')} {group}
             </div>
+            {/* Standings mini-table — only when the full group is shown
+                (a search filter would misalign it with the cards below)
+                and at least one match has been played, so a pre-tournament
+                table of zeros doesn't add noise. */}
+            {!search &&
+              standings?.[group]?.some((r) => r.played > 0) && (
+                <GroupStandingsTable rows={standings[group]} lang={lang} />
+              )}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {byGroup[group].map((team) => {
                 const stage = stageById?.[team.id];

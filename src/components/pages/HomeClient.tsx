@@ -1,14 +1,13 @@
 'use client';
-import { useState } from 'react';
 import { Match, TopScorer } from '@/types';
 import { useAppStore } from '@/store';
 import { t } from '@/lib/i18n';
 import MatchCard from '@/components/ui/MatchCard';
 import StaleDataBanner from '@/components/ui/StaleDataBanner';
 import UpdateAttemptTab from '@/components/ui/UpdateAttemptTab';
+import TopScorersChart from '@/components/ui/TopScorersChart';
 import { claimDailySticker, awardSticker } from '@/lib/supabase';
 import { israelDateString } from '@/lib/date';
-import { TEAMS_BY_FIFA_CODE, getTeamName } from '@/data/teams';
 
 interface HomeClientProps {
   todayMatches: Match[];
@@ -35,7 +34,6 @@ export default function HomeClient({
 }: HomeClientProps) {
   const { lang, user, dailyClaimedDate, setDailyClaimedDate, addSticker } =
     useAppStore();
-  const [expandedFact, setExpandedFact] = useState<string | null>(null);
 
   const today = israelDateString();
   const dailyClaimed = dailyClaimedDate === today;
@@ -195,91 +193,7 @@ export default function HomeClient({
       {/* Top scorers */}
       {topScorers.length > 0 && (
         <Section title={t(lang, 'home_top_scorers')} emoji="⚽" accent="teal">
-          {topScorers.map((s, i) => {
-            const scorerTeam = TEAMS_BY_FIFA_CODE[s.team_id];
-            const isExpanded = expandedFact === s.player_name;
-            // Prefer a native Hebrew article when reading in Hebrew, but
-            // fall back to the English one rather than showing nothing.
-            const isHebrewFact = lang === 'he' && !!s.fact_he;
-            const fact =
-              (lang === 'he' ? s.fact_he : s.fact_en) ?? s.fact_en ?? s.fact_he;
-            const wikiUrl =
-              (lang === 'he' ? s.wiki_url_he : s.wiki_url) ??
-              s.wiki_url ??
-              s.wiki_url_he;
-            return (
-              <div
-                key={s.player_name}
-                className="py-2 border-b border-ink/10 last:border-0"
-              >
-                <button
-                  onClick={() =>
-                    fact && setExpandedFact(isExpanded ? null : s.player_name)
-                  }
-                  className="w-full flex items-center gap-3 text-start"
-                >
-                  <div
-                    className={`font-readout text-xs w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      MEDAL_STYLE[i] ?? 'text-starlight/40'
-                    }`}
-                  >
-                    {i + 1}
-                  </div>
-                  {s.photo_url && (
-                    <img
-                      src={s.photo_url}
-                      alt=""
-                      className="w-8 h-8 rounded-full object-cover border border-ink/10 flex-shrink-0"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
-                      }}
-                    />
-                  )}
-                  <img
-                    src={scorerTeam?.flag_url || ''}
-                    alt=""
-                    className="w-7 h-5 object-cover rounded shadow-sm flex-shrink-0"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="font-bold text-sm">
-                      {lang === 'he' && s.name_he ? s.name_he : s.player_name}
-                    </div>
-                    <div className="text-xs text-starlight/40">
-                      {getTeamName(scorerTeam?.id, lang)}
-                    </div>
-                  </div>
-                  <div className="font-readout text-teal text-lg flex-shrink-0">
-                    {s.goals} ⚽
-                  </div>
-                  {fact && (
-                    <span className="text-starlight/30 text-xs flex-shrink-0">
-                      {isExpanded ? '▲' : '▼'}
-                    </span>
-                  )}
-                </button>
-                {isExpanded && fact && (
-                  <div dir={isHebrewFact ? 'rtl' : 'ltr'} className="ps-9 mt-2">
-                    <p className="text-xs text-starlight/60 leading-relaxed">
-                      {fact}
-                    </p>
-                    {wikiUrl && (
-                      <a
-                        href={wikiUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-1.5 text-[11px] text-teal/70 hover:text-teal transition-colors"
-                      >
-                        {lang === 'he' ? 'ויקיפדיה' : 'Wikipedia'}
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          <TopScorersChart scorers={topScorers} lang={lang} />
         </Section>
       )}
       {matchesAttemptedAt && (
@@ -288,12 +202,6 @@ export default function HomeClient({
     </div>
   );
 }
-
-const MEDAL_STYLE: Record<number, string> = {
-  0: 'bg-gold/20 text-gold',
-  1: 'bg-starlight/15 text-starlight/80',
-  2: 'bg-coral/20 text-coral',
-};
 
 const ACCENT_DOT: Record<string, string> = {
   gold: 'bg-gold',

@@ -31,7 +31,7 @@ export default async function HomePage() {
       todayMatches={todayMatches}
       yesterdayMatches={yesterdayMatches}
       tomorrowMatches={tomorrowMatches}
-      topScorers={scorers.slice(0, 5)}
+      topScorers={scorers}
       matchesError={error}
       matchesStale={stale}
       matchesUpdatedAt={updatedAt}

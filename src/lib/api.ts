@@ -524,35 +524,50 @@ export async function fetchTopScorers(): Promise<TopScorer[]> {
     }
   }
 
+  // Every scorer the API knows (~170 once the group stage is done), but
+  // Wikipedia enrichment (photo + facts, ~3 requests per player) only for
+  // the top of the list — enriching a hundred one-goal scorers would mean
+  // 500+ Wikipedia calls per cache refresh for rows almost nobody expands.
+  const WIKI_ENRICH_LIMIT = 20
+
   try {
-    const res = await fetch(`${FDORG_BASE}/competitions/WC/scorers?limit=20`, {
+    const res = await fetch(`${FDORG_BASE}/competitions/WC/scorers?limit=200`, {
       headers: { 'X-Auth-Token': FDORG_KEY },
       next: { revalidate: 3600 },
     })
     if (!res.ok) throw new Error(`scorers fetch: ${res.status}`)
     const json = await res.json()
-    const scorers: TopScorer[] = await Promise.all((json.scorers ?? []).map(async (s: Record<string, unknown>) => {
+    const scorers: TopScorer[] = (json.scorers ?? []).map((s: Record<string, unknown>) => {
       const pl = s.player as Record<string, unknown>
       const tm = s.team   as Record<string, unknown>
-      const code = String(tm?.tla ?? '').toUpperCase()
-      const playerName = String(pl?.name ?? '')
-      const [summary, heResult] = playerName
-        ? await Promise.all([fetchWikipediaSummary(playerName), fetchHebrewFact(playerName)])
-        : [{ photo_url: null, fact: null, page_url: null }, { fact: null, url: null }]
       return {
-        player_name:  playerName,
-        team_id:      code,
+        player_name:  String(pl?.name ?? ''),
+        team_id:      String(tm?.tla ?? '').toUpperCase(),
         goals:        Number(s.goals  ?? 0),
         assists:      Number(s.assists ?? 0),
         played_matches: Number(s.playedMatches) || undefined,
-        photo_url:    summary.photo_url ?? undefined,
-        fact_en:      summary.fact ?? undefined,
-        fact_he:      heResult.fact ?? undefined,
-        wiki_url:     summary.page_url ?? undefined,
-        wiki_url_he:  heResult.url ?? undefined,
-        name_he:      heResult.name ?? undefined,
       }
-    }))
+    })
+
+    // Enrich in small batches, not one burst — ~3 Wikipedia requests per
+    // player, and firing them all at once gets throttled, which used to
+    // silently drop photos and Hebrew names.
+    const BATCH = 5
+    const toEnrich = scorers.filter(s => s.player_name).slice(0, WIKI_ENRICH_LIMIT)
+    for (let start = 0; start < toEnrich.length; start += BATCH) {
+      await Promise.all(toEnrich.slice(start, start + BATCH).map(async (scorer) => {
+        const [summary, heResult] = await Promise.all([
+          fetchWikipediaSummary(scorer.player_name),
+          fetchHebrewFact(scorer.player_name),
+        ])
+        scorer.photo_url   = summary.photo_url ?? undefined
+        scorer.fact_en     = summary.fact ?? undefined
+        scorer.wiki_url    = summary.page_url ?? undefined
+        scorer.fact_he     = heResult.fact ?? undefined
+        scorer.wiki_url_he = heResult.url ?? undefined
+        scorer.name_he     = heResult.name ?? undefined
+      }))
+    }
     setCache(cacheKey, scorers, 3600000)
     await saveScorersFallback(scorers)
     return scorers
@@ -586,7 +601,11 @@ async function fetchWikipediaSummary(slug: string): Promise<WikiSummary> {
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(slug)}`,
       { next: { revalidate: 86400 } }
     )
-    if (!res.ok) { setCache(cacheKey, empty, 86400000); return empty }
+    // Only a 404 ("no such article") is worth remembering for 24h — a
+    // 429/5xx is transient, and caching it would blank photos and facts
+    // until the cache turns over.
+    if (res.status === 404) { setCache(cacheKey, empty, 86400000); return empty }
+    if (!res.ok) return empty
     const json = await res.json()
     // Common names (e.g. "Ma Ning") often resolve to a disambiguation page
     // listing unrelated people instead of a real bio — that's worse than
@@ -630,7 +649,9 @@ async function fetchHebrewFact(enSlug: string): Promise<{ fact: string | null; u
       `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(enSlug)}&prop=langlinks&lllang=he&format=json&origin=*&redirects=1`,
       { next: { revalidate: 86400 } }
     )
-    if (!linkRes.ok) { setCache(cacheKey, HE_CACHE_MISS, 86400000); return { fact: null, url: null, name: null } }
+    // Transient failure (rate limit, outage) — don't cache the miss
+    // sentinel, or one throttled burst hides Hebrew names for 24 hours.
+    if (!linkRes.ok) return { fact: null, url: null, name: null }
     const linkJson = await linkRes.json()
     const pages = Object.values(linkJson.query?.pages ?? {}) as Record<string, unknown>[]
     const heTitle = (pages[0]?.langlinks as Record<string, unknown>[] | undefined)?.[0]?.['*']
@@ -641,7 +662,8 @@ async function fetchHebrewFact(enSlug: string): Promise<{ fact: string | null; u
       `https://he.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(heTitle)}`,
       { next: { revalidate: 86400 } }
     )
-    if (!sumRes.ok) { setCache(cacheKey, HE_CACHE_MISS, 86400000); return { fact: null, url: null, name: null } }
+    if (sumRes.status === 404) { setCache(cacheKey, HE_CACHE_MISS, 86400000); return { fact: null, url: null, name: null } }
+    if (!sumRes.ok) return { fact: null, url: null, name: null }
     const sumJson = await sumRes.json()
     if (sumJson.type === 'disambiguation' || typeof sumJson.extract !== 'string' || !sumJson.extract) {
       setCache(cacheKey, HE_CACHE_MISS, 86400000)

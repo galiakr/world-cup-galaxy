@@ -145,9 +145,16 @@ export async function fetchMatches(): Promise<MatchesResult> {
       const scoreAway = parseScore(r.away_score)
       const finished = String(r.finished ?? '').toUpperCase() === 'TRUE' || r.finished === true || r.status === 'finished'
       const timeElapsed = String(r.time_elapsed ?? '').toLowerCase()
+      // The feed's live flag can flip early (hours before kickoff, seen on
+      // 2026-07-11) as well as lag behind — accept 'live' only once our own
+      // kickoff timestamp has passed. An unparseable kickoff falls back to
+      // trusting the feed rather than pinning the match to 'scheduled'.
+      const feedSaysLive = r.status === 'live' || (!!timeElapsed && timeElapsed !== 'notstarted')
+      const kickoffMs = new Date(kickoff).getTime()
+      const kickedOff = Number.isNaN(kickoffMs) || kickoffMs <= Date.now()
       const status: Match['status'] =
-        finished                                                        ? 'finished' :
-        r.status === 'live' || (timeElapsed && timeElapsed !== 'notstarted') ? 'live' : 'scheduled'
+        finished                  ? 'finished' :
+        feedSaysLive && kickedOff ? 'live' : 'scheduled'
 
       const homeTeam = TEAMS_BY_ID[homeId]
       const awayTeam = TEAMS_BY_ID[awayId]

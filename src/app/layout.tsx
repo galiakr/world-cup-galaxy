@@ -4,6 +4,7 @@ import TopHeader from '@/components/layout/TopHeader'
 import BottomNav from '@/components/layout/BottomNav'
 import Sidebar from '@/components/layout/Sidebar'
 import LangSync from '@/components/layout/LangSync'
+import ServiceWorkerRegister from '@/components/layout/ServiceWorkerRegister'
 import StickerToast from '@/components/ui/StickerToast'
 import LoginGate from '@/components/pages/LoginGate'
 
@@ -12,6 +13,14 @@ export const metadata: Metadata = {
   description: 'World Cup 2026 app for kids — stickers, quizzes, predictions in Hebrew & English',
   manifest: '/manifest.json',
   themeColor: '#F6EFE2',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -25,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-galaxy min-h-screen">
         <LangSync />
+        <ServiceWorkerRegister />
         <LoginGate>
           <div className="lg:flex">
             <Sidebar />

@@ -2,7 +2,7 @@
 
 A bilingual (Hebrew/English) kids' app for the 2026 FIFA World Cup with stickers, quizzes, match data, and predictions, built for children aged 6–12 to enjoy with or without their parents.
 
-🔗 **Live app:** [_world-cup-galaxy.vercel.app_](https://world-cup-galaxy.vercel.app/)
+**Live app:** [_world-cup-galaxy.vercel.app_](https://world-cup-galaxy.vercel.app/)
 
 ---
 
@@ -68,7 +68,7 @@ No passwords, no emails. Children log in by picking an avatar and typing a name.
 No i18n library. A `LangSync` component patches `<html dir>` on the client when the language switches between Hebrew and English. All content is stored in bilingual objects and rendered based on the active language state.
 
 **PWA: installable, with a hand-rolled service worker**
-The app installs to a mobile home screen like a native app (on Android Chrome: ⋮ menu → "Install app"). `public/manifest.json` declares the name, theme color, and icons — 192, 512, and a "maskable" 512 whose content sits inside the safe zone so OS icon masks don't clip it. A minimal ~50-line service worker (`public/sw.js`, registered by the `ServiceWorkerRegister` client component) satisfies Chrome's installability requirement: network-first for same-origin requests, falling back to a small precached app shell when offline. It deliberately does **not** cache Supabase or external API calls, so live-data freshness stays governed by the two-layer cache alone rather than a second caching layer with its own staleness.
+The app installs to a mobile home screen like a native app (on Android Chrome: ⋮ menu → "Install app"). `public/manifest.json` declares the name, theme color, and icons 192, 512, and a "maskable" 512 whose content sits inside the safe zone so OS icon masks don't clip it. A minimal ~50-line service worker (`public/sw.js`, registered by the `ServiceWorkerRegister` client component) satisfies Chrome's installability requirement: network-first for same-origin requests, falling back to a small precached app shell when offline. It deliberately does **not** cache Supabase or external API calls, so live-data freshness stays governed by the two-layer cache alone rather than a second caching layer with its own staleness.
 
 **Archive mode: life after the final**
 The live-data APIs won't outlive the tournament: worldcup26.ir is a hobby project, and football-data.org rotates out past seasons. So the app can freeze the whole tournament into the repo: `npm run snapshot-archive` captures every match (scores, scorers, penalties, referees, half-time), the top scorers (with their Wikipedia facts already resolved), and all 48 squads into `src/data/archive/*.json`. After a cutoff date one week past the final (or with `WC_ARCHIVE_MODE=1`), the fetchers serve those files directly, no flaky-API retries, no Supabase dependency, and the app keeps working as a self-contained memento of the 2026 World Cup. The snapshot script is safe to run any time as a dry run; the one that counts is run right after the final, while the APIs still have the data.

@@ -156,12 +156,6 @@ export async function fetchMatches(): Promise<MatchesResult> {
         finished                  ? 'finished' :
         feedSaysLive && kickedOff ? 'live' : 'scheduled'
 
-      const homeTeam = TEAMS_BY_ID[homeId]
-      const awayTeam = TEAMS_BY_ID[awayId]
-      const details = homeTeam?.fifa_code && awayTeam?.fifa_code
-        ? detailsMap[`${homeTeam.fifa_code.toUpperCase()}|${awayTeam.fifa_code.toUpperCase()}`]
-        : undefined
-
       return {
         id:           String(r.id ?? r._id ?? Math.random()),
         match_number: Number(r.match_number ?? r.matchday ?? r.num ?? 0),
@@ -179,12 +173,26 @@ export async function fetchMatches(): Promise<MatchesResult> {
         away_scorers: parseScorers(r.away_scorers),
         home_penalty_score: parsePenaltyScore(r.home_penalty_score),
         away_penalty_score: parsePenaltyScore(r.away_penalty_score),
-        referee: details?.referee,
-        duration: details?.duration,
-        half_time_home: details?.half_time_home,
-        half_time_away: details?.half_time_away,
       }
     })
+
+    fillBracketFromSemis(matches)
+
+    // Attach football-data.org details after the bracket fill, so a
+    // final/third-place match whose teams we just derived can still be
+    // joined by its FIFA-code pair.
+    for (const m of matches) {
+      const homeTeam = TEAMS_BY_ID[m.home_team_id]
+      const awayTeam = TEAMS_BY_ID[m.away_team_id]
+      const details = homeTeam?.fifa_code && awayTeam?.fifa_code
+        ? detailsMap[`${homeTeam.fifa_code.toUpperCase()}|${awayTeam.fifa_code.toUpperCase()}`]
+        : undefined
+      if (!details) continue
+      m.referee = details.referee
+      m.duration = details.duration
+      m.half_time_home = details.half_time_home
+      m.half_time_away = details.half_time_away
+    }
 
     // If football-data.org failed outright (empty details map), the
     // matches built above are missing referees / half-time / duration.
@@ -215,6 +223,38 @@ export async function fetchMatches(): Promise<MatchesResult> {
     const fallback = await loadMatchesFallback()
     if (fallback) return { matches: fallback.matches, stale: true, updatedAt: fallback.updatedAt, attemptedAt }
     throw e
+  }
+}
+
+// The feed lags on bracket progression: both semifinals finished on
+// 2026-07-15, yet on 2026-07-17 the final and third-place rows still had
+// team ids of 0 ("None"). Those pairings are deterministic — the final is
+// the two semifinal winners, third place the two losers — so fill any
+// slot the feed left empty from our own finished semifinal results. Each
+// slot keeps the feed's convention of home = first semifinal's team.
+function matchWinnerId(m: Match): string | null {
+  if (m.status !== 'finished') return null
+  if (m.home_penalty_score != null && m.away_penalty_score != null && m.home_penalty_score !== m.away_penalty_score) {
+    return m.home_penalty_score > m.away_penalty_score ? m.home_team_id : m.away_team_id
+  }
+  if (m.home_score == null || m.away_score == null || m.home_score === m.away_score) return null
+  return m.home_score > m.away_score ? m.home_team_id : m.away_team_id
+}
+
+function matchLoserId(m: Match): string | null {
+  const winner = matchWinnerId(m)
+  if (winner === null) return null
+  return winner === m.home_team_id ? m.away_team_id : m.home_team_id
+}
+
+function fillBracketFromSemis(matches: Match[]) {
+  const semis = matches.filter(m => m.round === 'semi').sort(byKickoffAsc)
+  if (semis.length !== 2) return
+  for (const m of matches) {
+    const pick = m.round === 'final' ? matchWinnerId : m.round === 'third_place' ? matchLoserId : null
+    if (!pick) continue
+    if (!TEAMS_BY_ID[m.home_team_id]) m.home_team_id = pick(semis[0]) ?? m.home_team_id
+    if (!TEAMS_BY_ID[m.away_team_id]) m.away_team_id = pick(semis[1]) ?? m.away_team_id
   }
 }
 
